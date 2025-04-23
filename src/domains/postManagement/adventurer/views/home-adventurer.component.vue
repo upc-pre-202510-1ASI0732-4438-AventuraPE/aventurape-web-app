@@ -15,41 +15,43 @@ export default {
   },
   data() {
     return {
-      activeTab: 0,
-      loading: true,
-      tabs: [
-        {label: 'Actividades', icon: 'pi pi-compass'},
-        {label: 'Emprendedores', icon: 'pi pi-users'}
-      ],
-      galleryImages: [
-        {src: 'https://picsum.photos/1200/400?random=1', alt: 'Aventura 1'},
-        {src: 'https://picsum.photos/1200/400?random=2', alt: 'Aventura 2'},
-        {src: 'https://picsum.photos/1200/400?random=3', alt: 'Aventura 3'}
-      ],
+      loading: false,
       activities: [],
-      entrepreneurs: [
-        {
-          id: 101,
-          name: 'Aventuras Sierra',
-          avatar: 'https://picsum.photos/64/64?random=21',
-        },
-        {
-          id: 102,
-          name: 'Acuática Experiencias',
-          avatar: 'https://picsum.photos/64/64?random=22',
-        },
-        {
-          id: 103,
-          name: 'Vertical Climbing',
-          avatar: 'https://picsum.photos/64/64?random=23',
-        }
+      activeTab: 0,
+      tabs: [
+        { label: 'Aventuras', icon: 'pi pi-compass' },
+        { label: 'Emprendedores', icon: 'pi pi-users' }
       ],
+      entrepreneurs: [], // Aquí irían los emprendedores cuando se implementen
       activityApiService: new ActivityApiService()
     };
+  },
+
+  computed: {
+    carouselItems() {
+      // Si no hay actividades, devolver array vacío
+      if (!this.activities || this.activities.length === 0) {
+        return [];
+      }
+
+      // Máximo 5 actividades para el carrusel
+      return this.activities.slice(0, 5).map(activity => ({
+        id: activity.id,
+        title: activity.title,
+        description: activity.description.substring(0, 120) + (activity.description.length > 120 ? '...' : ''),
+        image: activity.image
+      }));
+    }
   },
   methods: {
     changeTab(index) {
       this.activeTab = index;
+    },
+    goToActivity(id) {
+      this.$router.push({
+        name: 'activity-detail',
+        params: { id }
+      });
     },
 
     async fetchActivities() {
@@ -91,21 +93,38 @@ export default {
 
     <!-- Carrusel de imágenes autoplay -->
     <div class="gallery-section">
+      <!-- Estado de carga -->
+      <div v-if="loading" class="carousel-loading">
+        <i class="pi pi-spin pi-spinner"></i>
+        <p>Cargando actividades destacadas...</p>
+      </div>
+      <!-- Sin actividades -->
+      <div v-else-if="carouselItems.length === 0" class="carousel-empty">
+        <i class="pi pi-info-circle"></i>
+        <p>No hay actividades destacadas disponibles</p>
+      </div>
+
+      <!-- Carrusel con actividades -->
       <Carousel
-          :value="galleryImages"
+          v-else
+          :value="carouselItems"
           :numVisible="1"
           :numScroll="1"
-          :autoplayInterval="3000"
+          :autoplayInterval="4000"
           :circular="true"
-          :autoplay="true">
+          :autoplay="true"
+          class="custom-carousel">
         <template #item="slotProps">
-          <div class="gallery-item">
-            <img :src="slotProps.data.src" :alt="slotProps.data.alt"/>
+          <div class="carousel-item">
+            <img :src="slotProps.data.image" :alt="slotProps.data.title" />
+            <div class="carousel-caption">
+              <h3>{{ slotProps.data.title }}</h3>
+            </div>
           </div>
         </template>
       </Carousel>
-    </div>
 
+    </div>
     <!-- Navegación por pestañas -->
     <div class="navigation-tabs">
       <TabMenu :model="tabs" v-model:activeIndex="activeTab"/>
@@ -162,6 +181,115 @@ export default {
 </template>
 
 <style scoped>
+/* Estilos para carrusel mejorado */
+.carousel-item {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.carousel-item:hover img {
+  transform: scale(1.05);
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8));
+  color: white;
+  padding: 30px 20px 20px;
+  text-align: left;
+}
+
+.carousel-caption h3 {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+.carousel-caption p {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  max-width: 80%;
+}
+
+.explore-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.explore-btn:hover {
+  background-color: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+
+.carousel-loading, .carousel-empty {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-lighter);
+  border-radius: 8px;
+  color: var(--text-light);
+}
+
+.carousel-loading i, .carousel-empty i {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+/* Estilos para los controles del carrusel */
+:deep(.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button) {
+  background-color: var(--primary-color);
+}
+
+:deep(.p-carousel .p-carousel-indicators .p-carousel-indicator button) {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+:deep(.p-carousel .p-carousel-content .p-carousel-prev,
+.p-carousel .p-carousel-content .p-carousel-next) {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: var(--primary-color);
+  margin: 0 10px;
+  transition: all 0.2s ease;
+}
+
+:deep(.p-carousel .p-carousel-content .p-carousel-prev:hover,
+.p-carousel .p-carousel-content .p-carousel-next:hover) {
+  background-color: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
 .home-container {
   max-width: 1200px;
   margin: 0 auto;

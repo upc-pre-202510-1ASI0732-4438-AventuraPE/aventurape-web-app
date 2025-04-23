@@ -48,11 +48,52 @@ export default {
 .activity-card {
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .activity-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Control de tamaño para imágenes en el encabezado */
+:deep(.p-card-header) {
+  height: 200px;
+  overflow: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+:deep(.p-card-header img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Mejora del padding en todas las secciones de la tarjeta */
+:deep(.p-card-body) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 15px !important;
+}
+
+:deep(.p-card-title) {
+  padding: 0 5px;
+  margin-bottom: 10px !important;
+}
+
+:deep(.p-card-subtitle) {
+  padding: 0 5px;
+}
+
+:deep(.p-card-content) {
+  flex: 1;
+  padding: 10px 5px !important;
+  margin-bottom: 0 !important;
 }
 
 .card-meta {
@@ -75,5 +116,6 @@ export default {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 0 5px;
 }
 </style>
