@@ -9,8 +9,8 @@ export class AuthenticationService {
         return http.post('/authentication/sign-up', signUpRequest);
     }
 
-
     getUserRoles(userId) {
         return http.get(`/users/${userId}`);
     }
+
 }
