@@ -3,6 +3,7 @@ import ProfileAvComponent from "@/domains/profileManagement/adventurer/views/pro
 import ActivityCardList from "@/domains/postManagement/adventurer/views/activity-card-list.component.vue";
 import HomeAdventurer from "@/domains/postManagement/adventurer/views/home-adventurer.component.vue";
 import ActivityDetail from "@/domains/postManagement/adventurer/views/activity-detail.component.vue";
+
 export default [
   // Profile Management
   {
@@ -19,10 +20,9 @@ export default [
   },
   {
     path: '/adventurer/posts/:id',
-    //    path: '/activities/:id',
     name: 'activity-detail',
     component: ActivityDetail,
-    meta: { requiresAuth: true, role: 'adventurer' }
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   },
   // Navigation from HeaderNav
   {
@@ -30,7 +30,7 @@ export default [
     name: 'AdventurerSearch',
     component: ActivityCardList,
     props: true,
-    meta: { requiresAuth: true, role: 'adventurer' }
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   },
 
   {

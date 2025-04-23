@@ -1,25 +1,19 @@
 <script>
+import { ActivityApiService } from '@/domains/postManagement/shared/services/activity-api.service.js';
+
 export default {
   name: "ActivityCardList",
   data() {
     return {
-      activities: [
-        // Datos de ejemplo para desarrollo
-        { id: 1, title: "Senderismo en el Valle", image: "https://primefaces.org/cdn/primevue/images/usercard.png" },
-        { id: 2, title: "Tour gastronómico", image: "https://primefaces.org/cdn/primevue/images/usercard.png" },
-        { id: 3, title: "Escalada en roca", image: "https://primefaces.org/cdn/primevue/images/usercard.png" },
-        { id: 4, title: "Paseo en kayak", image: "https://primefaces.org/cdn/primevue/images/usercard.png" },
-        { id: 5, title: "Recorrido cultural", image: "https://primefaces.org/cdn/primevue/images/usercard.png" },
-        { id: 6, title: "Campamento nocturno", image: "https://primefaces.org/cdn/primevue/images/usercard.png" },
-        { id: 7, title: "Ciclismo de montaña", image: "https://primefaces.org/cdn/primevue/images/usercard.png" },
-        { id: 8, title: "Curso de fotografía", image: "https://primefaces.org/cdn/primevue/images/usercard.png" }
-      ],
-      loading: false,
+      activities: [],
+      loading: true,
       searchQuery: "",
       viewMode: "grid",
-      selectedActivity: null
+      selectedActivity: null,
+      activityApiService: new ActivityApiService()
     };
   },
+
   computed: {
     filteredActivities() {
       if (!this.searchQuery) return this.activities;
@@ -30,31 +24,46 @@ export default {
       );
     }
   },
-  methods: {
-    goToDetail(activityId) {
-      this.$router.push({ name: "activity-detail", params: { id: activityId } });
-    },
-    selectActivity(id) {
-      this.selectedActivity = id;
-    },
-    editActivity(id) {
-      // Implementar lógica para editar actividad
-      console.log(`Editando actividad ${id}`);
-    },
-    fetchActivities() {
-      // Aquí implementarás el llamado a la API
-      this.loading = true;
 
-      // Simular llamada a API (reemplazar con tu llamada real)
-      setTimeout(() => {
-        // Aquí asignarías los datos reales: this.activities = response.data;
+  methods: {
+    selectActivity(activityId) {
+      this.selectedActivity = activityId;
+    },
+
+    goToDetail(activityId) {
+      this.$router.push({
+        name: 'activity-detail',
+        params: { id: activityId }
+      });
+    },
+
+    async fetchActivities() {
+      this.loading = true;
+      try {
+        const response = await this.activityApiService.getAllActivities();
+
+        // Mapear los datos del backend a nuestro formato local
+        this.activities = response.data.map(item => ({
+          id: item.Id,
+          title: item.nameActivity,
+          description: item.description,
+          cantPeople: item.cantPeople,
+          image: item.image || 'https://primefaces.org/cdn/primevue/images/usercard.png',
+          price: item.cost,
+          timeDuration: item.timeDuration,
+          entrepreneurId: item.entrepreneurId
+        }));
+
         this.loading = false;
-      }, 1000);
+      } catch (error) {
+        console.error('Error al cargar actividades:', error);
+        this.loading = false;
+      }
     }
   },
+
   mounted() {
-    // Descomentar para implementar la carga de datos reales
-    // this.fetchActivities();
+    this.fetchActivities();
   }
 };
 </script>

@@ -1,55 +1,59 @@
 <script>
+// make-comment.component.vue - script section
 export default {
   name: 'MakeComment',
+  emits: ['submit-review'],
+
   data() {
     return {
       reviewData: {
-        // El nombre de usuario se obtendrá de la lógica de datos
         rating: 0,
-        comment: '',
-        date: null
+        comment: ''
       },
-      maxLength: 500,
-      hoverRating: 0
+      hoverRating: 0,
+      maxLength: 500
     };
   },
+
   computed: {
     remainingChars() {
       return this.maxLength - this.reviewData.comment.length;
     }
   },
+
   methods: {
-    setRating(rating) {
-      this.reviewData.rating = rating;
+    setRating(value) {
+      this.reviewData.rating = value;
     },
-    setHoverRating(rating) {
-      this.hoverRating = rating;
+
+    setHoverRating(value) {
+      this.hoverRating = value;
     },
+
     resetHoverRating() {
       this.hoverRating = 0;
     },
-    getStarClass(position) {
-      return {
-        'star-hover': this.hoverRating >= position && this.hoverRating > 0,
-        'star-selected': this.reviewData.rating >= position && this.hoverRating === 0,
-        'star-selected-and-hover': this.reviewData.rating >= position && this.hoverRating > 0
-      };
-    },
-    submitReview() {
-      if (this.reviewData.rating > 0 && this.reviewData.comment) {
-        const newReview = {
-          ...this.reviewData,
-          // Nombre temporal hasta implementar lógica de usuario
-          userName: 'Usuario Actual',
-          date: new Date().toISOString()
-        };
-        this.$emit('submit-review', newReview);
-        this.reviewData = {
-          rating: 0,
-          comment: '',
-          date: null
-        };
+
+    getStarClass(star) {
+      if (this.hoverRating >= star) {
+        return this.reviewData.rating >= star ? 'star-selected-and-hover' : 'star-hover';
+      } else {
+        return this.reviewData.rating >= star ? 'star-selected' : '';
       }
+    },
+
+    submitReview() {
+      const newReview = {
+        content: this.reviewData.comment,
+        rating: this.reviewData.rating,
+        adventureId: 1 // Temporalmente hardcodeado, después lo obtienes del store
+      };
+
+      this.$emit('submit-review', newReview);
+
+      // Resetear formulario
+      this.reviewData.rating = 0;
+      this.reviewData.comment = '';
     }
   }
 };
@@ -101,11 +105,12 @@ export default {
           </div>
         </div>
       </div>
-
+      <button type="submit">Enviar comentario</button>
+      <!--
       <button type="submit" class="submit-button" :disabled="!reviewData.rating || !reviewData.comment">
         <i class="pi pi-check-circle"></i>
         Publicar reseña
-      </button>
+      </button>-->
     </form>
   </div>
 </template>

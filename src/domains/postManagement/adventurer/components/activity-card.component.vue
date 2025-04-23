@@ -1,36 +1,79 @@
+// src/domains/postManagement/adventurer/components/activity-card.component.vue
 <script>
 export default {
   name: "ActivityCard",
   props: {
+    id: Number,
     title: String,
     image: String,
-    people: Number
+    people: Number,
+    description: String,
+    price: Number,
+    timeDuration: Number
+  },
+  methods: {
+    goToDetail() {
+      this.$router.push({
+        name: 'activity-detail',
+        params: { id: this.id }
+      });
+    }
   }
 };
-
 </script>
 
 <template>
-  <Card style="width: 25rem; overflow: hidden">
+  <Card class="activity-card" @click="goToDetail">
     <template #header>
-      <img alt="user header" src="https://primefaces.org/cdn/primevue/images/usercard.png" />
+      <img :src="image" :alt="title" />
     </template>
-    <template #title>Advanced Card</template>
-    <template #subtitle>Card subtitle</template>
+    <template #title>{{ title }}</template>
+    <template #subtitle>
+      <div class="card-meta">
+        <span class="meta-item">
+          <i class="pi pi-users"></i> {{ people }} personas
+        </span>
+        <span class="meta-item">
+          <i class="pi pi-tag"></i> {{ price.toFixed(2) }} €
+        </span>
+      </div>
+    </template>
     <template #content>
-      <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-        quas!
-      </p>
+      <p class="card-description">{{ description }}</p>
     </template>
   </Card>
 </template>
 
-  <style scoped>
-/*ESTILO GENERALES*/
-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+<style scoped>
+.activity-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-  </style>
+
+.activity-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #555;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.meta-item i {
+  margin-right: 4px;
+}
+
+.card-description {
+  color: #666;
+  font-size: 0.95rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

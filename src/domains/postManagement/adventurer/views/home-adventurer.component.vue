@@ -1,8 +1,9 @@
 <script>
-import ActivityCard from "@/domains/postManagement/adventurer/components/activity-card.component.vue";
-import EntrepreneurCard from "@/domains/postManagement/adventurer/components/entrepreneur-card.component.vue";
-import Carousel from "primevue/carousel";
-import TabMenu from "primevue/tabmenu";
+import { ActivityApiService } from '@/domains/postManagement/shared/services/activity-api.service.js';
+import ActivityCard from '../components/activity-card.component.vue';
+import EntrepreneurCard from '../components/entrepreneur-card.component.vue';
+import Carousel from 'primevue/carousel';
+import TabMenu from 'primevue/tabmenu';
 
 export default {
   name: "HomeAdventurer",
@@ -14,51 +15,18 @@ export default {
   },
   data() {
     return {
-      // Control de pestañas
       activeTab: 0,
+      loading: true,
       tabs: [
-        { label: 'Aventuras', icon: 'pi pi-compass' },
-        { label: 'Emprendedores', icon: 'pi pi-users' }
+        {label: 'Actividades', icon: 'pi pi-compass'},
+        {label: 'Emprendedores', icon: 'pi pi-users'}
       ],
-
-      // Imágenes para el carrusel
       galleryImages: [
-        { id: 1, src: 'https://picsum.photos/800/300?random=1', alt: 'Aventura en montaña' },
-        { id: 2, src: 'https://picsum.photos/800/300?random=2', alt: 'Rafting en río' },
-        { id: 3, src: 'https://picsum.photos/800/300?random=3', alt: 'Senderismo en bosque' },
-        { id: 4, src: 'https://picsum.photos/800/300?random=4', alt: 'Escalada en roca' },
-        { id: 5, src: 'https://picsum.photos/800/300?random=5', alt: 'Paracaidismo' }
+        {src: 'https://picsum.photos/1200/400?random=1', alt: 'Aventura 1'},
+        {src: 'https://picsum.photos/1200/400?random=2', alt: 'Aventura 2'},
+        {src: 'https://picsum.photos/1200/400?random=3', alt: 'Aventura 3'}
       ],
-
-      // Datos de actividades
-      activities: [
-        {
-          id: 1,
-          title: 'Senderismo en Sierra Nevada',
-          image: 'https://picsum.photos/300/200?random=11',
-          people: 12
-        },
-        {
-          id: 2,
-          title: 'Kayak en Río Genil',
-          image: 'https://picsum.photos/300/200?random=12',
-          people: 8
-        },
-        {
-          id: 3,
-          title: 'Escalada en El Chorro',
-          image: 'https://picsum.photos/300/200?random=13',
-          people: 6
-        },
-        {
-          id: 4,
-          title: 'Buceo en Cabo de Gata',
-          image: 'https://picsum.photos/300/200?random=14',
-          people: 10
-        }
-      ],
-
-      // Datos de emprendedores
+      activities: [],
       entrepreneurs: [
         {
           id: 101,
@@ -75,13 +43,40 @@ export default {
           name: 'Vertical Climbing',
           avatar: 'https://picsum.photos/64/64?random=23',
         }
-      ]
+      ],
+      activityApiService: new ActivityApiService()
     };
   },
   methods: {
     changeTab(index) {
       this.activeTab = index;
-    }
+    },
+
+    async fetchActivities() {
+      this.loading = true;
+      try {
+        const response = await this.activityApiService.getAllActivities();
+
+        // Mapear los datos del backend al formato esperado por el componente ActivityCard
+        this.activities = response.data.map(item => ({
+          id: item.Id,
+          title: item.nameActivity,
+          description: item.description,
+          people: item.cantPeople,
+          image: item.image || 'https://primefaces.org/cdn/primevue/images/usercard.png',
+          price: item.cost,
+          timeDuration: item.timeDuration,
+          entrepreneurId: item.entrepreneurId
+        }));
+
+        this.loading = false;
+      } catch (error) {
+        console.error('Error al cargar actividades:', error);
+        this.loading = false;
+      }
+    }  },
+  mounted() {
+    this.fetchActivities();
   }
 };
 </script>
@@ -105,7 +100,7 @@ export default {
           :autoplay="true">
         <template #item="slotProps">
           <div class="gallery-item">
-            <img :src="slotProps.data.src" :alt="slotProps.data.alt" />
+            <img :src="slotProps.data.src" :alt="slotProps.data.alt"/>
           </div>
         </template>
       </Carousel>
@@ -113,7 +108,7 @@ export default {
 
     <!-- Navegación por pestañas -->
     <div class="navigation-tabs">
-      <TabMenu :model="tabs" v-model:activeIndex="activeTab" />
+      <TabMenu :model="tabs" v-model:activeIndex="activeTab"/>
     </div>
 
     <!-- Contenido principal -->
@@ -121,12 +116,30 @@ export default {
       <!-- Panel de Aventuras -->
       <div v-if="activeTab === 0" class="tab-content activities-panel">
         <h2>Aventuras disponibles</h2>
-        <div class="activities-grid">
+
+        <!-- Estado de carga -->
+        <div v-if="loading" class="loading-state">
+          <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+          <p>Cargando actividades...</p>
+        </div>
+
+        <!-- Sin resultados -->
+        <div v-else-if="activities.length === 0" class="empty-state">
+          <i class="pi pi-info-circle"></i>
+          <p>No hay actividades disponibles en este momento</p>
+        </div>
+
+        <!-- Lista de actividades -->
+        <div v-else class="activities-grid">
           <div v-for="activity in activities" :key="activity.id" class="activity-card-wrapper">
             <ActivityCard
+                :id="activity.id"
                 :title="activity.title"
                 :image="activity.image"
                 :people="activity.people"
+                :description="activity.description"
+                :price="activity.price"
+                :timeDuration="activity.timeDuration"
             />
           </div>
         </div>
@@ -246,10 +259,6 @@ export default {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.activity-card-wrapper:hover {
-  transform: translateY(-5px);
-}
-
 /* Cuadrícula para emprendedores */
 .entrepreneurs-grid {
   display: grid;
@@ -261,9 +270,20 @@ export default {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.entrepreneur-card-wrapper:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+/* Estados de carga y vacío */
+.loading-state, .empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #666;
+}
+
+.loading-state i, .empty-state i {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  color: #3a7539;
 }
 
 /* Animaciones */
@@ -284,8 +304,19 @@ export default {
     font-size: 28px;
   }
 
+  .activities-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 25px;
+  }
 
+  .entrepreneurs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
 
-
+@media (max-width: 480px) {
+  .activities-grid, .entrepreneurs-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
