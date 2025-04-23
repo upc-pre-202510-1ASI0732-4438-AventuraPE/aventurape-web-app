@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { AuthenticationService } from '@/domains/IAM/services/authentication.service.js';
 import Cookies from 'js-cookie';
-
+import HomeAdventurer from '@/domains/postManagement/adventurer/views/home-adventurer.component.vue';
+import ActivityDetail from "@/domains/postManagement/adventurer/views/activity-detail.component.vue";
+import ActivityCardList from "@/domains/postManagement/adventurer/views/activity-card-list.component.vue";
 const routes = [
   {
     path: '/',
     name: 'home',
+    component: HomeAdventurer,
     meta: { requiresAuth: true }
   },
   {
@@ -28,7 +31,7 @@ const routes = [
   {
     path: '/adventurous-home',
     name: 'adventurous-home',
-    component: () => import('@/domains/postManagement/adventurer/views/homeAdventurer.vue'),
+    component: HomeAdventurer,
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   },
   {
@@ -36,7 +39,22 @@ const routes = [
     name: 'entrepreneur-home',
     component: () => import('@/domains/postManagement/entrepreneur/views/homeEntrepreneur.vue'),
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
-  }
+  },
+  {
+    path: '/adventurer/posts/:id',
+    //    path: '/activities/:id',
+    name: 'activity-detail',
+    component: ActivityDetail,
+    meta: { requiresAuth: true, role: 'adventurer' }
+  },
+  // Navigation from HeaderNav
+  {
+    path: '/buscar',
+    name: 'AdventurerSearch',
+    component: ActivityCardList,
+    props: true,
+    meta: { requiresAuth: true, role: 'adventurer' }
+  },
 ];
 
 const router = createRouter({
