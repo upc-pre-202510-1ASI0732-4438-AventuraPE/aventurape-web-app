@@ -298,7 +298,7 @@ export default {
 
 :deep(.btn-register:hover) {
   background-color: var(--primary-light);
-  box-shadow: 0 4px 7.5px rgba(168, 134, 98, 0.3);
+  box-shadow: 0 4px 8px rgba(168, 134, 98, 0.3);
 }
 
 :deep(.btn-register:focus) {
