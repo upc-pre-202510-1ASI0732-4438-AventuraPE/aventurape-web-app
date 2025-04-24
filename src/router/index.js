@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { AuthenticationService } from '@/domains/IAM/services/authentication.service.js';
 import Cookies from 'js-cookie';
+import EntrepreneurRoutes from '@/router/entrepreneurRoutes.js';
 
 const routes = [
   {
@@ -36,8 +37,11 @@ const routes = [
     name: 'entrepreneur-home',
     component: () => import('@/domains/postManagement/entrepreneur/views/homeEntrepreneur.vue'),
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
-  }
+  },
+  ...EntrepreneurRoutes
+
 ];
+
 
 const router = createRouter({
   history: createWebHistory(),
