@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { AuthenticationService } from '@/domains/IAM/services/authentication.service.js';
 import Cookies from 'js-cookie';
-import homeEntrepreneur from "@/domains/postManagement/entrepreneur/views/homeEntrepreneur.vue";
-import ProfileAvComponent from "@/domains/profileManagement/adventurer/views/profileAv.component.vue";
-import ProfileEmpComponent from "@/domains/profileManagement/entrepreneur/views/profileEmp.component.vue";
-
+import adventurerRoutes from './adventurerRoutes.js';
+import HomeAdventurer from '@/domains/postManagement/adventurer/views/home-adventurer.component.vue';
+import entrepreneurRoutes from "@/router/entrepreneurRoutes.js";
 const routes = [
   {
     path: '/',
     name: 'home',
+    component: HomeAdventurer,
     meta: { requiresAuth: true }
   },
   {
@@ -31,7 +31,7 @@ const routes = [
   {
     path: '/adventurous-home',
     name: 'adventurous-home',
-    component: homeEntrepreneur,
+    component: HomeAdventurer,
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   },
   {
@@ -40,18 +40,9 @@ const routes = [
     component: () => import('@/domains/postManagement/entrepreneur/views/homeEntrepreneur.vue'),
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
   },
-  {
-    path: '/adventurer/profile',
-    name: 'AdventurerProfile',
-    component: ProfileAvComponent,
-    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
-  },
-  {
-    path: '/entrepreneur/profile',
-    name: 'EntrepreneurProfile',
-    component: ProfileEmpComponent,
-    meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
-  }
+  ...adventurerRoutes,
+  ...entrepreneurRoutes
+
 ];
 
 const router = createRouter({
