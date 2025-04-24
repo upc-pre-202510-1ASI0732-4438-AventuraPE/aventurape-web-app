@@ -12,5 +12,8 @@ export class AuthenticationService {
     getUserRoles(userId) {
         return http.get(`/users/${userId}`);
     }
+    getUserById(userId) {
+        return http.get(`/users/${userId}`);
+    }
 
 }
