@@ -332,21 +332,41 @@ export default {
   margin: 0 auto;
   padding: 20px;
 }
-
 .home-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin: 30px auto 40px;
+  max-width: 800px;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.home-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 2px;
 }
 
 .home-header h1 {
-  color: #3a7539;
-  font-size: 36px;
-  margin-bottom: 10px;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
 }
 
 .home-header p {
-  color: #666;
-  font-size: 18px;
+  color: var(--text-light);
+  font-size: 1.2rem;
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* Estilos para el carrusel de imágenes */
@@ -371,32 +391,43 @@ export default {
 /* Estilos para pestañas de navegación */
 .navigation-tabs {
   margin-bottom: 30px;
+  padding: 0 20px;
 }
 
 :deep(.p-tabmenu .p-tabmenu-nav) {
   border: none;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 5px;
+  background-color: var(--primary-lighter);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(118, 85, 50, 0.1);
+}
+
+:deep(.p-tabmenu .p-tabmenu-nav .p-tabmenuitem) {
+  margin: 0 5px;
 }
 
 :deep(.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link) {
-  border-radius: 6px;
-  margin: 0 5px;
-  padding: 12px 20px;
-  font-weight: 500;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 :deep(.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link) {
-  background-color: #3a7539;
+  background-color: var(--primary-color);
   color: #fff;
+  box-shadow: 0 4px 8px rgba(118, 85, 50, 0.2);
 }
 
 :deep(.p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link) {
-  background-color: #e9ecef;
-  color: #3a7539;
+  background-color: rgba(118, 85, 50, 0.1);
+  color: var(--primary-color);
 }
 
+:deep(.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-icon) {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
 /* Estilos para el contenido principal */
 .main-content {
   min-height: 400px;
@@ -406,22 +437,41 @@ export default {
   animation: fadeIn 0.4s ease;
 }
 
-.tab-content h2 {
-  color: #3a7539;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #f0f0f0;
-}
 
 /* Cuadrícula para actividades */
 .activities-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 45px;
+  margin-top: 20px;
+
+}
+
+.tab-content h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(118, 85, 50, 0.1);
+  font-size: 1.8rem;
+  font-weight: 700;
+  position: relative;
+}
+
+
+.tab-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background-color: var(--primary-color);
 }
 
 .activity-card-wrapper {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
 }
 
 /* Cuadrícula para emprendedores */
@@ -449,20 +499,51 @@ export default {
   }
 }
 
-/* Estados de carga y vacío */
 .loading-state, .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  color: #666;
+  padding: 60px 30px;
+  color: var(--text-light);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  margin: 20px 0;
 }
 
 .loading-state i, .empty-state i {
-  font-size: 2rem;
-  margin-bottom: 12px;
-  color: #3a7539;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--primary-light);
+  opacity: 0.8;
+}
+
+.loading-state p, .empty-state p {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.empty-state {
+  background-color: #f9f5f0;
+}
+
+.empty-state button {
+  margin-top: 15px;
+  background-color: var(--primary-light);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.empty-state button:hover {
+  background-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(118, 85, 50, 0.2);
 }
 
 /* Animaciones */

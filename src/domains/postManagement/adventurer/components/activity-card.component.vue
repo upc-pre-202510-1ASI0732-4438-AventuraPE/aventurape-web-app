@@ -34,7 +34,7 @@ export default {
           <i class="pi pi-users"></i> {{ people }} personas
         </span>
         <span class="meta-item">
-          <i class="pi pi-tag"></i> {{ price.toFixed(2) }} €
+          <i class="pi pi-tag"></i>S/. {{ price.toFixed(2) }}
         </span>
       </div>
     </template>
