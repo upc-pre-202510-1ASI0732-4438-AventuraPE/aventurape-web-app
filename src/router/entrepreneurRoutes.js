@@ -1,14 +1,14 @@
-import ProfileAvComponent from "@/domains/profileManagement/adventurer/views/profileAv.component.vue";
 import StatisticsComponent from "@/domains/statisticsManagement/entrepreneur/views/statistics.component.vue";
 import SubscriptionComponent from "@/domains/subscriptionManagement/entrepreneur/views/subscription.component.vue";
+import ProfileEmpComponent from "@/domains/profileManagement/entrepreneur/views/profileEmp.component.vue";
 
 export default [
     // Profile Management
     {
         path: '/entrepreneur/profile',
         name: 'EntrepreneurProfile',
-        component: ProfileAvComponent,
-        meta: { requiresAuth: true, role: 'entrepreneur' }
+        component: ProfileEmpComponent,
+        meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
     },
 
     // Statistics Management

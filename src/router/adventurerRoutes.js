@@ -16,7 +16,7 @@ export default [
     path: '/adventurer/profile',
     name: 'AdventurerProfile',
     component: ProfileAvComponent,
-    meta: { requiresAuth: true, role: 'adventurer' }
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   },
   {
     path: '/adventurer/posts/:id',
