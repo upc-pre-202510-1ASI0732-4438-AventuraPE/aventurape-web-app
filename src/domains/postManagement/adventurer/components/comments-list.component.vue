@@ -206,11 +206,11 @@ export default {
 .no-reviews {
   text-align: center;
   padding: 40px 20px;
-  color: #777;
+  color: #666;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color: white;
   border-radius: 8px;
 }
 

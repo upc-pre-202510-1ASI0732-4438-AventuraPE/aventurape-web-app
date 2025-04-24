@@ -61,11 +61,13 @@ export default {
 
 <template>
   <div class="make-review">
-    <h3 class="review-title">
-      Comparte tu experiencia
-    </h3>
+    <div class="review-header">
+      <i class="pi pi-comments"></i>
+      <h3 class="review-title">Comparte tu experiencia</h3>
+    </div>
+
     <form @submit.prevent="submitReview" class="review-form">
-      <div class="form-group">
+      <div class="form-group rating-group">
         <label>¿Cómo calificarías esta actividad?</label>
         <div class="rating-selector">
           <span
@@ -76,18 +78,16 @@ export default {
               @mouseleave="resetHoverRating"
               class="rating-star"
               :class="getStarClass(star)"
-          >
-            ★
-          </span>
-          <span class="rating-text">
-            {{ reviewData.rating ? `${reviewData.rating} de 5 estrellas` : 'Selecciona una calificación' }}
-          </span>
+          >★</span>
         </div>
+        <span class="rating-text" :class="{'rating-selected': reviewData.rating > 0}">
+          {{ reviewData.rating ? `${reviewData.rating} de 5 estrellas` : 'Selecciona una calificación' }}
+        </span>
       </div>
 
       <div class="form-group">
         <label for="reviewComment">
-          <i class="pi pi-comment"></i>
+          <i class="pi pi-pencil"></i>
           Tu comentario
         </label>
         <div class="textarea-container">
@@ -105,44 +105,57 @@ export default {
           </div>
         </div>
       </div>
-      <button type="submit">Enviar comentario</button>
-      <!--
-      <button type="submit" class="submit-button" :disabled="!reviewData.rating || !reviewData.comment">
-        <i class="pi pi-check-circle"></i>
+
+      <button type="submit" class="submit-button" :disabled="!reviewData.rating || !reviewData.comment.trim()">
+        <i class="pi pi-send"></i>
         Publicar reseña
-      </button>-->
+      </button>
     </form>
   </div>
 </template>
 
 <style scoped>
 .make-review {
-  padding: 25px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  margin: 20px 0;
-  transition: transform 0.2s;
+  padding: 30px;
+  background: linear-gradient(145deg, #ffffff, var(--primary-lighter));
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(118, 85, 50, 0.08);
+  margin: 30px 0;
+  border: 1px solid rgba(118, 85, 50, 0.1);
+  transition: all 0.3s ease;
 }
 
 .make-review:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(118, 85, 50, 0.12);
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  border-bottom: 2px solid rgba(118, 85, 50, 0.2);
+  padding-bottom: 15px;
+}
+
+.review-header i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  background: rgba(118, 85, 50, 0.1);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
 
 .review-title {
-  margin-top: 0;
-  margin-bottom: 25px;
-  font-size: 1.5rem;
-  color: #333;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.review-title i {
-  color: #4CAF50;
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
 .review-form {
@@ -152,117 +165,149 @@ export default {
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s ease;
+  border: 1px solid rgba(168, 134, 98, 0.1);
+}
+
+.form-group:hover {
+  box-shadow: 0 5px 15px rgba(118, 85, 50, 0.08);
+}
+
+.rating-group {
+  text-align: center;
 }
 
 label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   font-weight: 600;
-  color: #444;
+  color: var(--text-dark);
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-.rating-label {
-  font-size: 16px;
-  color: #333;
-}
-
-.rating-container {
-  background-color: #fff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  margin-top: 10px;
+  gap: 10px;
+  font-size: 1.1rem;
 }
 
 .rating-selector {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 12px;
 }
 
 .rating-star {
-  font-size: 32px;
-  color: #ddd;
+  font-size: 38px;
+  color: #e0e0e0;
   cursor: pointer;
-  transition: transform 0.2s, color 0.3s;
-  display: inline-block;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .rating-star:hover {
-  transform: scale(1.3) rotate(5deg);
+  transform: scale(1.2) rotate(10deg);
+}
+
+.rating-star::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-color);
+  border-radius: 50%;
+  transition: all 0.2s ease;
 }
 
 .star-hover, .star-selected {
-  color: #ffc107;
+  color: #d4a76a;
+}
+
+.star-selected::after {
+  width: 8px;
+  height: 8px;
 }
 
 .star-selected-and-hover {
-  color: #ffdb58;
+  color: var(--primary-color);
+  transform: scale(1.2);
 }
 
 .rating-text {
   display: block;
-  margin-top: 5px;
-  font-size: 14px;
-  color: #666;
+  margin-top: 10px;
+  font-size: 1rem;
+  color: var(--text-light);
   font-weight: 500;
+  transition: color 0.3s;
+}
+
+.rating-selected {
+  color: var(--primary-color);
+  font-weight: 600;
 }
 
 .textarea-container {
   position: relative;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .styled-textarea {
   width: 100%;
-  padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  padding: 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  line-height: 1.6;
+  transition: all 0.3s;
   resize: vertical;
-  min-height: 120px;
-  background-color: #fff;
+  min-height: 150px;
+  font-family: inherit;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
 }
 
 .styled-textarea:focus {
   outline: none;
-  border-color: #4CAF50;
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(118, 85, 50, 0.15), inset 0 2px 5px rgba(0, 0, 0, 0);
 }
 
 .char-counter {
   position: absolute;
-  bottom: 10px;
-  right: 12px;
-  font-size: 12px;
-  color: #888;
+  bottom: 12px;
+  right: 15px;
+  font-size: 0.8rem;
+  color: #777;
   background: rgba(255, 255, 255, 0.9);
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
 }
 
 .char-counter.warning {
-  color: #ff5252;
+  color: var(--error-color);
   font-weight: bold;
-  background: rgba(255, 82, 82, 0.1);
+  background: rgba(241, 92, 92, 0.1);
+  transform: scale(1.05);
 }
 
 .submit-button {
-  background-color: #4CAF50;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
   color: white;
   border: none;
-  padding: 14px;
-  font-size: 16px;
+  padding: 16px;
+  font-size: 1.1rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -270,29 +315,32 @@ label {
   justify-content: center;
   gap: 10px;
   margin-top: 10px;
-  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.25);
+  box-shadow: 0 6px 15px rgba(118, 85, 50, 0.25);
+  align-self: center;
+  width: 70%;
+  max-width: 300px;
 }
 
 .submit-button:hover {
-  background-color: #45a049;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(118, 85, 50, 0.35);
+  background: linear-gradient(135deg, #8a673c, var(--primary-color));
 }
 
 .submit-button:active {
   transform: translateY(1px);
-  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2);
+  box-shadow: 0 4px 8px rgba(118, 85, 50, 0.2);
 }
 
 .submit-button:disabled {
-  background-color: #cccccc;
+  background: linear-gradient(135deg, #cccccc, #dddddd);
   cursor: not-allowed;
   box-shadow: none;
   transform: none;
 }
 
 .submit-button i {
-  font-size: 18px;
+  font-size: 1.2rem;
 }
 
 @media (max-width: 768px) {
@@ -300,12 +348,16 @@ label {
     padding: 20px;
   }
 
-  .styled-textarea {
-    font-size: 16px;
+  .form-group {
+    padding: 15px;
   }
 
   .rating-star {
-    font-size: 28px;
+    font-size: 32px;
+  }
+
+  .submit-button {
+    width: 100%;
   }
 }
 </style>

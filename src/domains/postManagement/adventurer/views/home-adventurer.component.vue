@@ -16,13 +16,14 @@ export default {
   data() {
     return {
       loading: false,
+      loadingEntrepreneurs: false,
       activities: [],
       activeTab: 0,
       tabs: [
         { label: 'Aventuras', icon: 'pi pi-compass' },
         { label: 'Emprendedores', icon: 'pi pi-users' }
       ],
-      entrepreneurs: [], // Aquí irían los emprendedores cuando se implementen
+      entrepreneurs: [],
       activityApiService: new ActivityApiService()
     };
   },
@@ -53,7 +54,27 @@ export default {
         params: { id }
       });
     },
+    async fetchEntrepreneurs() {
+      this.loadingEntrepreneurs = true;
+      try {
+        // Opción alternativa: usar endpoint de usuarios general y filtrar por rol
+        const response = await this.activityApiService.getAllUsers();
 
+        // Filtramos solo los usuarios con rol "ROLE_ENTREPRENEUR"
+        this.entrepreneurs = response.data
+            .filter(user => user.roles.includes("ROLE_ENTREPRENEUR"))
+            .map(entrepreneur => ({
+              id: entrepreneur.id,
+              username: entrepreneur.username,
+              avatar: null
+            }));
+
+        this.loadingEntrepreneurs = false;
+      } catch (error) {
+        console.error('Error al cargar emprendedores:', error);
+        this.loadingEntrepreneurs = false;
+      }
+    },
     async fetchActivities() {
       this.loading = true;
       try {
@@ -79,6 +100,7 @@ export default {
     }  },
   mounted() {
     this.fetchActivities();
+    this.fetchEntrepreneurs();
   }
 };
 </script>
@@ -165,12 +187,27 @@ export default {
       </div>
 
       <!-- Panel de Emprendedores -->
+      <!-- Panel de Emprendedores -->
       <div v-if="activeTab === 1" class="tab-content entrepreneurs-panel">
         <h2>Emprendedores destacados</h2>
-        <div class="entrepreneurs-grid">
+
+        <!-- Estado de carga -->
+        <div v-if="loadingEntrepreneurs" class="loading-state">
+          <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+          <p>Cargando emprendedores...</p>
+        </div>
+
+        <!-- Sin resultados -->
+        <div v-else-if="entrepreneurs.length === 0" class="empty-state">
+          <i class="pi pi-info-circle"></i>
+          <p>No hay emprendedores disponibles en este momento</p>
+        </div>
+
+        <!-- Lista de emprendedores -->
+        <div v-else class="entrepreneurs-grid">
           <div v-for="entrepreneur in entrepreneurs" :key="entrepreneur.id" class="entrepreneur-card-wrapper">
             <EntrepreneurCard
-                :name="entrepreneur.name"
+                :name="entrepreneur.username"
                 :avatar="entrepreneur.avatar"
             />
           </div>
@@ -395,7 +432,21 @@ export default {
 }
 
 .entrepreneur-card-wrapper {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Estados de carga y vacío */

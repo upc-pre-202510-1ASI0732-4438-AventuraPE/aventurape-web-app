@@ -21,11 +21,6 @@ export class ActivityApiService {
         return http.get(`/publication/${id}/comments`);
     }
 
-    // Obtener todos los emprendedores
-    async getAllEntrepreneurs() {
-        return http.get('/users/entrepreneurs');
-    }
-
     // src/domains/postManagement/shared/services/activity-api.service.js
     async getUserById(userId) {
         return http.get(`/users/${userId}`);
@@ -43,6 +38,25 @@ export class ActivityApiService {
     }
     async updatePublication(id, publication) {
         return http.put(`/publication/${id}/update-publication`, publication);
+    }
+
+    async getAllEntrepreneurs() {
+        // Obtener token desde localStorage o cookies
+        const token = localStorage.getItem('token') || Cookies.get('token');
+
+        // Configurar los headers con el token
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        return http.get('/users/entrepreneurs', config);
+    }
+
+    // Obtener todos los usuarios
+    async getAllUsers() {
+        return http.get('/users');
     }
 
 }
