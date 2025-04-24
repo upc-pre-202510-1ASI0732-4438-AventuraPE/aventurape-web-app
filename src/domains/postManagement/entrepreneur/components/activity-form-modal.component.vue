@@ -20,7 +20,9 @@ export default {
         image: '',
         cantPeople: '',
         cost: ''
-      }
+      },
+      imageFile: null,
+      imagePreview: null
     }
   },
   watch: {
@@ -34,6 +36,7 @@ export default {
           cantPeople: newValue.cantPeople,
           cost: newValue.cost
         };
+        this.imagePreview = newValue.image;
       } else {
         this.resetForm();
       }
@@ -46,7 +49,14 @@ export default {
   },
   methods: {
     savePublication() {
-      this.$emit('save', this.publication);
+      if (this.imageFile) {
+        this.readFileAsBase64(this.imageFile, (base64Image) => {
+          this.publication.image = base64Image;
+          this.$emit('save', this.publication);
+        });
+      } else {
+        this.$emit('save', this.publication);
+      }
     },
     closeModal() {
       this.$emit('close');
@@ -60,6 +70,35 @@ export default {
         cantPeople: '',
         cost: ''
       };
+      this.imageFile = null;
+      this.imagePreview = null;
+    },
+    handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      this.imageFile = file;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    readFileAsBase64(file, callback) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        callback(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage() {
+      this.imageFile = null;
+      this.imagePreview = null;
+      this.publication.image = '';
+      // Reset the file input
+      const fileInput = document.getElementById('image-upload');
+      if (fileInput) fileInput.value = '';
     }
   }
 }
@@ -99,10 +138,30 @@ export default {
             </div>
           </div>
 
+          <!-- Replace the existing image input with this -->
           <div class="form-group">
-            <label for="image">URL de Imagen</label>
-            <input type="text" id="image" v-model="publication.image" placeholder="https://ejemplo.com/imagen.jpg">
-            <small class="form-hint">Ingresa la URL de una imagen representativa</small>
+            <label for="image-upload">Imagen</label>
+            <div class="image-upload-container">
+              <div v-if="imagePreview" class="image-preview-container">
+                <img :src="imagePreview" alt="Preview" class="image-preview">
+                <button type="button" @click="removeImage" class="remove-image-btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div v-else class="upload-placeholder">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <span>Sube una imagen representativa</span>
+              </div>
+              <input
+                  type="file"
+                  id="image-upload"
+                  @change="handleImageUpload"
+                  accept="image/*"
+                  class="file-input">
+              <label for="image-upload" class="upload-btn">
+                {{ imagePreview ? 'Cambiar imagen' : 'Seleccionar archivo' }}
+              </label>
+            </div>
           </div>
 
           <div class="form-group">
@@ -221,13 +280,6 @@ export default {
   resize: vertical;
 }
 
-.form-hint {
-  color: var(--text-light);
-  font-size: 14px;
-  margin-top: 6px;
-  display: block;
-}
-
 .form-row {
   display: flex;
   gap: 20px;
@@ -275,5 +327,94 @@ export default {
 
 .btn-secondary:hover {
   background-color: #ddd;
+}
+
+.image-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-light);
+  padding: 30px 0;
+  width: 100%;
+}
+
+.upload-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: var(--primary-light);
+}
+
+.file-input {
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.upload-btn {
+  background-color: var(--primary-lighter);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.upload-btn:hover {
+  background-color: var(--primary-light);
+  color: white;
+}
+
+.image-preview-container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 10px;
+}
+
+.image-preview {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  max-height: 200px;
+}
+
+.remove-image-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.remove-image-btn:hover {
+  background-color: #d32f2f;
 }
 </style>
