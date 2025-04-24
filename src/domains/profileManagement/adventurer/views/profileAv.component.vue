@@ -303,26 +303,6 @@ export default {
               <span class="detail-value">{{ adventurer.streetAddress }}</span>
             </div>
           </div>
-
-          <div class="profile-detail-item">
-            <div class="detail-icon">
-              <i class="fa-solid fa-map-pin"></i>
-            </div>
-            <div class="detail-content">
-              <span class="detail-label">Código Postal</span>
-              <span class="detail-value">{{ adventurer.postalCode }}</span>
-            </div>
-          </div>
-
-          <div class="profile-detail-item">
-            <div class="detail-icon">
-              <i class="fa-solid fa-globe"></i>
-            </div>
-            <div class="detail-content">
-              <span class="detail-label">País</span>
-              <span class="detail-value">{{ adventurer.country }}</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
