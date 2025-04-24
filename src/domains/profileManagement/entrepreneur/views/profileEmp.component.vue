@@ -1,59 +1,85 @@
 <script>
-import {Entrepreneur} from "@/domains/profileManagement/shared/models/Entrepreneur.entity.js";
-import {Profile} from "@/domains/profileManagement/shared/services/profile-api.service.js";
-import {AuthenticationService} from "@/domains/IAM/services/authentication.service.js";
+import { Entrepreneur } from "@/domains/profileManagement/shared/models/Entrepreneur.entity.js";
+import { Profile } from "@/domains/profileManagement/shared/services/profile-api.service.js";
 
 export default {
   name: "EntrepreneurProfile",
   data() {
     return {
       entrepreneur: new Entrepreneur(),
-      username: '',
       loading: false,
       error: null,
+      isNewProfile: true,
       debugInfo: null
     }
   },
-  created() {
-    this.fetchEntrepreneurProfile();
-    this.getUsername();
+  async created() {
+    await this.fetchEntrepreneurProfile();
   },
   methods: {
-
     async fetchEntrepreneurProfile() {
       try {
         this.loading = true;
         const profileService = new Profile();
-        const response = await profileService.getProfileEntrepreneur();
+        const userId = localStorage.getItem("userId");
 
-        console.log("API Response:", response);
-        this.debugInfo = response;
+        const response = await profileService.getEntrepreneurProfileByUserId(userId);
 
-        if (response && response.data && response.data.length > 0) {
-          const data = response.data[0];
+        if (response && response.data) {
+          const data = response.data;
+
+          // Extraer componentes de la dirección si es necesario
+          const [street, numberAndCity] = data.streetAddress ? data.streetAddress.split(', ') : ['', ''];
+          const [number, city] = numberAndCity ? numberAndCity.split(' ') : ['', ''];
+
           this.entrepreneur = new Entrepreneur(
               data.id,
               data.userId,
-              data.name || '',
-              data.city || '',
-              data.country || '',
-              data.number || '',
-              data.postalCode || '',
-              data.streetAddress || '',
-              data.emailAddress || ''
+              data.name,
+              city || data.city,
+              data.country,
+              number || data.number,
+              data.postalCode,
+              street || data.street,
+              data.streetAddress,
+              data.emailAddress
           );
 
-          if (data.username) {
-            this.username = data.username;
-          } else if (data.emailAddress) {
-            this.username = data.emailAddress.split('@')[0];
-          }
+          this.isNewProfile = false;
         } else {
-          this.error = 'No data received from API';
+          this.isNewProfile = true;
         }
       } catch (err) {
-        this.error = `Failed to load entrepreneur profile: ${err.message}`;
-        console.error("API Error:", err);
+        // Si ocurre un error por no encontrar el perfil (404), asumimos que es nuevo
+        this.isNewProfile = true;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async createProfile() {
+      if (!this.isNewProfile) {
+        this.error = "Ya tienes un perfil creado.";
+        return;
+      }
+
+      try {
+        this.loading = true;
+        const profileService = new Profile();
+
+        const profileData = {
+          nameEntrepreneurship: this.entrepreneur.nameEntrepreneurship,
+          addressCity: this.entrepreneur.city,
+          addressCountry: this.entrepreneur.country,
+          addressNumber: this.entrepreneur.number,
+          addressPostalCode: this.entrepreneur.postalCode,
+          addressStreet: this.entrepreneur.street,
+          emailAddress: this.entrepreneur.emailAddress
+        };
+
+        await profileService.createEntrepreneurProfile(profileData);
+        await this.fetchEntrepreneurProfile(); // actualizar vista con datos reales
+      } catch (err) {
+        this.error = `Error al crear perfil: ${err.message}`;
       } finally {
         this.loading = false;
       }
@@ -64,18 +90,29 @@ export default {
 
 <template>
   <div class="entrepreneur-profile">
-    <div v-if="loading">Loading profile...</div>
+    <div v-if="loading">Cargando perfil...</div>
     <div v-else-if="error" class="error">{{ error }}</div>
-    <div v-else-if="!entrepreneur.id" class="error">No profile data found. Please create a profile first.</div>
+
+    <div v-else-if="isNewProfile">
+      <h2>Crear perfil de Emprendedor</h2>
+      <form @submit.prevent="createProfile">
+        <input v-model="entrepreneur.nameEntrepreneurship" placeholder="Nombre del emprendimiento" required />
+        <input v-model="entrepreneur.emailAddress" placeholder="Correo electrónico" type="email" required />
+        <input v-model="entrepreneur.street" placeholder="Calle" required />
+        <input v-model="entrepreneur.number" placeholder="Número" required />
+        <input v-model="entrepreneur.city" placeholder="Ciudad" required />
+        <input v-model="entrepreneur.postalCode" placeholder="Código Postal" required />
+        <input v-model="entrepreneur.country" placeholder="País" required />
+        <button type="submit">Guardar Perfil</button>
+      </form>
+    </div>
+
     <div v-else class="profile-container">
-      <h2>Perfil emprendedor</h2>
+      <h2>Perfil Emprendedor</h2>
       <div class="profile-details">
-        <p><strong>Nombre del local:</strong> {{ entrepreneur.name }}</p>
+        <p><strong>Emprendimiento:</strong> {{ entrepreneur.nameEntrepreneurship }}</p>
         <p><strong>Correo:</strong> {{ entrepreneur.emailAddress }}</p>
         <p><strong>Dirección:</strong> {{ entrepreneur.streetAddress }}</p>
-        <p><strong>Ciudad:</strong> {{ entrepreneur.city }}</p>
-        <p><strong>País:</strong> {{ entrepreneur.country }}</p>
-        <p><strong>Código postal:</strong> {{ entrepreneur.postalCode }}</p>
       </div>
     </div>
   </div>
@@ -88,6 +125,31 @@ export default {
   padding: 20px;
 }
 
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+input, select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
 .profile-container {
   background-color: #f9f9f9;
   border-radius: 8px;
@@ -95,38 +157,10 @@ export default {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.profile-details {
-  margin-top: 20px;
-}
-
-h2 {
-  color: #333;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-h3 {
-  margin-top: 20px;
-  color: #555;
-}
-
 .error {
   color: #e74c3c;
+  background-color: #fdd;
   padding: 10px;
-  background-color: #fadbd8;
   border-radius: 4px;
-}
-
-.debug-info {
-  margin-top: 30px;
-  padding: 15px;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  overflow: auto;
-}
-
-.debug-info pre {
-  white-space: pre-wrap;
 }
 </style>

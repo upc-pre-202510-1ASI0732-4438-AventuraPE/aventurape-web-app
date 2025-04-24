@@ -26,6 +26,6 @@ export class Adventurer {
         this.city = city;
         this.postalCode = postalCode;
         this.country = country;
-        this.streetAddress = streetAddress || street;
+        this.streetAddress = streetAddress || `${street} ${number}, ${city}`.trim();
     }
 }

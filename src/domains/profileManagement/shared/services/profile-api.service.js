@@ -2,35 +2,51 @@ import http from "@/shared/services/http-common.js";
 
 export class Profile {
 
-    //ENTREPRENEUR
-
-    getProfileEntrepreneur() {
+    // ENTREPRENEUR METHODS
+    getEntrepreneurProfiles() {
         return http.get('/profiles/entrepreneur');
     }
-    getProfileEntrepreneurByProfileId(profileId) {
+
+    getEntrepreneurProfileById(profileId) {
         return http.get(`/profiles/entrepreneur/${profileId}`);
     }
-    getProfileEntrepreneurByUserId(userId) {
+
+    getEntrepreneurProfileByUserId(userId) {
         return http.get(`/profiles/entrepreneur/user/${userId}`);
     }
-    postProfileEntrepreneur(userId, profileData) {
-        return http.post(`/profiles/entrepreneur/${userId}`, profileData);
+
+    createEntrepreneurProfile(data) {
+        return http.post('/profiles/entrepreneur', data);
     }
 
     //ADVENTURER
 
-    getProfileAdventurer() {
+    // ADVENTURER METHODS
+    getAdventurerProfiles() {
         return http.get('/profiles/adventurer');
     }
-    getProfileAdventurerByProfileId(profileId) {
+
+    getAdventurerProfileById(profileId) {
         return http.get(`/profiles/adventurer/${profileId}`);
     }
-    getProfileAdventurerByUserId(userId) {
-        return http.get(`/profiles/adventurer/user/${userId}`);
-    }
-    postProfileAdventurer(userId, profileData) {
-        return http.post(`/profiles/adventurer/${userId}`, profileData);
+
+    getEntrepreneurProfiles() {
+        return http.get('/profiles/entrepreneur');
     }
 
+    // Obtener perfil de aventurero por ID de usuario
+    getAdventurerProfileByUserId(userId) {
+        return http.get(`/profiles/adventurer/user/${userId}`);
+    }
+
+    // Crear perfil
+    createAdventurerProfile(data) {
+        return http.post('/profiles/adventurer', data);
+    }
+
+    /*// Actualizar perfil
+    updateAdventurerProfile(profileId, data) {
+        return http.put(`/profiles/adventurer/${profileId}`, data);
+    }*/
 
 }
