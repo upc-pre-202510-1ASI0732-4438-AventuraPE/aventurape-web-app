@@ -30,4 +30,19 @@ export class ActivityApiService {
     async getUserById(userId) {
         return http.get(`/users/${userId}`);
     }
+
+    // Obtener todas las publicaciones de un emprendedor
+    async getAllActivitiesByEntrepreneurId(id) {
+        return http.get(`/publication/${id}/publications`);
+    }
+    async postPublication(publication) {
+        return http.post('/publication/create-publication', publication);
+    }
+    async deletePublication(id) {
+        return http.delete(`/publication/${id}/delete-publication`);
+    }
+    async updatePublication(id, publication) {
+        return http.put(`/publication/${id}/update-publication`, publication);
+    }
+
 }

@@ -15,7 +15,6 @@ export default {
       return date.toLocaleDateString('es-ES', options);
     },
     getRandomColor(name) {
-      // Genera un color basado en el nombre del usuario para avatares sin imagen
       const colors = [
         '#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE',
         '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE'
