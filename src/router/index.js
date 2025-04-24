@@ -42,8 +42,8 @@ const routes = [
   },
   ...adventurerRoutes,
   ...entrepreneurRoutes
-
 ];
+
 
 const router = createRouter({
   history: createWebHistory(),
