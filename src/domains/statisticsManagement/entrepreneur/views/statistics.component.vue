@@ -16,7 +16,8 @@ export default {
       publications: [],
       entrepreneurId: null,
       loading: false,
-      error: null
+      error: null,
+      currentSort: 'rating'
     }
   },
   created() {
@@ -27,8 +28,6 @@ export default {
       try {
         this.loading = true;
         const authService = new AuthenticationService();
-
-        // Get userId from cookies or localStorage
         const userId = localStorage.getItem("userId") || Cookies.get("userId");
 
         if (!userId) {
@@ -38,7 +37,6 @@ export default {
         }
 
         const response = await authService.getUserById(userId);
-
         if (!response || !response.data || !response.data.id) {
           this.error = 'No se pudo obtener la información del usuario.';
           this.loading = false;
@@ -64,23 +62,48 @@ export default {
         this.loading = true;
         const entrepreneurStadisticsApiService = new EntrepreneurStadisticsApiService();
         const response = await entrepreneurStadisticsApiService.getAllActivitiesOrderByRatingByEntrepreneurId(this.entrepreneurId);
-
-
+        let publications = [];
         if (response && response.data && Array.isArray(response.data)) {
-          this.publications = response.data;
+          publications = response.data;
         } else if (response && response.data && !Array.isArray(response.data)) {
-          this.publications = [response.data];
+          publications = [response.data];
         } else if (response && Array.isArray(response)) {
-          this.publications = response;
-        } else {
-          this.publications = [];
+          publications = response;
         }
+
+        if (publications.length > 0) {
+          const commentPromises = publications.map(pub => {
+            return entrepreneurStadisticsApiService.getCommentsCountForPublication(pub.id || pub.Id)
+                .then(commentsResponse => {
+                  const comments = commentsResponse.data || [];
+                  pub.commentsCount = Array.isArray(comments) ? comments.length : 0;
+                  return pub;
+                })
+                .catch(err => {
+                  console.error(`Error fetching comments for publication ${pub.id || pub.Id}:`, err);
+                  pub.commentsCount = 0;
+                  return pub;
+                });
+          });
+
+          await Promise.all(commentPromises);
+          if (this.currentSort === 'comments') {
+            publications.sort((a, b) => b.commentsCount - a.commentsCount);
+          }
+        }
+
+        this.publications = publications;
       } catch (err) {
         this.error = `Error al cargar publicaciones: ${err.message}`;
         console.error("Error fetching publications:", err);
       } finally {
         this.loading = false;
       }
+    },
+
+    handleSortChange(sortOption) {
+      this.currentSort = sortOption;
+      this.fetchPublications();
     }
   }
 }
@@ -101,6 +124,7 @@ export default {
     <PublicationCard
         :publications="publications"
         :loading="loading"
+        @sort-changed="handleSortChange"
     />
 
   </div>

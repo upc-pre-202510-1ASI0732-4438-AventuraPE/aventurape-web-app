@@ -17,6 +17,7 @@ export default {
     return {
       publications: [],
       entrepreneurId: null,
+      userName: "",
       loading: false,
       error: null,
       showFormModal: false,
@@ -34,7 +35,6 @@ export default {
         this.loading = true;
         const authService = new AuthenticationService();
 
-        // Get userId from cookies or localStorage
         const userId = localStorage.getItem("userId") || Cookies.get("userId");
 
         if (!userId) {
@@ -52,6 +52,8 @@ export default {
         }
 
         this.entrepreneurId = response.data.id;
+        this.userName = response.data.username || "Emprendedor";
+        console.log("Setting userName to:", this.userName);
         this.fetchPublications();
       } catch (err) {
         this.error = `Error al cargar información de usuario: ${err.message}`;
@@ -114,13 +116,11 @@ export default {
         const activityService = new ActivityApiService();
 
         if (this.editingPublication) {
-          // Update existing publication
           await activityService.updatePublication(
               this.editingPublication.id || this.editingPublication.Id,
               publicationData
           );
         } else {
-          // Create new publication
           const publication = {
             ...publicationData,
             entrepreneurId: this.entrepreneurId
@@ -128,7 +128,6 @@ export default {
           await activityService.postPublication(publication);
         }
 
-        // Close modal and refresh publications
         this.closeFormModal();
         this.fetchPublications();
       } catch (err) {
@@ -159,7 +158,7 @@ export default {
 <template>
   <div class="home-container">
     <div class="hero-section">
-      <h1 class="page-title">Bienvenido Emprendedor</h1>
+      <h1 class="page-title">Bienvenido {{ userName }}</h1>
       <p class="subtitle">Gestiona y promociona tus actividades</p>
     </div>
 

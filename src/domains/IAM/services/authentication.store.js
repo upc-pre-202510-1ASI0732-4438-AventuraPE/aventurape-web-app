@@ -6,27 +6,37 @@ export const useAuthenticationStore = defineStore("authentication", {
     state: () => ({
         isSignedIn: !!Cookies.get("token"),
         username: Cookies.get("username") || "",
-        roles: [], // Se vacía inicialmente, los roles se obtendrán dinámicamente
-        userId: null, // Almacena el userId
+        roles: [],
+        userId: null,
     }),
 
     actions: {
+        // In authentication.store.js
         async signUp(signUpRequest, router, toast) {
-            const authService = new AuthenticationService();
-
             try {
-                const response = await authService.signUp(signUpRequest);
-
-                toast.add({
-                    severity: "success",
-                    summary: "Éxito",
-                    detail: "Te has registrado correctamente. Ahora puedes iniciar sesión.",
-                    life: 3000,
+                const response = await this.authenticationService.signUp(signUpRequest, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
 
-                router.push({ name: "sign-in" });
+                if (response.status === 201 || response.status === 200) {
+                    toast.add({
+                        severity: 'success',
+                        summary: 'Registro exitoso',
+                        detail: '¡Te has registrado correctamente!',
+                        life: 3000
+                    });
+                    router.push('/sign-in');
+                }
             } catch (error) {
                 console.error("Error en el registro:", error);
+                toast.add({
+                    severity: 'error',
+                    summary: 'Error de registro',
+                    detail: error.response?.data?.message || 'Error al registrarse. Inténtalo de nuevo.',
+                    life: 5000
+                });
                 throw error;
             }
         },

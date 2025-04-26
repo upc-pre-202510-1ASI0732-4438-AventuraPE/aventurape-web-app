@@ -47,7 +47,7 @@ export default {
       <div v-for="pub in publications" :key="pub.id || pub.Id" class="publication-card">
         <div class="image-container">
           <img :src="pub.image" alt="Activity image" class="activity-image">
-          <div class="price-badge">${{ pub.cost }}</div>
+          <div class="price-badge">s/. {{ pub.cost }}</div>
         </div>
         <div class="card-content">
           <h3 class="card-title">{{ pub.nameActivity }}</h3>
@@ -77,7 +77,6 @@ export default {
 </template>
 
 <style scoped>
-/* Include relevant styles from the original component */
 .content {
   background-color: var(--white);
   padding: 30px;
@@ -256,7 +255,7 @@ export default {
   position: absolute;
   bottom: 15px;
   right: 15px;
-  background-color: var(--primary-color);
+  background-color: var(--primary-light);
   color: var(--white);
   padding: 8px 12px;
   border-radius: 30px;

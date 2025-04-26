@@ -16,13 +16,31 @@
           number: false,
           postalCode: false
         },
-        debugInfo: null
+        debugInfo: null,
+        userName: ""
       }
     },
     async created() {
       await this.fetchEntrepreneurProfile();
+      await this.fetchUserData(); // This line is now correct
     },
     methods: {
+      async fetchUserData() {
+        try {
+          const userId = localStorage.getItem("userId");
+          if (!userId) return;
+
+          const profileService = new Profile();
+          const response = await profileService.getUserById(userId);
+
+          if (response && response.data) {
+            this.userName = response.data.username || "Usuario";
+          }
+        } catch (err) {
+          console.error("Error fetching user data:", err);
+          this.userName = "Usuario"; // Fallback name
+        }
+      },
       async fetchEntrepreneurProfile() {
         try {
           this.loading = true;
@@ -198,9 +216,8 @@
     </div>
 
     <div v-else-if="isNewProfile" class="form-container">
-      <h2 class="form-title">
-        <i class="fa-solid fa-user-plus form-icon"></i>
-        Crear perfil de Emprendedor
+      <h2 class="profile-title">
+        <i class="fa-solid fa-user-tie"></i> Perfil de {{ userName }}
       </h2>
       <form @submit.prevent="createProfile">
         <div class="form-group">
@@ -314,7 +331,7 @@
 
     <div v-else class="profile-container">
       <h2 class="profile-title">
-        <i class="fa-solid fa-user-tie"></i> Perfil Emprendedor
+        <i class="fa-solid fa-user-tie"></i> Perfil de {{userName}}
       </h2>
       <div class="profile-card">
         <div class="profile-header">
@@ -366,7 +383,6 @@
   max-width: 800px;
   margin: 2rem auto;
   padding: 2rem;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333;
   background-color: #faf6f2;
   border-radius: 12px;

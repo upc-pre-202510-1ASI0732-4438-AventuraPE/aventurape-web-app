@@ -5,4 +5,7 @@ export class EntrepreneurStadisticsApiService {
     async getAllActivitiesOrderByRatingByEntrepreneurId(id) {
         return http.get(`/publication/order-by-rating/${id}`);
     }
+    async getCommentsCountForPublication(id) {
+        return http.get(`/publication/${id}/comments`);
+    }
 }

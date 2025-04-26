@@ -48,5 +48,8 @@ export class Profile {
     updateAdventurerProfile(profileId, data) {
         return http.put(`/profiles/adventurer/${profileId}`, data);
     }*/
+    getUserById(userId) {
+        return http.get(`/users/${userId}`);
+    }
 
 }

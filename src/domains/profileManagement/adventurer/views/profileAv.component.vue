@@ -19,13 +19,31 @@ export default {
         postalCode: false,
         number: false
       },
-      debugInfo: null
+      debugInfo: null,
+      userName: ""
     }
   },
   async created() {
+    await this.fetchUserData();
     await this.fetchAdventurerProfile();
   },
   methods: {
+    async fetchUserData() {
+      try {
+        const userId = localStorage.getItem("userId");
+        if (!userId) return;
+
+        const profileService = new Profile();
+        const response = await profileService.getUserById(userId);
+
+        if (response && response.data) {
+          this.userName = response.data.username || "Usuario";
+        }
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        this.userName = "Usuario";
+      }
+    },
     async fetchAdventurerProfile() {
       try {
         this.loading = true;
@@ -36,11 +54,7 @@ export default {
 
         if (response && response.data) {
           const data = response.data;
-
-          // Extraer firstName y lastName de fullName si es necesario
           const [firstName, lastName] = data.fullName ? data.fullName.split(' ') : ['', ''];
-
-          // Extraer componentes de la dirección si es necesario
           const [street, numberAndCity] = data.streetAddress ? data.streetAddress.split(', ') : ['', ''];
           const [number, city] = numberAndCity ? numberAndCity.split(' ') : ['', ''];
 
@@ -156,7 +170,7 @@ export default {
     <div v-else-if="isNewProfile" class="form-container">
       <h2 class="form-title">
         <i class="fa-solid fa-user-plus form-icon"></i>
-        Crear perfil de Aventurero
+         {{ userName }}! Crea tu perfil
       </h2>
       <form @submit.prevent="createProfile">
         <div class="form-row">
@@ -262,7 +276,7 @@ export default {
 
     <div v-else class="profile-container">
       <h2 class="profile-title">
-        <i class="fa-solid fa-user-check"></i> Perfil Aventurero
+        <i class="fa-solid fa-user-check"></i> Perfil de {{ userName }}
       </h2>
 
       <div class="profile-card">

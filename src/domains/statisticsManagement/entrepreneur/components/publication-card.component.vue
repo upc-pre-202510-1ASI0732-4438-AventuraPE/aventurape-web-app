@@ -9,18 +9,16 @@ export default {
     loading: {
       type: Boolean,
       default: false
-    },
-    methods: {
-      sortPublications() {
-        if (this.selectedSort === 'rating') {
-          this.publications.sort((a, b) => b.averageRating - a.averageRating);
-        }
-      },
-      data() {
-        return {
-          selectedSort: 'rating',
-        };
-      }
+    }
+  },
+  data() {
+    return {
+      selectedSort: 'rating'
+    };
+  },
+  methods: {
+    sortPublications() {
+      this.$emit('sort-changed', this.selectedSort);
     }
   }
 }
@@ -34,9 +32,7 @@ export default {
         <label for="sortSelect">Ordenar por:</label>
         <select id="sortSelect" v-model="selectedSort" @change="sortPublications">
           <option value="rating">Mejor puntuados</option>
-          <!-- añadir si es que se añade otro endpoint -->
-          <!-- <option value="costLow">Costo: menor a mayor</option> -->
-          <!-- <option value="costHigh">Costo: mayor a menor</option> -->
+          <option value="comments">Más comentados</option>
         </select>
       </div>
 
@@ -70,10 +66,15 @@ export default {
             </div>
             <div class="detail-item">
               <i class="fas fa-users detail-icon"></i>
-              <span>{{ pub.cantPeople }} personas</span>
+              <span>{{ pub.cantPeople }} </span>
             </div>
             <div class="rating-badge">
-              <i class="fas fa-star" style="color: gold; margin-right: 4px;"></i>{{ pub.averageRating }}
+              <i class="fas fa-star" style="color: gold; margin-right: 4px;"></i>
+              {{ Number(pub.averageRating).toFixed(2) }}
+            </div>
+            <div class="comments-badge" v-if="pub.commentsCount !== undefined">
+              <i class="fas fa-comment" style="color: var(--primary-color); margin-right: 4px;"></i>
+              {{ pub.commentsCount }}
             </div>
           </div>
         </div>
@@ -248,18 +249,24 @@ export default {
 }
 
 .sort-dropdown select {
-  background-color: var(--primary-lighter);
-  border: 1px solid #ccc;
   border-radius: 6px;
   padding: 6px 12px;
   font-size: 14px;
   cursor: pointer;
 }
-
-.publication-count {
-  padding: 5px 12px;
-  border-radius: 20px;
+.rating-badge, .comments-badge {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.rating-badge {
+  color: #333;
+}
+
+.comments-badge {
+  color: var(--text-dark);
 }
 </style>

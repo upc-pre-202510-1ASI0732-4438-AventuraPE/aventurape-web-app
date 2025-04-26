@@ -1,6 +1,9 @@
 <template>
   <div class="subscription-dashboard">
-    <h1 class="dashboard-title">Mi Suscripción</h1>
+    <div class="hero-section">
+      <h1 class="page-title">Mi subscripción</h1>
+      <p class="subtitle">Visualiza información sobre tu subscripción</p>
+    </div>
 
     <!-- Estado de carga -->
     <div v-if="loading" class="loading-state">
@@ -373,21 +376,33 @@ export default {
 </script>
 
 <style scoped>
+
 .subscription-dashboard {
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 20px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.dashboard-title {
-  color: #765532;
-  font-size: 32px;
-  margin-bottom: 40px;
+.hero-section {
   text-align: center;
+  margin-bottom: 40px;
+  padding: 40px 20px;
+  background-color: var(--primary-lighter);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.page-title {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 32px;
   font-weight: 700;
 }
 
+.subtitle {
+  color: var(--text-light);
+  font-size: 18px;
+}
 .loading-state {
   display: flex;
   flex-direction: column;
