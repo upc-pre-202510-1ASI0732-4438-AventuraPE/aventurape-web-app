@@ -11,31 +11,74 @@ export const useAuthenticationStore = defineStore("authentication", {
     }),
 
     actions: {
-        // In authentication.store.js
-        async signUp(signUpRequest, router, toast) {
-            try {
-                const response = await this.authenticationService.signUp(signUpRequest, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
+        async onSignUp() {
+            this.submitted = true;
+            this.errorMessage = "";
 
-                if (response.status === 201 || response.status === 200) {
-                    toast.add({
-                        severity: 'success',
-                        summary: 'Registro exitoso',
-                        detail: '¡Te has registrado correctamente!',
-                        life: 3000
-                    });
-                    router.push('/sign-in');
-                }
+            // Enhanced validation
+            if (!this.username || !this.password || !this.confirmPassword || !this.role) {
+                this.errorMessage = "Todos los campos son obligatorios.";
+                return;
+            }
+
+            if (!this.recaptchaVerified) {
+                this.errorMessage = "Por favor, verifique que no es un robot.";
+                this.$toast.add({
+                    severity: "error",
+                    summary: "Error",
+                    detail: "Por favor, verifique que no es un robot",
+                    life: 3000,
+                });
+                return;
+            }
+
+            // Check if password meets minimum requirements
+            if (this.passwordStrength < 60) {
+                this.errorMessage = "La contraseña no cumple con los requisitos mínimos de seguridad.";
+                return;
+            }
+
+            if (this.password !== this.confirmPassword) {
+                this.errorMessage = "Las contraseñas no coinciden.";
+                return;
+            }
+
+            // Crear solicitud de registro con recaptchaToken
+            const signUpRequest = new SignUpRequest(this.username, this.password, [this.role], this.recaptchaToken);
+
+            // Acceder al store
+            const authenticationStore = useAuthenticationStore();
+
+            try {
+                await authenticationStore.signUp(signUpRequest, this.$router, this.$toast);
             } catch (error) {
                 console.error("Error en el registro:", error);
+                this.errorMessage =
+                    error.response?.data?.message || "Error al registrarse. Inténtalo de nuevo.";
+            }
+        },
+
+        async signUp(signUpRequest, router, toast) {
+            const authService = new AuthenticationService();
+
+            try {
+                const response = await authService.signUp(signUpRequest);
+
                 toast.add({
-                    severity: 'error',
-                    summary: 'Error de registro',
-                    detail: error.response?.data?.message || 'Error al registrarse. Inténtalo de nuevo.',
-                    life: 5000
+                    severity: "success",
+                    summary: "Éxito",
+                    detail: "Te has registrado correctamente. Por favor inicia sesión.",
+                    life: 3000,
+                });
+
+                router.push({ name: "sign-in" });
+            } catch (error) {
+                console.error('Sign up error', error);
+                toast.add({
+                    severity: "error",
+                    summary: "Error",
+                    detail: error.response?.data?.message || "Error al registrarse. Inténtalo de nuevo.",
+                    life: 3000,
                 });
                 throw error;
             }
@@ -75,13 +118,8 @@ export const useAuthenticationStore = defineStore("authentication", {
 
                 this.redirectBasedOnRole(router);
             } catch (error) {
-                console.error("Sign in error", error);
-                toast.add({
-                    severity: "error",
-                    summary: "Error",
-                    detail: error.response?.data?.message || "Error al iniciar sesión",
-                    life: 3000,
-                });
+                console.error('Sign in error', error);
+                throw error;
             }
         },
 

@@ -1,6 +1,6 @@
 <script>
-import {useAuthenticationStore} from "../services/authentication.store.js";
-import {SignInRequest} from "../model/sign-in.request.js";
+import { useAuthenticationStore } from "../services/authentication.store.js";
+import { SignInRequest } from "../model/sign-in.request.js";
 
 export default {
   name: "sign-in",
@@ -8,16 +8,40 @@ export default {
     return {
       username: "",
       password: "",
-      submitted: false
+      submitted: false,
+      recaptchaVerified: false,
+      recaptchaToken: ""
+    };
+  },
+  mounted() {
+    const recaptchaScript = document.createElement('script');
+    recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js');
+    document.head.appendChild(recaptchaScript);
+
+    window.onRecaptchaVerify = (token) => {
+      this.recaptchaVerified = true;
+      this.recaptchaToken = token;
+    };
+
+    window.onRecaptchaExpired = () => {
+      this.recaptchaVerified = false;
+      this.recaptchaToken = "";
     };
   },
   methods: {
     onSignIn() {
       this.submitted = true;
-      if (this.username && this.password) {
+      if (this.username && this.password && this.recaptchaVerified) {
         let authenticationStore = useAuthenticationStore();
-        let signInRequest = new SignInRequest(this.username, this.password);
+        let signInRequest = new SignInRequest(this.username, this.password, this.recaptchaToken);
         authenticationStore.signIn(signInRequest, this.$router, this.$toast);
+      } else if (!this.recaptchaVerified) {
+        this.$toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Por favor, verifique que no es un robot",
+          life: 3000,
+        });
       }
     }
   }
@@ -45,6 +69,15 @@ export default {
             <label for="password">Contraseña</label>
           </div>
           <small v-if="submitted && !password" class="p-invalid">Contraseña es requerida</small>
+        </div>
+        <div class="recaptcha-container">
+          <div
+              class="g-recaptcha"
+              data-sitekey="6LfQ4CUrAAAAALzMwFCAy740fAgfLqh0OgiIK51-"
+              data-callback="onRecaptchaVerify"
+              data-expired-callback="onRecaptchaExpired">
+          </div>
+          <small v-if="submitted && !recaptchaVerified" class="p-invalid">Por favor verifique que no es un robot</small>
         </div>
         <div class="registration-question">
           <router-link style="text-decoration: none !important;" :to="{ path: '/sign-up' }">
@@ -82,7 +115,14 @@ export default {
   max-width: 150px;
   margin-bottom: 1rem;
 }
-
+.recaptcha-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  flex-direction: column;
+  align-items: center;
+}
 .title {
   color: #765532;
   font-size: 1.8rem;
@@ -133,7 +173,13 @@ export default {
   text-align: center;
   margin: 1.5rem 0;
 }
-
+.recaptcha-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  flex-direction: column;
+  align-items: center;
+}
 .text-registro {
   color: #666;
 }

@@ -14,20 +14,44 @@ export default {
       submitted: false,
       errorMessage: "",
       roles: ref([
-        { name: "Adventurous", code: "ROLE_ADVENTUROUS" },
-        { name: "Entrepreneur", code: "ROLE_ENTREPRENEUR" },
+        {name: "Adventurous", code: "ROLE_ADVENTUROUS"},
+        {name: "Entrepreneur", code: "ROLE_ENTREPRENEUR"},
       ]),
       passwordStrength: 0,
       passwordFeedback: "",
       passwordVisible: false,
       confirmPasswordVisible: false,
+      proofingEntrepreneure: null,
       passwordRequirements: [
-        { label: "Al menos 8 caracteres", met: false },
-        { label: "Al menos una letra mayúscula", met: false },
-        { label: "Al menos una letra minúscula", met: false },
-        { label: "Al menos un número", met: false },
-        { label: "Al menos un carácter especial", met: false }
+        {label: "Al menos 8 caracteres", met: false},
+        {label: "Al menos una letra mayúscula", met: false},
+        {label: "Al menos una letra minúscula", met: false},
+        {label: "Al menos un número", met: false},
+        {label: "Al menos un carácter especial", met: false}
       ],
+      recaptchaVerified: false,
+      recaptchaToken: ""
+    };
+  },
+  mounted() {
+    // Load reCAPTCHA script if not already loaded
+    if (!document.querySelector('script[src="https://www.google.com/recaptcha/api.js"]')) {
+      const recaptchaScript = document.createElement('script');
+      recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js');
+      document.head.appendChild(recaptchaScript);
+    }
+
+    // Define callback functions in window scope
+    window.onRecaptchaVerify = (token) => {
+      this.recaptchaVerified = true;
+      this.recaptchaToken = token;
+      console.log("reCAPTCHA verified:", token);
+    };
+
+    window.onRecaptchaExpired = () => {
+      this.recaptchaVerified = false;
+      this.recaptchaToken = "";
+      console.log("reCAPTCHA expired");
     };
   },
   methods: {
@@ -89,10 +113,23 @@ export default {
 
     async onSignUp() {
       this.submitted = true;
+      this.errorMessage = "";
 
       // Enhanced validation
       if (!this.username || !this.password || !this.confirmPassword || !this.role) {
         this.errorMessage = "Todos los campos son obligatorios.";
+        return;
+      }
+
+      // Add check for reCAPTCHA
+      if (!this.recaptchaVerified) {
+        this.errorMessage = "Por favor, verifique que no es un robot.";
+        this.$toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Por favor, verifique que no es un robot",
+          life: 3000,
+        });
         return;
       }
 
@@ -108,7 +145,12 @@ export default {
       }
 
       // Crear solicitud de registro
-      const signUpRequest = new SignUpRequest(this.username, this.password, [this.role]);
+      const signUpRequest = new SignUpRequest(
+          this.username,
+          this.password,
+          [this.role],
+          this.recaptchaToken
+      );
 
       // Acceder al store
       const authenticationStore = useAuthenticationStore();
@@ -120,9 +162,9 @@ export default {
         this.errorMessage =
             error.response?.data?.message || "Error al registrarse. Inténtalo de nuevo.";
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <template>
@@ -226,6 +268,18 @@ export default {
             <label for="role">Tipo de Cuenta</label>
           </div>
           <small v-if="submitted && !role" class="p-invalid">El tipo de cuenta es obligatorio.</small>
+        </div>
+        <div class="recaptcha-container">
+          <div
+              id="recaptcha-container"
+              class="g-recaptcha"
+              data-sitekey="6LfQ4CUrAAAAALzMwFCAy740fAgfLqh0OgiIK51-"
+              data-callback="onRecaptchaVerify"
+              data-expired-callback="onRecaptchaExpired">
+          </div>
+          <small v-if="submitted && !recaptchaVerified" class="p-invalid">
+            Por favor verifique que no es un robot
+          </small>
         </div>
         <div class="registration-question">
           <router-link to="/sign-in" class="register-link">
@@ -360,7 +414,14 @@ export default {
 .requirement-met i {
   color: #4caf50;
 }
-
+.recaptcha-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  flex-direction: column;
+  align-items: center;
+}
 :deep(.p-inputtext) {
   width: 100%;
   padding: 0.75rem;
