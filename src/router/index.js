@@ -4,6 +4,9 @@ import Cookies from 'js-cookie';
 import adventurerRoutes from './adventurerRoutes.js';
 import HomeAdventurer from '@/domains/postManagement/adventurer/views/home-adventurer.component.vue';
 import entrepreneurRoutes from "@/router/entrepreneurRoutes.js";
+import HomeAdmin from "@/domains/ADMIN/views/homeAdmin.vue";
+import signInAdminComponent from "@/domains/IAM/pages/sign-in-admin.component.vue";
+import singUpAdminComponent from "@/domains/IAM/pages/sing-up-admin.component.vue";
 const routes = [
   {
     path: '/',
@@ -40,6 +43,24 @@ const routes = [
     component: () => import('@/domains/postManagement/entrepreneur/views/homeEntrepreneur.vue'),
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
   },
+  {
+    path: '/admin-home',
+    name: 'admin-home',
+    component: HomeAdmin,
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADMIN'] }
+  },
+  {
+    path: '/sign-in-admin',
+    name: 'sign-in-admin',
+    component: signInAdminComponent,
+    meta: { requiresAuth: false }
+  },
+  {
+    path: '/sign-up-admin',
+    name: 'sign-up-admin',
+    component: singUpAdminComponent,
+    meta: { requiresAuth: false }
+  },
   ...adventurerRoutes,
   ...entrepreneurRoutes
 ];
@@ -74,6 +95,8 @@ router.beforeEach(async (to, from, next) => {
         return next({ name: 'entrepreneur-home' });
       } else if (roles.includes('ROLE_ADVENTUROUS')) {
         return next({ name: 'adventurous-home' });
+      } else if (roles.includes('ROLE_ADMIN')){
+        return next({ name: 'admin-home' });
       }
     } catch (error) {
       console.error('Error fetching roles:', error);

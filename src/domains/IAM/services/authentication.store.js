@@ -142,7 +142,10 @@ export const useAuthenticationStore = defineStore("authentication", {
                 router.push({ name: "entrepreneur-home" });
             } else if (this.roles.includes("ROLE_ADVENTUROUS")) {
                 router.push({ name: "adventurous-home" });
-            } else {
+            } else if(this.roles.includes("ROLE_ADMIN")){
+                router.push({ name: "admin-home" });
+            }
+            else {
                 router.push({ name: "sign-in" });
             }
         },

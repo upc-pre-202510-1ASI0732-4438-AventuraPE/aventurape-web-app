@@ -10,19 +10,19 @@ export default [
     path: '/adventurer',
     name: 'AdventurerDashboard',
     component:  HomeAdventurer ,
-    meta: { requiresAuth: true, role: 'adventurer' }
+    meta: { requiresAuth: true, role: ['ROLE_ADVENTUROUS', 'ROLE_ADMIN'] }
   },
   {
     path: '/adventurer/profile',
     name: 'AdventurerProfile',
     component: ProfileAvComponent,
-    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS', 'ROLE_ADMIN'] }
   },
   {
     path: '/adventurer/posts/:id',
     name: 'activity-detail',
     component: ActivityDetail,
-    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS', 'ROLE_ADMIN'] }
   },
   // Navigation from HeaderNav
   {
@@ -30,12 +30,12 @@ export default [
     name: 'AdventurerSearch',
     component: ActivityCardList,
     props: true,
-    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS', 'ROLE_ADMIN'] }
   },
 
   {
     path: '/favoritos',
     name: 'AdventurerFavorites',
-    meta: { requiresAuth: true, role: 'adventurer' }
+    meta: { requiresAuth: true, role: ['ROLE_ADVENTUROUS', 'ROLE_ADMIN'] }
   }
 ]

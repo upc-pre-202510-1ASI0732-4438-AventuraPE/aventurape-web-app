@@ -8,7 +8,7 @@ export default [
         path: '/entrepreneur/profile',
         name: 'EntrepreneurProfile',
         component: ProfileEmpComponent,
-        meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
+        meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR', 'ROLE_ADMIN']}
     },
 
     // Statistics Management
@@ -16,7 +16,7 @@ export default [
         path: '/entrepreneur/statistics',
         name: 'EntrepreneurStatistics',
         component:StatisticsComponent,
-        meta: { requiresAuth: true, role: 'entrepreneur' }
+        meta: { requiresAuth: true, role: 'entrepreneur' && ['ROLE_ADMIN']}
     },
 
     // Subscription Management
@@ -24,7 +24,7 @@ export default [
         path: '/entrepreneur/subscriptions',
         name: 'EntrepreneurSubscriptions',
         component:SubscriptionComponent,
-        meta: { requiresAuth: true, role: 'entrepreneur' }
+        meta: { requiresAuth: true, role: 'entrepreneur' && ['ROLE_ADMIN']}
     },
 
 ]
