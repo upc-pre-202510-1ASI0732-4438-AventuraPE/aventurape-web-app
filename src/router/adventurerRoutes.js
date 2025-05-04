@@ -3,6 +3,7 @@ import ProfileAvComponent from "@/domains/profileManagement/adventurer/views/pro
 import ActivityCardList from "@/domains/postManagement/adventurer/views/activity-card-list.component.vue";
 import HomeAdventurer from "@/domains/postManagement/adventurer/views/home-adventurer.component.vue";
 import ActivityDetail from "@/domains/postManagement/adventurer/views/activity-detail.component.vue";
+import FavoritesSection from "@/domains/postManagement/adventurer/views/favorites-section.vue";
 
 export default [
   // Profile Management
@@ -32,10 +33,11 @@ export default [
     props: true,
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   },
-
   {
     path: '/favoritos',
-    name: 'AdventurerFavorites',
-    meta: { requiresAuth: true, role: 'adventurer' }
+    name: 'Favorites',
+    component: FavoritesSection,
+    props: true,
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   }
 ]
