@@ -5,6 +5,7 @@ import EntrepreneurCard from '../components/entrepreneur-card.component.vue';
 import Carousel from 'primevue/carousel';
 import TabMenu from 'primevue/tabmenu';
 import AdventurerCard from "../components/adventurer-card.component.vue";
+import ConfirmationModal from "../components/confirmation-modal.component.vue";
 
 export default {
   name: "homeAdmin",
@@ -12,6 +13,7 @@ export default {
     AdventurerCard,
     ActivityCard,
     EntrepreneurCard,
+    ConfirmationModal,
     Carousel,
     TabMenu
   },
@@ -29,7 +31,10 @@ export default {
       ],
       entrepreneurs: [],
       adventurers:[],
-      activityApiService: new ActivityApiService()
+      activityApiService: new ActivityApiService(),
+      showDeleteModal: false,
+      publicationToDelete: null,
+      error: null,
     };
   },
 
@@ -59,6 +64,35 @@ export default {
         params: { id }
       });
     },
+    openFormModal(publication = null) {
+      this.editingPublication = publication;
+      this.showFormModal = true;
+    },
+
+    openDeleteModal(publication) {
+      this.publicationToDelete = publication;
+      this.showDeleteModal = true;
+    },
+
+    closeDeleteModal() {
+      this.showDeleteModal = false;
+      this.publicationToDelete = null;
+    },
+    async confirmDelete() {
+      try {
+        this.loading = true;
+        const activityService = new ActivityApiService();
+        const id = this.publicationToDelete.id || this.publicationToDelete.Id;
+        await activityService.deletePublication(id);
+        this.closeDeleteModal();
+        await this.fetchActivities();
+      } catch (err) {
+        this.error = `Error al eliminar la publicación: ${err.message}`;
+        console.error("Error deleting publication:", err);
+        this.loading = false;
+      }
+    },
+
     async fetchEntrepreneurs() {
       this.loadingEntrepreneurs = true;
       try {
@@ -73,6 +107,7 @@ export default {
               username: entrepreneur.username,
               avatar: null
             }));
+
 
         this.loadingEntrepreneurs = false;
       } catch (error) {
@@ -146,7 +181,7 @@ export default {
     <main class="main-content">
       <!-- Panel de Aventuras -->
       <div v-if="activeTab === 0" class="tab-content activities-panel">
-        <h2>Aventuras disponibles</h2>
+        <h2>Actividades del Sistema</h2>
 
         <!-- Estado de carga -->
         <div v-if="loading" class="loading-state">
@@ -162,7 +197,10 @@ export default {
 
         <!-- Lista de actividades -->
         <div v-else class="activities-grid">
-          <div v-for="activity in activities" :key="activity.id" class="activity-card-wrapper">
+          <div
+              v-for="activity in activities"
+              :key="activity.id"
+              class="activity-card-wrapper">
             <ActivityCard
                 :id="activity.id"
                 :title="activity.title"
@@ -171,8 +209,16 @@ export default {
                 :description="activity.description"
                 :price="activity.price"
                 :timeDuration="activity.timeDuration"
+                @delete="openDeleteModal"
             />
           </div>
+          <!-- Modal de confirmación -->
+          <ConfirmationModal
+              :show="showDeleteModal"
+              :publication="publicationToDelete"
+              @confirm="confirmDelete"
+              @cancel="closeDeleteModal"
+          />
         </div>
       </div>
 

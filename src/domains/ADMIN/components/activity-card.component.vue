@@ -3,13 +3,48 @@
 export default {
   name: "ActivityCard",
   props: {
-    id: Number,
-    title: String,
-    image: String,
-    people: Number,
-    description: String,
-    price: Number,
-    timeDuration: Number
+    id: {
+      type: [Number],
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String,
+      required: true
+    },
+    people: {
+      type: Number,
+      default: 0
+    },
+    description: {
+      type: String,
+      default: ''
+    },
+    price: {
+      type: Number,
+      default: 0
+    },
+    timeDuration: {
+      type: Number,
+      default: 0
+    }
+  },
+  emits: ['delete'],
+  computed: {
+    publication() {
+      return {
+        id: this.id,
+        nameActivity: this.title,
+        image: this.image,
+        cost: this.price,
+        timeDuration: this.timeDuration,
+        cantPeople: this.people,
+        description: this.description
+      };
+    }
   },
   methods: {
     goToDetail() {
@@ -17,9 +52,13 @@ export default {
         name: 'activity-detail',
         params: { id: this.id }
       });
+    },
+    onDelete() {
+      this.$emit('delete', this.publication);
     }
   }
 };
+
 </script>
 
 <template>
@@ -27,7 +66,9 @@ export default {
     <template #header>
       <img :src="image" :alt="title" />
     </template>
+
     <template #title>{{ title }}</template>
+
     <template #subtitle>
       <div class="card-meta">
         <span class="meta-item">
@@ -38,8 +79,15 @@ export default {
         </span>
       </div>
     </template>
+
     <template #content>
       <p class="card-description">{{ description }}</p>
+      <div class="card-actions">
+        <!-- Para eliminar -->
+        <button class="btn-delete" @click.stop="onDelete">
+          <i class="pi pi-trash"></i> Eliminar
+        </button>
+      </div>
     </template>
   </Card>
 </template>
@@ -117,5 +165,35 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 5px;
+}
+
+/* Alineación del botón a la derecha */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 5px;
+  margin-top: auto;
+}
+/* Estilos para el botón de eliminar */
+.btn-delete {
+  background-color: #fff0f0;
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-delete:hover {
+  background-color: #ffe5e5;
+}
+
+.btn-delete:hover {
+  background-color: #ffe5e5;
 }
 </style>
