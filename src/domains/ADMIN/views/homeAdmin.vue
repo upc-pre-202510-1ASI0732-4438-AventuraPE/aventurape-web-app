@@ -4,10 +4,12 @@ import ActivityCard from '../components/activity-card.component.vue';
 import EntrepreneurCard from '../components/entrepreneur-card.component.vue';
 import Carousel from 'primevue/carousel';
 import TabMenu from 'primevue/tabmenu';
+import AdventurerCard from "../components/adventurer-card.component.vue";
 
 export default {
   name: "homeAdmin",
   components: {
+    AdventurerCard,
     ActivityCard,
     EntrepreneurCard,
     Carousel,
@@ -17,13 +19,16 @@ export default {
     return {
       loading: false,
       loadingEntrepreneurs: false,
+      //aventureros
+      loadingAdventurer: false,
       activities: [],
       activeTab: 0,
       tabs: [
         { label: 'Aventuras', icon: 'pi pi-compass' },
-        { label: 'Emprendedores', icon: 'pi pi-users' }
+        { label: 'Usuarios', icon: 'pi pi-users' }
       ],
       entrepreneurs: [],
+      adventurers:[],
       activityApiService: new ActivityApiService()
     };
   },
@@ -75,6 +80,30 @@ export default {
         this.loadingEntrepreneurs = false;
       }
     },
+
+    ///Aventureros
+
+    async fetchAdventurers() {
+      this.loadingAdventurer = true;
+      try {
+        // Opción alternativa: usar endpoint de usuarios general y filtrar por rol
+        const response = await this.activityApiService.getAllUsers();
+
+        // Filtramos solo los usuarios con rol "ROLE_ADVENTUROUS"
+        this.adventurers = response.data
+            .filter(user => user.roles.includes("ROLE_ADVENTUROUS"))
+            .map(adventurer => ({
+              id: adventurer.id,
+              username: adventurer.username,
+              avatar: null
+            }));
+
+        this.loadingAdventurer = false;
+      } catch (error) {
+        console.error('Error al cargar aventureros:', error);
+        this.loadingAdventurer = false;
+      }
+    },
     async fetchActivities() {
       this.loading = true;
       try {
@@ -101,6 +130,7 @@ export default {
   mounted() {
     this.fetchActivities();
     this.fetchEntrepreneurs();
+    this.fetchAdventurers();
   }
 };
 </script>
@@ -149,7 +179,7 @@ export default {
       <!-- Panel de Emprendedores -->
       <!-- Panel de Emprendedores -->
       <div v-if="activeTab === 1" class="tab-content entrepreneurs-panel">
-        <h2>Emprendedores destacados</h2>
+        <h2>Emprendedores </h2>
 
         <!-- Estado de carga -->
         <div v-if="loadingEntrepreneurs" class="loading-state">
@@ -172,6 +202,35 @@ export default {
             />
           </div>
         </div>
+
+
+        <!-- Panel de Aventureros -->
+        <!-- Panel de Aventureros -->
+        <div v-if="activeTab === 1" class="tab-content entrepreneurs-panel">
+          <h2>Aventureros</h2>
+
+          <!-- Estado de carga -->
+          <div v-if="loadingAdventurer" class="loading-state">
+            <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            <p>Cargando aventureros...</p>
+          </div>
+
+          <!-- Sin resultados -->
+          <div v-else-if="adventurers.length === 0" class="empty-state">
+            <i class="pi pi-info-circle"></i>
+            <p>No hay aventureros disponibles en este momento</p>
+          </div>
+
+          <!-- Lista de Aventureros -->
+          <div v-else class="entrepreneurs-grid">
+            <div v-for="adventurer in adventurers" :key="adventurer.id" class="entrepreneur-card-wrapper">
+              <AdventurerCard
+                  :name="adventurer.username"
+                  :avatar="adventurer.avatar"
+              />
+            </div>
+          </div>
+      </div>
       </div>
     </main>
   </div>
