@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       username: "",
+      email:"",
       password: "",
       confirmPassword: "",
       role: "ROLE_ADMIN", // Rol predeterminado
@@ -147,6 +148,7 @@ export default {
       const signUpRequest = new SignUpRequest(
           this.username,
           this.password,
+          this.email,
           [this.role],
           this.recaptchaToken
       );
@@ -184,6 +186,18 @@ export default {
             <label for="username">Usuario</label>
           </div>
           <small v-if="submitted && !username" class="p-invalid">El nombre de usuario es obligatorio.</small>
+        </div>
+        <div class="field mt-5">
+          <div class="p-float-label">
+            <InputText
+                id="email"
+                v-model="email"
+                type="email"
+                :class="{'p-invalid': submitted && !email}"
+            />
+            <label for="email">Correo Electrónico</label>
+          </div>
+          <small v-if="submitted && !email" class="p-invalid">El correo electrónico es obligatorio.</small>
         </div>
         <div class="field mt-5">
           <div class="p-float-label password-input-container">

@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { createPinia } from 'pinia'
 import { faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 library.add(faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt)
-
+import emailjs from '@emailjs/browser';
+emailjs.init("eCqd55MH38eEgZvfa");
 
 import 'primevue/resources/themes/lara-light-indigo/theme.css'
 import 'primevue/resources/primevue.min.css'

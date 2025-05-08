@@ -1,5 +1,6 @@
 <script>
 import { ActivityApiService } from '@/domains/postManagement/shared/services/activity-api.service.js';
+import emailjs from '@emailjs/browser';
 import ActivityCard from '../components/activity-card.component.vue';
 import EntrepreneurCard from '../components/entrepreneur-card.component.vue';
 import Carousel from 'primevue/carousel';
@@ -83,7 +84,23 @@ export default {
         this.loading = true;
         const activityService = new ActivityApiService();
         const id = this.publicationToDelete.id || this.publicationToDelete.Id;
+
+        // Get activity details to find owner's email before deleting
+        const activityDetails = await activityService.getActivityById(id);
+        const entrepreneurId = activityDetails.data.entrepreneurId;
+
+        // Get entrepreneur details to get their email
+        const userResponse = await activityService.getUserById(entrepreneurId);
+        const userEmail = userResponse.data.email;
+        const username = userResponse.data.username;
+        const activityName = activityDetails.data.nameActivity;
+
+        // Delete the publication
         await activityService.deletePublication(id);
+
+        // Send notification email to the activity owner
+        this.sendDeletionEmail(userEmail, username, activityName);
+
         this.closeDeleteModal();
         await this.fetchActivities();
       } catch (err) {
@@ -91,6 +108,33 @@ export default {
         console.error("Error deleting publication:", err);
         this.loading = false;
       }
+    },
+    sendDeletionEmail(email, username, activityName) {
+      const templateParams = {
+        to_email: email,
+        to_name: username,
+        activity_name: activityName,
+        subject: 'Tu actividad ha sido eliminada',
+        message: `Tu actividad "${activityName}" ha sido eliminada del sistema por un administrador.`
+      };
+
+      emailjs.send(
+          'service_w4b26t5',
+          'template_aventurape',
+          templateParams
+      )
+          .then((response) => {
+            console.log('Email notification sent:', response);
+            this.$toast.add({
+              severity: "success",
+              summary: "Notificación enviada",
+              detail: "Se ha notificado al usuario sobre la eliminación",
+              life: 3000,
+            });
+          })
+          .catch((error) => {
+            console.error('Error sending email notification:', error);
+          });
     },
 
     async fetchEntrepreneurs() {
