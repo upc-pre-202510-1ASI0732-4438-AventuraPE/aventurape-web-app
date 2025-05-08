@@ -12,6 +12,7 @@ export class AuthenticationService {
         return http.post(`/authentication/sign-up?recaptchaToken=${signUpRequest.recaptchaToken || ''}`, {
             username: signUpRequest.username,
             password: signUpRequest.password,
+            email: signUpRequest.email,
             roles: signUpRequest.roles
         });
     }

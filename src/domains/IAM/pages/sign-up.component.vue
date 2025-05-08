@@ -9,6 +9,7 @@ export default {
     return {
       username: "",
       password: "",
+      email:"",
       confirmPassword: "",
       role: "ROLE_ADVENTUROUS", // Rol predeterminado
       submitted: false,
@@ -115,9 +116,14 @@ export default {
       this.submitted = true;
       this.errorMessage = "";
 
-      // Enhanced validation
-      if (!this.username || !this.password || !this.confirmPassword || !this.role) {
+      if (!this.username || !this.email || !this.password || !this.confirmPassword || !this.role) {
         this.errorMessage = "Todos los campos son obligatorios.";
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.email)) {
+        this.errorMessage = "Por favor, ingrese un correo electrónico válido.";
         return;
       }
 
@@ -133,6 +139,7 @@ export default {
         return;
       }
 
+
       // Check if password meets minimum requirements
       if (this.passwordStrength < 60) {
         this.errorMessage = "La contraseña no cumple con los requisitos mínimos de seguridad.";
@@ -144,12 +151,14 @@ export default {
         return;
       }
 
-      // Crear solicitud de registro
+
       const signUpRequest = new SignUpRequest(
           this.username,
           this.password,
+          this.email,
           [this.role],
-          this.recaptchaToken
+          this.recaptchaToken,
+          this.proofingEntrepreneure
       );
 
       // Acceder al store
@@ -185,6 +194,21 @@ export default {
             <label for="username">Usuario</label>
           </div>
           <small v-if="submitted && !username" class="p-invalid">El nombre de usuario es obligatorio.</small>
+        </div>
+        <div class="field mt-5">
+          <div class="p-float-label">
+            <InputText
+                id="email"
+                v-model="email"
+                type="email"
+                :class="{'p-invalid': submitted && (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))}"
+            />
+            <label for="email">Correo Electrónico</label>
+          </div>
+          <small v-if="submitted && !email" class="p-invalid">El correo electrónico es obligatorio.</small>
+          <small v-if="submitted && email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)" class="p-invalid">
+            Ingrese un correo electrónico válido.
+          </small>
         </div>
         <div class="field mt-5">
           <div class="p-float-label password-input-container">
