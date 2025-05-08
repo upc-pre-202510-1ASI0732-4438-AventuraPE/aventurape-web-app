@@ -16,6 +16,11 @@ export class ActivityApiService {
         return http.post(`/publication/${id}/add-comment`, comment);
     }
 
+    // Eliminar un comentario de una actividad
+    async deleteComment(publicationId, commentId) {
+        return http.delete(`/publication/${publicationId}/comments/${commentId}`);
+    }
+
     // Obtener todos los comentarios de una publicación
     async getCommentsByActivityId(id) {
         return http.get(`/publication/${id}/comments`);

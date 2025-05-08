@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'CommentsList',
+  name: 'CommentsListAdmin',
   props: {
     reviews: {
       type: Array,
@@ -60,6 +60,11 @@ export default {
         </div>
         <div class="review-content">
           <p>{{ review.comment }}</p>
+        </div>
+        <div class="review-footer">
+          <button class="action-btn" @click="$emit('delete-comment', review.id)">
+            <i class="pi pi-trash"></i> Eliminar
+          </button>
         </div>
       </div>
     </div>
