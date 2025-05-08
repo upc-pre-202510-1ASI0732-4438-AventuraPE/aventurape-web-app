@@ -59,4 +59,21 @@ export class ActivityApiService {
         return http.get('/users');
     }
 
+    // Añadir una publicación a favoritos
+    // /api/v1/favorite-publications/create-favorite-publication
+    async addToFavorites(favoritePublication) {
+        return http.post('/favorite-publications/create-favorite-publication', favoritePublication);
+    }
+
+
+    // Eliminar una publicación de favoritos
+    async removeFromFavorites(favoriteId) {
+        return http.delete(`/favorite-publications/delete-favorite-publication/${favoriteId}`);
+    }
+
+    // Obtener las publicaciones favoritas del usuario
+///api/v1/favorite-publications/getFavoritePublicationByProfileId/{profileId}
+    async getFavoritePublicationsByProfileId(userId) {
+        return http.get(`/favorite-publications/getFavoritePublicationByProfileId/${userId}`);
+    }
 }
