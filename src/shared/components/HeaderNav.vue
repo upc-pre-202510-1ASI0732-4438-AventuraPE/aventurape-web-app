@@ -28,6 +28,9 @@ const fetchRoles = async () => {
 
 onMounted(fetchRoles);
 
+//Administrador
+const hasAdminRole = computed(() => Array.isArray(roles.value) && roles.value.includes('ROLE_ADMIN'));
+
 const hasAdventurousRole = computed(() => Array.isArray(roles.value) && roles.value.includes('ROLE_ADVENTUROUS'));
 const hasEntrepreneurRole = computed(() => Array.isArray(roles.value) && roles.value.includes('ROLE_ENTREPRENEUR'));
 const isLoggedIn = computed(() => !!Cookies.get('token'));
@@ -62,14 +65,24 @@ const signOut = () => {
       <div class="nav-items" :class="{ 'mobile-open': isMobileMenuOpen }">
 
         <div class="nav-item home" @click="closeMobileMenu">
-          <router-link :to="effectiveRole === 'entrepreneur' ? '/entrepreneur-home' : '/adventurous-home'">
+          <!--Estoy añadiendo aca tambien al admin-->
+          <router-link :to="effectiveRole === 'entrepreneur' ? '/entrepreneur-home' : '/adventurous-home' && '/admin-home'">
             <font-awesome-icon icon="home" />
             <span>Inicio</span>
           </router-link>
         </div>
+        <!-- Opciones para el rol Administrador -->
+        <template v-if="hasAdminRole ">
+          <div class="nav-item search" @click="closeMobileMenu">
+            <router-link to="/buscar">
+              <font-awesome-icon icon="search" />
+              <span>Buscar actividades</span>
+            </router-link>
+          </div>
+        </template>
 
         <!-- Opciones para el rol Adventurer -->
-        <template v-if="hasAdventurousRole">
+        <template v-if="hasAdventurousRole ">
           <div class="nav-item search" @click="closeMobileMenu">
             <router-link to="/buscar">
               <font-awesome-icon icon="search" />
