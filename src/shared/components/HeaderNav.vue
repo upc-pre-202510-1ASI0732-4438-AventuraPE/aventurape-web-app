@@ -51,6 +51,12 @@ const signOut = () => {
   console.log('Sign out triggered');
   authStore.signOut(router);
 };
+const getHomeRoute = () => {
+  if (hasAdminRole.value) return '/admin-home';
+  if (hasEntrepreneurRole.value) return '/entrepreneur-home';
+  if (hasAdventurousRole.value) return '/adventurous-home';
+  return '/sign-in'; // Fallback
+}
 </script>
 
 
@@ -66,7 +72,7 @@ const signOut = () => {
 
         <div class="nav-item home" @click="closeMobileMenu">
           <!--Estoy añadiendo aca tambien al admin-->
-          <router-link :to="effectiveRole === 'entrepreneur' ? '/entrepreneur-home' : '/adventurous-home' && '/admin-home'">
+          <router-link :to="getHomeRoute()">
             <font-awesome-icon icon="home" />
             <span>Inicio</span>
           </router-link>
