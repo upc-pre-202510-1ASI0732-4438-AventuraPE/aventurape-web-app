@@ -122,7 +122,6 @@ export default {
           <i class="pi pi-tag"></i>S/. {{ price.toFixed(2) }}
         </span>
 
-
         <!--Boton de favorito--->
         <span class="meta-item favorite-button" @click.stop="toggleFavorite($event)">
           <i v-if="loading" class="pi pi-spin pi-spinner"></i>
