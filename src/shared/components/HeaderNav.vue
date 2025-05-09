@@ -131,13 +131,7 @@ const getHomeRoute = () => {
           </div>
         </template>
 
-        <!-- Botón de cerrar sesión para todos los usuarios -->
-        <div class="nav-item sign-out" @click="closeMobileMenu">
-          <a href="#" @click.prevent="signOut">
-            <font-awesome-icon icon="sign-out-alt" />
-            <span>Cerrar Sesión</span>
-          </a>
-        </div>
+
 
       </div>
     </nav>
