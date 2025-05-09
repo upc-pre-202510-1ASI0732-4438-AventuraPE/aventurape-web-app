@@ -242,4 +242,23 @@ export default {
     margin-top: 10px;
   }
 }
+
+/* Estilos para el botón de eliminar */
+.action-btn {
+  background-color: #fff0f0;
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.action-btn:hover {
+  background-color: #ffe5e5;
+}
 </style>
