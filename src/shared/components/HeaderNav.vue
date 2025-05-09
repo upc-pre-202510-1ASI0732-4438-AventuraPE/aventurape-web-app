@@ -77,7 +77,15 @@ const getHomeRoute = () => {
             <span>Inicio</span>
           </router-link>
         </div>
-
+        <!-- Opciones para el rol Administrador -->
+        <template v-if="hasAdminRole ">
+          <div class="nav-item search" @click="closeMobileMenu">
+            <router-link to="/buscar">
+              <font-awesome-icon icon="search" />
+              <span>Buscar actividades</span>
+            </router-link>
+          </div>
+        </template>
 
         <!-- Opciones para el rol Adventurer -->
         <template v-if="hasAdventurousRole ">
