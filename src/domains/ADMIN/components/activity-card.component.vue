@@ -192,8 +192,4 @@ export default {
 .btn-delete:hover {
   background-color: #ffe5e5;
 }
-
-.btn-delete:hover {
-  background-color: #ffe5e5;
-}
 </style>

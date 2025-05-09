@@ -7,6 +7,7 @@ import entrepreneurRoutes from "@/router/entrepreneurRoutes.js";
 import HomeAdmin from "@/domains/ADMIN/views/homeAdmin.vue";
 import signInAdminComponent from "@/domains/IAM/pages/sign-in-admin.component.vue";
 import singUpAdminComponent from "@/domains/IAM/pages/sing-up-admin.component.vue";
+import adminRoutes from "@/router/adminRoutes.js";
 const routes = [
   {
     path: '/',
@@ -43,6 +44,7 @@ const routes = [
     component: () => import('@/domains/postManagement/entrepreneur/views/homeEntrepreneur.vue'),
     meta: { requiresAuth: true, requiredRoles: ['ROLE_ENTREPRENEUR'] }
   },
+    /////// ADMIN /////
   {
     path: '/admin-home',
     name: 'admin-home',
@@ -62,7 +64,8 @@ const routes = [
     meta: { requiresAuth: false }
   },
   ...adventurerRoutes,
-  ...entrepreneurRoutes
+  ...entrepreneurRoutes,
+  ...adminRoutes,
 ];
 
 
