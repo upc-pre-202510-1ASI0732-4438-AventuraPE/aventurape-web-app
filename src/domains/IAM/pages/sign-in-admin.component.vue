@@ -34,7 +34,7 @@ export default {
       if (this.username && this.password && this.recaptchaVerified) {
         let authenticationStore = useAuthenticationStore();
         let signInRequest = new SignInRequest(this.username, this.password, this.recaptchaToken);
-        authenticationStore.signIn(signInRequest, this.$router, this.$toast);
+        authenticationStore.signInAdmin(signInRequest, this.$router, this.$toast);
       } else if (!this.recaptchaVerified) {
         this.$toast.add({
           severity: "error",
