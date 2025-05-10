@@ -87,7 +87,7 @@
 import { ActivityApiService } from '@/domains/postManagement/shared/services/activity-api.service.js';
 
 export default {
-  name: "ActivityCardList",
+  name: "ActivityCardListAdmin",
   directives: {
     focus: {
       inserted: function (el) {
@@ -137,7 +137,7 @@ export default {
 
     goToDetail(activityId) {
       this.$router.push({
-        name: 'activity-detail',
+        name: 'activity-detail-admin',
         params: {id: activityId}
       });
     },

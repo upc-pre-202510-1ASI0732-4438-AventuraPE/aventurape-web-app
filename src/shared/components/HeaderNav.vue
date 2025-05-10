@@ -80,7 +80,7 @@ const getHomeRoute = () => {
         <!-- Opciones para el rol Administrador -->
         <template v-if="hasAdminRole ">
           <div class="nav-item search" @click="closeMobileMenu">
-            <router-link to="/buscar">
+            <router-link to="/buscar-admin">
               <font-awesome-icon icon="search" />
               <span>Buscar actividades</span>
             </router-link>

@@ -23,7 +23,7 @@ export default [
     path: '/adventurer/posts/:id',
     name: 'activity-detail',
     component: ActivityDetail,
-    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS', 'ROLE_ADMIN'] }
+    meta: { requiresAuth: true, requiredRoles: ['ROLE_ADVENTUROUS'] }
   },
   // Navigation from HeaderNav
   {
