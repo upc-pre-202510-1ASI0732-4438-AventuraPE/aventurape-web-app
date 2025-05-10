@@ -84,11 +84,11 @@ export const useAuthenticationStore = defineStore("authentication", {
             }
         },
 
-        async signIn(signInRequest, router, toast) {
+        async signInAdmin(signInRequest, router, toast) {
             const authService = new AuthenticationService();
 
             try {
-                const response = await authService.signIn(signInRequest);
+                const response = await authService.signInAdmin(signInRequest);
 
                 if (!response.data || !response.data.token) {
                     throw new Error("Invalid response from server");
@@ -123,6 +123,45 @@ export const useAuthenticationStore = defineStore("authentication", {
             }
         },
 
+        async signIn(signInRequest, router, toast) {
+            const authService = new AuthenticationService();
+
+            try {
+                const response = await authService.signIn(signInRequest);
+
+                if (!response.data || !response.data.token) {
+                    throw new Error("Invalid response from server");
+                }
+
+                const userId = response.data.id;
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("userId", userId);
+                localStorage.setItem("username", response.data.username);
+
+                Cookies.set("token", response.data.token, { path: "/" });
+                Cookies.set("userId", userId, { path: "/" });
+                Cookies.set("username", response.data.username, { path: "/" });
+
+                this.isSignedIn = true;
+                this.username = response.data.username;
+                this.userId = userId;
+
+                await this.fetchRoles(userId);
+
+                toast.add({
+                    severity: "success",
+                    summary: "Éxito",
+                    detail: "Has iniciado sesión correctamente",
+                    life: 3000,
+                });
+
+                router.push({ name: 'admin-home' });
+            } catch (error) {
+                console.error('Sign in error', error);
+                throw error;
+            }
+        },
+
         async fetchRoles(userId) {
             const authService = new AuthenticationService();
             try {
@@ -142,6 +181,8 @@ export const useAuthenticationStore = defineStore("authentication", {
                 router.push({ name: "entrepreneur-home" });
             } else if (this.roles.includes("ROLE_ADVENTUROUS")) {
                 router.push({ name: "adventurous-home" });
+            } else if (this.roles.includes("ROLE_ADMIN")) {
+                router.push({ name: "admin-home" });
             } else {
                 router.push({ name: "sign-in" });
             }

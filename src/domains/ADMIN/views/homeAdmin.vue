@@ -61,7 +61,7 @@ export default {
     },
     goToActivity(id) {
       this.$router.push({
-        name: 'activity-detail',
+        name: 'activity-detail-admin',
         params: { id }
       });
     },

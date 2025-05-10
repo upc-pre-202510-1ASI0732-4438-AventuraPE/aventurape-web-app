@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'CommentsList',
+  name: 'CommentsListAdmin',
   props: {
     reviews: {
       type: Array,
@@ -60,6 +60,11 @@ export default {
         </div>
         <div class="review-content">
           <p>{{ review.comment }}</p>
+        </div>
+        <div class="review-footer">
+          <button class="action-btn" @click="$emit('delete-comment', review.id)">
+            <i class="pi pi-trash"></i> Eliminar
+          </button>
         </div>
       </div>
     </div>
@@ -236,5 +241,24 @@ export default {
     margin-left: 0;
     margin-top: 10px;
   }
+}
+
+/* Estilos para el botón de eliminar */
+.action-btn {
+  background-color: #fff0f0;
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.action-btn:hover {
+  background-color: #ffe5e5;
 }
 </style>

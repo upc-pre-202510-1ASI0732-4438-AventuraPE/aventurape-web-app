@@ -17,6 +17,13 @@ export class AuthenticationService {
         });
     }
 
+    signInAdmin(signInRequest) {
+        return http.post(`/authentication/sign-in?recaptchaToken=${signInRequest.recaptchaToken || ''}`, {
+            username: signInRequest.username,
+            password: signInRequest.password,
+        });
+    }
+
     getUserRoles(userId) {
         return http.get(`/users/${userId}`);
     }
