@@ -49,7 +49,7 @@ export default {
   methods: {
     goToDetail() {
       this.$router.push({
-        name: 'activity-detail',
+        name: 'activity-detail-admin',
         params: { id: this.id }
       });
     },
