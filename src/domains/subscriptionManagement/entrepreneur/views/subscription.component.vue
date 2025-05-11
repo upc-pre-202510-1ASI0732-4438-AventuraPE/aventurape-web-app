@@ -42,21 +42,6 @@
         </Card>
 
         <!-- Panel de preguntas frecuentes -->
-        <div class="faq-section">
-          <h3 class="faq-title">Preguntas frecuentes</h3>
-
-          <div class="faq-items">
-            <div class="faq-item" v-for="(question, index) in faqs" :key="index">
-              <div class="faq-question" @click="toggleFaq(index)">
-                <span>{{ question.question }}</span>
-                <i :class="{'pi': true, 'pi-chevron-down': !question.open, 'pi-chevron-up': question.open}"></i>
-              </div>
-              <div class="faq-answer" v-show="question.open">
-                <p>{{ question.answer }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Panel derecho: Comprobante de pago -->
