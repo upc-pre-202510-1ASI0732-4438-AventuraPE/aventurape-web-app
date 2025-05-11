@@ -16,9 +16,23 @@ export class ActivityApiService {
         return http.post(`/publication/${id}/add-comment`, comment);
     }
 
-    // Eliminar un comentario de una actividad
     async deleteComment(publicationId, commentId) {
-        return http.delete(`/publication/${publicationId}/comments/${commentId}`);
+        if (!publicationId || !commentId) {
+            throw new Error('Publication ID and Comment ID are required');
+        }
+
+        try {
+            console.log(`Deleting comment ${commentId} from publication ${publicationId}`);
+
+            // Make sure to use the correct endpoint format
+            const response = await http.delete(`/publication/${publicationId}/comments/${commentId}`);
+
+            console.log('Delete comment response:', response);
+            return response;
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+            throw error;
+        }
     }
 
     // Obtener todos los comentarios de una publicación

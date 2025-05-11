@@ -39,7 +39,6 @@ const effectiveRole = computed(() => (isEntrepreneurRoute.value ? 'entrepreneur'
 
 const isMobileMenuOpen = ref(false);
 const toggleMobileMenu = () => {
-  console.log('Toggling mobile menu:', isMobileMenuOpen.value);
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
 };
 
@@ -47,9 +46,11 @@ const closeMobileMenu = () => {
   isMobileMenuOpen.value = false;
 };
 
+// Update the signOut function in HeaderNav.vue to add more debugging
 const signOut = () => {
-  console.log('Sign out triggered');
-  authStore.signOut(router);
+  if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+    authStore.signOut(router);
+  }
 };
 const getHomeRoute = () => {
   if (hasAdminRole.value) return '/admin-home';

@@ -89,17 +89,39 @@ export default {
           throw new Error('Faltan valores para eliminar el comentario.');
         }
 
+        // Add loading indicator
+        this.deletingCommentId = commentId;
+
         console.log('Datos enviados para eliminar comentario:', { publicationId, commentId });
 
-        // Llamada al servicio para eliminar el comentario
-        await this.activityApiService.deleteComment(publicationId, commentId);
+        // Call the service to delete the comment
+        const response = await this.activityApiService.deleteComment(publicationId, commentId);
+        console.log('API response for comment deletion:', response);
 
-        // Actualizar la lista de comentarios
-        this.activity.reviews = this.activity.reviews.filter(comment => comment.id !== commentId);
+        if (response) {
+          // Immediately update UI by filtering out the deleted comment
+          this.activity.reviews = this.activity.reviews.filter(comment => comment.id !== commentId);
+          console.log('Comentario eliminado exitosamente');
 
-        console.log('Comentario eliminado exitosamente');
+          // Show success message
+          this.$toast?.add({
+            severity: "success",
+            summary: "Éxito",
+            detail: "El comentario ha sido eliminado",
+            life: 3000,
+          });
+        }
       } catch (error) {
         console.error('Error al eliminar el comentario:', error.response?.data || error.message);
+        // Show error message to user
+        this.$toast?.add({
+          severity: "error",
+          summary: "Error",
+          detail: "No se pudo eliminar el comentario",
+          life: 3000,
+        });
+      } finally {
+        this.deletingCommentId = null; // Clear loading state
       }
     },
 
@@ -247,8 +269,9 @@ export default {
           <!-- Panel de Comentarios -->
           <div v-if="activeTabIndex === 0" class="tab-panel">
             <CommentsListAdmin
-             :reviews="activity.reviews"
-             @delete-comment="deleteComment"
+              :reviews="activity.reviews"
+              :activityName="activity.title"
+              @delete-comment="deleteComment"
             />
           </div>
 
