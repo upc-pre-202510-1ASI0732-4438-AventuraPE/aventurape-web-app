@@ -1,19 +1,19 @@
 <template>
   <div class="subscription-dashboard">
     <div class="hero-section">
-      <h1 class="page-title">Mi subscripción</h1>
-      <p class="subtitle">Visualiza información sobre tu subscripción</p>
+      <h1 class="page-title">Mi membresía</h1>
+      <p class="subtitle">Visualiza información sobre tu pago único</p>
     </div>
 
     <!-- Estado de carga -->
     <div v-if="loading" class="loading-state">
       <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-      <p>Cargando información de suscripción...</p>
+      <p>Cargando información de membresía...</p>
     </div>
 
     <!-- Dashboard principal -->
     <div v-else class="dashboard-container">
-      <!-- Panel izquierdo: Información de suscripción -->
+      <!-- Panel izquierdo: Información de membresía -->
       <div class="subscription-info-panel">
         <Card class="subscription-card">
           <template #header>
@@ -23,7 +23,7 @@
           </template>
           <template #content>
             <div class="plan-details">
-              <h3 class="plan-price">S/ 29.99<span>/mes</span></h3>
+              <h3 class="plan-price">S/ 109.99<span>/único</span></h3>
 
               <h4>Tus beneficios</h4>
               <ul class="benefits-list">
@@ -34,8 +34,8 @@
 
               <h4>Información importante</h4>
               <ul class="info-list">
-                <li><i class="pi pi-info-circle"></i> Para cancelar, debes notificarnos con 15 días de anticipación</li>
-                <li><i class="pi pi-wallet"></i> El pago debe realizarse antes del día 5 de cada mes</li>
+                <li><i class="pi pi-info-circle"></i> Una vez verificado el pago, tu acceso no tiene fecha de caducidad</li>
+                <li><i class="pi pi-wallet"></i> El pago único te da acceso permanente a la plataforma</li>
               </ul>
             </div>
           </template>
@@ -60,7 +60,7 @@
               <div class="proof-details">
                 <p><i class="pi pi-check-circle"></i> Comprobante recibido correctamente</p>
                 <p><i class="pi pi-calendar"></i> Verificado: {{ currentDate }}</p>
-                <p><i class="pi pi-info-circle"></i> Tu suscripción está activa</p>
+                <p><i class="pi pi-info-circle"></i> Tu membresía está activa</p>
               </div>
 
               <button class="update-button" @click="showUploadDialog = true">
@@ -74,7 +74,7 @@
               <div class="upload-message">
                 <i class="pi pi-exclamation-circle warning-icon"></i>
                 <p class="marketing-message">Necesitamos verificar tu pago</p>
-                <p class="instruction-message">Por favor, sube una imagen clara de tu comprobante de pago para activar completamente tu suscripción mensual.</p>
+                <p class="instruction-message">Por favor, sube una imagen clara de tu comprobante de pago para activar completamente tu membresía.</p>
               </div>
 
               <div class="upload-area" @click="triggerFileInput" @dragover.prevent @drop.prevent="onFileDrop">
