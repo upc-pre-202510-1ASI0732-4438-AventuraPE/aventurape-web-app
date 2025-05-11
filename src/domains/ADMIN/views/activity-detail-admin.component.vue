@@ -1,16 +1,14 @@
 <script>
 import Panel from 'primevue/panel';
 import TabMenu from 'primevue/tabmenu';
-import MakeComment from '@/domains/postManagement/adventurer/components/make-comment.component.vue';
-import CommentsList from '@/domains/postManagement/adventurer/components/comments-list.component.vue';
 import { ActivityApiService } from '@/domains/postManagement/shared/services/activity-api.service.js';
 import { CommentEntity } from '@/domains/postManagement/shared/models/comment.entity.js';
+import CommentsListAdmin from "@/domains/ADMIN/components/comments-list-admin.component.vue";
 
 export default {
-  name: 'DetailActivity',
+  name: 'DetailActivityAdmin',
   components: {
-    MakeComment,
-    CommentsList,
+    CommentsListAdmin,
     Panel,
     TabMenu
   },
@@ -22,10 +20,6 @@ export default {
         {
           label: 'Ver reseñas',
           icon: 'pi pi-list'
-        },
-        {
-          label: 'Escribir reseña',
-          icon: 'pi pi-pencil'
         }
       ],
 
@@ -87,6 +81,49 @@ export default {
         this.loading = false;
       }
     },
+    async deleteComment(commentId) {
+      try {
+        const publicationId = this.activity.id;
+
+        if (!publicationId || !commentId) {
+          throw new Error('Faltan valores para eliminar el comentario.');
+        }
+
+        // Add loading indicator
+        this.deletingCommentId = commentId;
+
+        console.log('Datos enviados para eliminar comentario:', { publicationId, commentId });
+
+        // Call the service to delete the comment
+        const response = await this.activityApiService.deleteComment(publicationId, commentId);
+        console.log('API response for comment deletion:', response);
+
+        if (response) {
+          // Immediately update UI by filtering out the deleted comment
+          this.activity.reviews = this.activity.reviews.filter(comment => comment.id !== commentId);
+          console.log('Comentario eliminado exitosamente');
+
+          // Show success message
+          this.$toast?.add({
+            severity: "success",
+            summary: "Éxito",
+            detail: "El comentario ha sido eliminado",
+            life: 3000,
+          });
+        }
+      } catch (error) {
+        console.error('Error al eliminar el comentario:', error.response?.data || error.message);
+        // Show error message to user
+        this.$toast?.add({
+          severity: "error",
+          summary: "Error",
+          detail: "No se pudo eliminar el comentario",
+          life: 3000,
+        });
+      } finally {
+        this.deletingCommentId = null; // Clear loading state
+      }
+    },
 
     async fetchComments() {
       try {
@@ -143,39 +180,6 @@ export default {
 
       } catch (error) {
         console.error('Error al obtener comentarios:', error);
-      }
-    },
-    async addReview(newReview) {
-      try {
-        // Obtener ID del usuario actual del store de autenticación
-        const userId = localStorage.getItem('userId') || 1;
-        const username = localStorage.getItem('username');
-
-        // Crear objeto de comentario según formato API
-        const comment = {
-          publicationId: this.activity.id,
-          content: newReview.content,
-          rating: newReview.rating,
-          adventureId: parseInt(userId)
-        };
-
-        await this.activityApiService.postComment(this.activity.id, comment);
-
-        // Agregar el comentario localmente para evitar una nueva llamada API
-        this.activity.reviews.unshift({
-          id: Date.now(), // ID temporal hasta obtener uno real
-          userName: username || `Usuario ${userId}`,
-          comment: newReview.content,
-          rating: newReview.rating,
-          adventureId: parseInt(userId),
-          date: new Date().toISOString()
-        });
-
-        // Cambiar a la pestaña de comentarios
-        this.activeTabIndex = 0;
-
-      } catch (error) {
-        console.error('Error al publicar comentario:', error);
       }
     }
   }
@@ -264,13 +268,13 @@ export default {
         <div class="reviews-content">
           <!-- Panel de Comentarios -->
           <div v-if="activeTabIndex === 0" class="tab-panel">
-            <CommentsList :reviews="activity.reviews" />
+            <CommentsListAdmin
+              :reviews="activity.reviews"
+              :activityName="activity.title"
+              @delete-comment="deleteComment"
+            />
           </div>
 
-          <!-- Panel de Formulario -->
-          <div v-if="activeTabIndex === 1" class="tab-panel">
-            <MakeComment @submit-review="addReview" />
-          </div>
         </div>
       </div>
     </div>

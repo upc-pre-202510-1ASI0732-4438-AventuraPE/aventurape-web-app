@@ -49,7 +49,7 @@ export default {
   methods: {
     goToDetail() {
       this.$router.push({
-        name: 'activity-detail',
+        name: 'activity-detail-admin',
         params: { id: this.id }
       });
     },
@@ -187,10 +187,6 @@ export default {
   display: flex;
   align-items: center;
   gap: 5px;
-}
-
-.btn-delete:hover {
-  background-color: #ffe5e5;
 }
 
 .btn-delete:hover {
