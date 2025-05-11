@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { createPinia } from 'pinia'
 import { faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 library.add(faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt)
+import Checkbox from 'primevue/checkbox';
 import emailjs from '@emailjs/browser';
 emailjs.init("eCqd55MH38eEgZvfa");
 
@@ -50,6 +51,7 @@ app.component('Dialog', Dialog)
 app.component('Menu', Menu)
 app.component('Sidebar', Sidebar)
 app.component('Toast', Toast)
+app.component('Checkbox', Checkbox);
 app.component('Card', Card)
 app.component('Calendar', Calendar)
 

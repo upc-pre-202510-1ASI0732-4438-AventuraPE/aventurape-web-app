@@ -11,9 +11,10 @@ export default {
       password: "",
       email:"",
       confirmPassword: "",
-      role: "ROLE_ADVENTUROUS", // Rol predeterminado
+      role: "ROLE_ADVENTUROUS",
       submitted: false,
       errorMessage: "",
+      termsAccepted: false,
       roles: ref([
         {name: "Adventurous", code: "ROLE_ADVENTUROUS"},
         {name: "Entrepreneur", code: "ROLE_ENTREPRENEUR"},
@@ -118,6 +119,11 @@ export default {
 
       if (!this.username || !this.email || !this.password || !this.confirmPassword || !this.role) {
         this.errorMessage = "Todos los campos son obligatorios.";
+        return;
+      }
+
+      if (!this.termsAccepted) {
+        this.errorMessage = "Debe aceptar los términos y políticas para continuar.";
         return;
       }
 
@@ -293,6 +299,19 @@ export default {
           </div>
           <small v-if="submitted && !role" class="p-invalid">El tipo de cuenta es obligatorio.</small>
         </div>
+        <div class="field mt-3">
+          <div class="terms-checkbox-container">
+            <Checkbox v-model="termsAccepted" :binary="true" inputId="terms" :class="{'p-invalid': submitted && !termsAccepted}" />
+            <label for="terms" class="terms-label ml-2">
+              Acepto los
+              <a href="https://drive.google.com/file/d/1My8N2feWniLFQ8hE3jyguaxT2dSlSY23/view?usp=sharing" target="_blank" class="terms-link">Términos y Condiciones</a>
+              y las
+              <a href="https://drive.google.com/file/d/1Fev4wxlkB-KMKhmsBly1eHolychZpJV9/view?usp=sharing" target="_blank" class="terms-link">Políticas de Privacidad</a>
+            </label>
+          </div>
+          <small v-if="submitted && !termsAccepted" class="p-invalid">Debe aceptar los términos y políticas para continuar.</small>
+        </div>
+
         <div class="recaptcha-container">
           <div
               id="recaptcha-container"
@@ -305,6 +324,7 @@ export default {
             Por favor verifique que no es un robot
           </small>
         </div>
+
         <div class="registration-question">
           <router-link to="/sign-in" class="register-link">
             <span class="text-registro">¿Ya tienes una cuenta?</span>
@@ -445,6 +465,30 @@ export default {
   margin: 1.5rem 0;
   flex-direction: column;
   align-items: center;
+}
+.terms-checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  margin: 0.5rem 0;
+}
+
+.terms-label {
+  margin-left: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-dark);
+}
+
+.terms-link {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.terms-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
 }
 :deep(.p-inputtext) {
   width: 100%;
