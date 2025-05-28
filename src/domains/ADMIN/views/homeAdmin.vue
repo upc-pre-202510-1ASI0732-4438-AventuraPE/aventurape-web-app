@@ -162,34 +162,13 @@ export default {
 
     ///Aventureros
 
-    async fetchAdventurers() {
-      this.loadingAdventurer = true;
-      try {
-        // Opción alternativa: usar endpoint de usuarios general y filtrar por rol
-        const response = await this.activityApiService.getAllUsers();
-
-        // Filtramos solo los usuarios con rol "ROLE_ADVENTUROUS"
-        this.adventurers = response.data
-            .filter(user => user.roles.includes("ROLE_ADVENTUROUS"))
-            .map(adventurer => ({
-              id: adventurer.id,
-              username: adventurer.username,
-              avatar: null
-            }));
-
-        this.loadingAdventurer = false;
-      } catch (error) {
-        console.error('Error al cargar aventureros:', error);
-        this.loadingAdventurer = false;
-      }
-    },
     async fetchActivities() {
       this.loading = true;
       try {
         const response = await this.activityApiService.getAllActivities();
 
         // Mapear los datos del backend al formato esperado por el componente ActivityCard
-        this.activities = response.data.map(item => ({
+        const activitiesData = response.data.map(item => ({
           id: item.Id,
           title: item.nameActivity,
           description: item.description,
@@ -197,15 +176,79 @@ export default {
           image: item.image || 'https://primefaces.org/cdn/primevue/images/usercard.png',
           price: item.cost,
           timeDuration: item.timeDuration,
-          entrepreneurId: item.entrepreneurId
+          entrepreneurId: item.entrepreneurId,
+          favoritesCount: 0,
+          commentsCount: 0
         }));
 
+        // Store activities initially
+        this.activities = activitiesData;
+
+        // Fetch counts for each activity in parallel
+        const countPromises = activitiesData.map(async (activity) => {
+          try {
+            const [favoritesResponse, commentsResponse] = await Promise.all([
+              this.activityApiService.getFavoritesCountByPublicationId(activity.id),
+              this.activityApiService.getCommentsCountByPublicationId(activity.id)
+            ]);
+
+            // Add console logs to debug
+            console.log('Favorites response:', favoritesResponse);
+            console.log('Comments response:', commentsResponse);
+
+            // Update the activity with the counts
+            const activityIndex = this.activities.findIndex(a => a.id === activity.id);
+            if (activityIndex !== -1) {
+              // Handle different response formats
+              this.activities[activityIndex].favoritesCount =
+                favoritesResponse.data !== undefined
+                  ? (typeof favoritesResponse.data === 'number'
+                     ? favoritesResponse.data
+                     : (favoritesResponse.data.count || 0))
+                  : (favoritesResponse.count || 0);
+
+              this.activities[activityIndex].commentsCount =
+                commentsResponse.data !== undefined
+                  ? (typeof commentsResponse.data === 'number'
+                     ? commentsResponse.data
+                     : (commentsResponse.data.count || 0))
+                  : (commentsResponse.count || 0);
+            }
+          } catch (error) {
+            console.error(`Error fetching counts for activity ${activity.id}:`, error);
+          }
+        });
+
+        // Wait for all count fetches to complete
+        await Promise.all(countPromises);
         this.loading = false;
       } catch (error) {
         console.error('Error al cargar actividades:', error);
         this.loading = false;
       }
-    }  },
+    },
+    async fetchAdventurers() {
+      this.loadingAdventurer = true;
+      try {
+        // Get all users and filter for adventurers (those with ROLE_USER)
+        const response = await this.activityApiService.getAllUsers();
+
+        // Filter users with ROLE_USER
+        this.adventurers = response.data
+          .filter(user => user.roles.includes("ROLE_USER"))
+          .map(adventurer => ({
+            id: adventurer.id,
+            username: adventurer.username,
+            avatar: null
+          }));
+
+        this.loadingAdventurer = false;
+      } catch (error) {
+        console.error('Error al cargar aventureros:', error);
+        this.loadingAdventurer = false;
+      }
+    }
+  },
   mounted() {
     this.fetchActivities();
     this.fetchEntrepreneurs();
@@ -253,6 +296,8 @@ export default {
                 :description="activity.description"
                 :price="activity.price"
                 :timeDuration="activity.timeDuration"
+                :favorites-count="activity.favoritesCount"
+                :comments-count="activity.commentsCount"
                 @delete="openDeleteModal"
             />
           </div>

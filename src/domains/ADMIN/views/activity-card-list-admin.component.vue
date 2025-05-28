@@ -72,6 +72,17 @@
             <div class="card-content">
               <img :src="activity.image || 'https://primefaces.org/cdn/primevue/images/usercard.png'" :alt="activity.title" />
               <div class="product-title">{{ activity.title }}</div>
+
+              <div class="activity-stats">
+                <div class="stat-item">
+                  <i class="pi pi-heart"></i>
+                  <span>{{ activity.favoritesCount }}</span>
+                </div>
+                <div class="stat-item">
+                  <i class="pi pi-comments"></i>
+                  <span>{{ activity.commentsCount }}</span>
+                </div>
+              </div>
             </div>
             <div class="hover-overlay" :class="{ active: selectedActivity === activity.id }">
               <button class="detail-btn" @click.stop="goToDetail(activity.id)">DETALLE</button>
@@ -147,24 +158,67 @@ export default {
       try {
         const response = await this.activityApiService.getAllActivities();
 
-        // Mapear los datos del backend a nuestro formato local
-        this.activities = response.data.map(item => ({
+        // Get activities first
+        const activitiesData = response.data.map(item => ({
           id: item.Id,
           title: item.nameActivity,
           description: item.description,
-          cantPeople: item.cantPeople,
+          people: item.cantPeople,
           image: item.image || 'https://primefaces.org/cdn/primevue/images/usercard.png',
           price: item.cost,
           timeDuration: item.timeDuration,
-          entrepreneurId: item.entrepreneurId
+          entrepreneurId: item.entrepreneurId,
+          favoritesCount: 0,
+          commentsCount: 0
         }));
 
+        // Store the initial activities data
+        this.activities = activitiesData;
+
+        // Fetch counts for each activity in parallel
+        const countPromises = activitiesData.map(async (activity) => {
+          try {
+            const [favoritesResponse, commentsResponse] = await Promise.all([
+              this.activityApiService.getFavoritesCountByPublicationId(activity.id),
+              this.activityApiService.getCommentsCountByPublicationId(activity.id)
+            ]);
+
+            // Update the activity with the counts
+            // Add debugging to see what's being returned
+            console.log('Favorites response for activity', activity.id, ':', favoritesResponse);
+            console.log('Comments response for activity', activity.id, ':', commentsResponse);
+
+            // Update the activity with the counts - ensure we handle different response formats
+            const activityIndex = this.activities.findIndex(a => a.id === activity.id);
+            if (activityIndex !== -1) {
+              // Check if the data is directly available or nested in a data property
+              this.activities[activityIndex].favoritesCount =
+                favoritesResponse.data !== undefined
+                  ? (typeof favoritesResponse.data === 'number'
+                     ? favoritesResponse.data
+                     : (favoritesResponse.data.count || 0))
+                  : (favoritesResponse.count || 0);
+
+              this.activities[activityIndex].commentsCount =
+                commentsResponse.data !== undefined
+                  ? (typeof commentsResponse.data === 'number'
+                     ? commentsResponse.data
+                     : (commentsResponse.data.count || 0))
+                  : (commentsResponse.count || 0);
+            }
+          } catch (error) {
+            console.error(`Error fetching counts for activity ${activity.id}:`, error);
+          }
+        });
+
+        // Wait for all count fetches to complete
+        await Promise.all(countPromises);
         this.loading = false;
       } catch (error) {
         console.error('Error al cargar actividades:', error);
         this.loading = false;
       }
-    }
+    },
   },
 
   mounted() {
@@ -353,7 +407,34 @@ export default {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
+.activity-stats {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed #eee;
+}
 
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.stat-item i {
+  font-size: 1.1rem;
+}
+
+.stat-item:first-child i {
+  color: #ff5252;
+}
+
+.stat-item:last-child i {
+  color: #3a7539;
+}
 .product-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 20px rgba(118, 85, 50, 0.15);
