@@ -2,11 +2,16 @@
 import FavoriteCard from '../components/favorite-card.component.vue';
 import { ActivityApiService } from '../../shared/services/activity-api.service';
 import Cookies from 'js-cookie';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'FavoritesView',
   components: {
     FavoriteCard
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -65,27 +70,27 @@ export default {
 <template>
   <div class="favorites-container">
     <div class="favorites-header">
-      <h1 class="favorites-title">Mis Actividades Favoritas</h1>
-      <p class="favorites-subtitle">Encuentra aquí todas las experiencias que has marcado como favoritas</p>
+      <h1 class="favorites-title">{{ $t('favorites.title') }}</h1>
+      <p class="favorites-subtitle">{{ $t('favorites.addFavorites') }}</p>
     </div>
 
     <div v-if="loading" class="loading-state">
       <ProgressSpinner class="custom-spinner" />
-      <p>Cargando tus favoritos...</p>
+      <p>{{ $t('common.loading') }}</p>
     </div>
 
     <div v-else-if="error" class="error-state">
       <i class="pi pi-exclamation-triangle error-icon"></i>
-      <h3>No pudimos cargar tus favoritos</h3>
+      <h3>{{ $t('common.error') }}</h3>
       <p>{{ error }}</p>
-      <Button label="Reintentar" @click="loadFavorites" icon="pi pi-refresh" class="retry-button"/>
+      <Button :label="$t('buttons.back')" @click="loadFavorites" icon="pi pi-refresh" class="retry-button"/>
     </div>
 
     <div v-else-if="favorites.length === 0" class="empty-state">
       <i class="pi pi-heart-fill empty-icon"></i>
-      <h2>No tienes actividades favoritas</h2>
-      <p>Explora actividades y marca como favorito las que te gusten para encontrarlas aquí</p>
-      <Button label="Explorar actividades" icon="pi pi-search" @click="$router.push({name: 'AdventurerSearch'})" class="explore-button"/>
+      <h2>{{ $t('favorites.noFavorites') }}</h2>
+      <p>{{ $t('favorites.addFavorites') }}</p>
+      <Button :label="$t('navbar.explore')" icon="pi pi-search" @click="$router.push({name: 'AdventurerSearch'})" class="explore-button"/>
     </div>
 
     <div v-else class="favorites-grid">

@@ -1,0 +1,79 @@
+{
+  "navbar": {
+    "explore": "Explore",
+    "myActivities": "My Activities",
+    "favorites": "Favorites",
+    "profile": "Profile",
+    "home": "Home",
+    "logout": "Logout"
+  },
+  "home": {
+    "title": "Welcome, Adventurer",
+    "subtitle": "Discover new experiences near you",
+    "searchPlaceholder": "Search activities...",
+    "noActivities": "No activities available",
+    "loadingActivities": "Loading activities...",
+    "popularActivities": "Popular Activities",
+    "nearbyActivities": "Nearby Activities",
+    "noResults": "No activities found for"
+  },
+  "buttons": {
+    "join": "Join",
+    "viewMore": "View More",
+    "viewDetails": "View Details",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "search": "Search",
+    "filter": "Filter",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites",
+    "listView": "List view",
+    "gridView": "Grid view",
+    "clearSearch": "Clear search"
+  },
+  "activities": {
+    "title": "Activities",
+    "details": "Activity Details",
+    "description": "Description",
+    "location": "Location",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "capacity": "Capacity",
+    "available": "spots available",
+    "participants": "Participants",
+    "comments": "Comments",
+    "writeComment": "Write a comment",
+    "noComments": "No comments yet",
+    "addComment": "Add Comment"
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "noFavorites": "You don't have favorite activities yet",
+    "addFavorites": "Explore activities and add them to your favorites"
+  },
+  "profile": {
+    "title": "My Profile",
+    "personalInfo": "Personal Information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "preferences": "Preferences"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "logout": "Are you sure you want to logout?",
+    "of": "of"
+  }
+}

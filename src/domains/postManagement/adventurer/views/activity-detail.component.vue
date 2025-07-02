@@ -5,6 +5,7 @@ import MakeComment from '@/domains/postManagement/adventurer/components/make-com
 import CommentsList from '@/domains/postManagement/adventurer/components/comments-list.component.vue';
 import { ActivityApiService } from '@/domains/postManagement/shared/services/activity-api.service.js';
 import { CommentEntity } from '@/domains/postManagement/shared/models/comment.entity.js';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'DetailActivity',
@@ -14,21 +15,14 @@ export default {
     Panel,
     TabMenu
   },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       selectedColor: 'black',
       activeTabIndex: 0,
-      reviewTabs: [
-        {
-          label: 'Ver reseñas',
-          icon: 'pi pi-list'
-        },
-        {
-          label: 'Escribir reseña',
-          icon: 'pi pi-pencil'
-        }
-      ],
-
       activity: {
         id: null,
         nameActivity: '',
@@ -43,6 +37,20 @@ export default {
       loading: true,
       activityApiService: new ActivityApiService()
     };
+  },
+  computed: {
+    reviewTabs() {
+      return [
+        {
+          label: this.t('activities.comments'),
+          icon: 'pi pi-list'
+        },
+        {
+          label: this.t('activities.writeComment'),
+          icon: 'pi pi-pencil'
+        }
+      ];
+    }
   },
 
   async mounted() {
@@ -187,7 +195,7 @@ export default {
     <!-- Estado de carga -->
     <div v-if="loading" class="loading-state">
       <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-      <p>Cargando detalles de la actividad...</p>
+      <p>{{ $t('common.loading') }}</p>
     </div>
 
     <div v-else>
@@ -208,7 +216,7 @@ export default {
             </div>
             <div class="meta-item">
               <i class="pi pi-users"></i>
-              <span>{{ activity.availableSpots }} plazas disponibles</span>
+              <span>{{ activity.availableSpots }} {{ $t('activities.available') }}</span>
             </div>
             <div class="meta-item price">
               <span>S/. {{ activity.price.toFixed(2) }}</span>
@@ -222,11 +230,11 @@ export default {
           <!--INFORMACION IMPORTANTE-->
           <!-- Sección de Informacion Importante -->
           <div class="additional-info">
-            <Panel header="Información importante" toggleable :toggleIcon="{ on: 'pi pi-minus', off: 'pi pi-plus' }">
+            <Panel :header="$t('activities.details')" toggleable :toggleIcon="{ on: 'pi pi-minus', off: 'pi pi-plus' }">
               <template #header>
                 <div class="panel-header">
                   <i class="pi pi-info-circle"></i>
-                  <span>Información importante</span>
+                  <span>{{ $t('activities.details') }}</span>
                 </div>
               </template>
               <ul class="info-list">
@@ -240,7 +248,7 @@ export default {
                 </li>
                 <li>
                   <i class="pi pi-calendar"></i>
-                  <span>¡Recuerda que en la actividad  podrás conocer a mucha gente nueva!</span>
+                  <span>¡Recuerda que en la actividad podrás conocer a mucha gente nueva!</span>
                 </li>
                 <li>
                   <i class="pi pi-users"></i>
@@ -256,7 +264,7 @@ export default {
       <!-- Sección de Comentarios -->
       <div class="reviews-section">
         <h3 class="section-title">
-          Comentarios
+          {{ $t('activities.comments') }}
         </h3>
 
         <TabMenu :model="reviewTabs" v-model:activeIndex="activeTabIndex" class="review-tabs" />
@@ -514,7 +522,7 @@ export default {
 }
 
 /* Mejoras en el TabMenu con aspecto profesional */
-.review-tabs {
+.review_tabs {
   margin-bottom: 30px;
 }
 

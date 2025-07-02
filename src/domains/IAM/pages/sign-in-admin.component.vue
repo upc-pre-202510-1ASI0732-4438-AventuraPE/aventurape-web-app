@@ -38,7 +38,7 @@ export default {
       } else if (!this.recaptchaVerified) {
         this.$toast.add({
           severity: "error",
-          summary: "Error",
+          summary: "",
           detail: "Por favor, verifique que no es un robot",
           life: 3000,
         });

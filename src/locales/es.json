@@ -1,0 +1,79 @@
+{
+  "navbar": {
+    "explore": "Explorar",
+    "myActivities": "Mis Actividades",
+    "favorites": "Favoritos",
+    "profile": "Perfil",
+    "home": "Inicio",
+    "logout": "Cerrar Sesión"
+  },
+  "home": {
+    "title": "Bienvenido, Aventurero",
+    "subtitle": "Descubre nuevas experiencias cerca de ti",
+    "searchPlaceholder": "Buscar actividades...",
+    "noActivities": "No hay actividades disponibles",
+    "loadingActivities": "Cargando actividades...",
+    "popularActivities": "Actividades Populares",
+    "nearbyActivities": "Actividades Cercanas",
+    "noResults": "No se encontraron actividades para"
+  },
+  "buttons": {
+    "join": "Unirse",
+    "viewMore": "Ver más",
+    "viewDetails": "Ver Detalles",
+    "back": "Volver",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "addToFavorites": "Agregar a Favoritos",
+    "removeFromFavorites": "Quitar de Favoritos",
+    "listView": "Vista de lista",
+    "gridView": "Vista de cuadrícula",
+    "clearSearch": "Limpiar búsqueda"
+  },
+  "activities": {
+    "title": "Actividades",
+    "details": "Detalles de la Actividad",
+    "description": "Descripción",
+    "location": "Ubicación",
+    "date": "Fecha",
+    "time": "Hora",
+    "price": "Precio",
+    "capacity": "Capacidad",
+    "available": "plazas disponibles",
+    "participants": "Participantes",
+    "comments": "Comentarios",
+    "writeComment": "Escribir comentario",
+    "noComments": "No hay comentarios aún",
+    "addComment": "Agregar Comentario"
+  },
+  "favorites": {
+    "title": "Mis Favoritos",
+    "noFavorites": "No tienes actividades favoritas aún",
+    "addFavorites": "Explora actividades y agrégalas a tus favoritos"
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "personalInfo": "Información Personal",
+    "name": "Nombre",
+    "email": "Correo Electrónico",
+    "phone": "Teléfono",
+    "preferences": "Preferencias"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información",
+    "close": "Cerrar",
+    "yes": "Sí",
+    "no": "No",
+    "logout": "¿Estás seguro que deseas cerrar sesión?",
+    "of": "de"
+  }
+}
