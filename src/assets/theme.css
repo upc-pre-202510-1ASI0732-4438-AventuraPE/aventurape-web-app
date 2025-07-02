@@ -1,31 +1,68 @@
-/* Global Theme Styles - Consistent Dark Mode */
-/* Paleta de colores: #765532 (primary), #A88662 (primary-light), #faf6f2 (light bg) */
+/* AESTHETIC DARK THEME - PREMIUM BROWN/BEIGE PALETTE */
+/* Enhanced visual design with modern aesthetics */
 
-/* DARK THEME - CONSISTENT BROWN/BEIGE PALETTE */
 .dark-theme {
-  background-color: #2a2318 !important; /* Dark brown base */
-  color: #f5f1eb !important; /* Light beige text */
-  transition: all 0.3s ease !important;
+  background: var(--theme-bg-primary) !important;
+  color: var(--theme-text-primary) !important;
+  transition: all 0.4s var(--animate-bezier) !important;
 
-  --primary-lighter: #2a2318 !important; /* Global override */
-  --primary-light: #f5f1eb !important; /* Global override */
-  --primary-color: #765532 !important; /* Global override */
+  --primary-lighter: var(--theme-nav-glass) !important;
+  --primary-light: var(--theme-text-primary) !important;
+  --primary-color: #8b5a4a !important; /* Warm brown that matches our palette */
 }
 
-/* COMPONENT LEVEL OVERRIDES */
+/* ===== GLOBAL IMAGE VISIBILITY RULES ===== */
+/* Ensure all images are always visible in both light and dark mode */
+img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.dark-theme img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  filter: none !important;
+}
+
+/* Specific rules for card images */
+.dark-theme .p-card img,
+.dark-theme .favorite-card img,
+.dark-theme [class*="card"] img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  background-color: transparent !important;
+}
+
+/* ===== END GLOBAL IMAGE VISIBILITY RULES ===== */
+
+/* ENHANCED COMPONENT LEVEL OVERRIDES */
 .dark-theme .header-nav,
 .dark-theme .nav,
 .dark-theme .navbar {
-  --primary-lighter: #2a2318 !important;
-  --primary-light: #f5f1eb !important;
+  --primary-lighter: var(--theme-nav-glass) !important;
+  --primary-light: var(--theme-text-primary) !important;
+  background: var(--theme-nav-bg) !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  border-bottom: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
 }
 
-/* UNIVERSAL BACKGROUND CONSISTENCY */
+/* PREMIUM TEXT HIERARCHY */
 .dark-theme *:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container):not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #f5f1eb !important; /* Light beige text for all elements */
+  color: var(--theme-text-secondary) !important;
 }
 
-/* MAIN STRUCTURAL ELEMENTS */
+.dark-theme h1, .dark-theme h2, .dark-theme h3, .dark-theme h4, .dark-theme h5, .dark-theme h6 {
+  color: var(--theme-text-primary) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+}
+
+/* SOPHISTICATED STRUCTURAL ELEMENTS */
 .dark-theme div:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
 .dark-theme section:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
 .dark-theme main:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
@@ -34,107 +71,148 @@
 .dark-theme header:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
 .dark-theme footer:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
 .dark-theme nav:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) {
-  background-color: #2a2318 !important; /* Consistent dark brown */
-  color: #f5f1eb !important;
+  background: var(--theme-bg-primary) !important;
+  color: var(--theme-text-primary) !important;
 }
 
-/* CARDS AND CONTAINERS - SUBTLE DIFFERENTIATION */
+/* CLEAN CARDS WITHOUT BORDERS */
 .dark-theme [class*="card"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="container"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="wrapper"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="panel"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="section"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important; /* Slightly lighter brown for cards */
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important; /* Subtle brown border */
-  border-radius: 8px !important; /* Consistent rounded corners */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important; /* Subtle shadow */
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  transition: all var(--animate-medium) var(--animate-bezier) !important;
 }
 
-/* TEXT ELEMENTS */
-.dark-theme h1, .dark-theme h2, .dark-theme h3, .dark-theme h4, .dark-theme h5, .dark-theme h6 {
-  color: #f5f1eb !important; /* Headers in light beige */
+/* ENHANCED HOVER EFFECTS WITHOUT BORDER CHANGES */
+.dark-theme [class*="card"]:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  transform: translateY(-4px) !important;
+  box-shadow: var(--theme-shadow-hover) !important;
 }
 
-.dark-theme p, .dark-theme span, .dark-theme div, .dark-theme li, .dark-theme td, .dark-theme th {
-  color: #e6ddd1 !important; /* Body text in slightly darker beige */
+/* ENHANCED TEXT ELEMENTS WITH TYPOGRAPHY */
+.dark-theme p:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme span:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme div:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme li:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme th:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-text-secondary) !important;
+  line-height: 1.6 !important;
 }
 
+/* PREMIUM LINK STYLING */
 .dark-theme a:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #A88662 !important; /* Links in primary-light */
+  color: var(--theme-accent-light) !important;
   text-decoration: none !important;
+  transition: all var(--animate-fast) var(--animate-bezier) !important;
+  position: relative !important;
 }
 
 .dark-theme a:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #A88662 !important; /* Keep same light brown - NO BLACK */
+  color: var(--theme-accent-hover) !important;
+  text-shadow: 0 0 8px var(--theme-accent-light) !important;
 }
 
-/* FORM ELEMENTS */
+/* IMPROVED FORM ELEMENTS WITHOUT UGLY BORDERS */
 .dark-theme input:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme textarea:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme select:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important; /* Same as cards */
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important; /* Subtle brown border */
-  border-radius: 4px !important;
-  padding: 8px 12px !important;
+  background: #2a2318 !important;
+  color: var(--theme-text-primary) !important;
+  border: 1px solid rgba(168, 134, 98, 0.2) !important;
+  border-radius: 8px !important;
+  padding: 12px 16px !important;
+  transition: all var(--animate-medium) var(--animate-bezier) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
 }
 
 .dark-theme input:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme textarea:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme select:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  border-color: #765532 !important; /* Primary color on focus */
-  box-shadow: 0 0 0 2px rgba(118, 85, 50, 0.3) !important;
+  border-color: #c4a876 !important;
+  box-shadow: 0 0 0 3px rgba(196, 168, 118, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  background: #332a1d !important;
+  transform: translateY(-1px) !important;
+  outline: none !important;
 }
 
-/* BUTTON ELEMENTS - NO BLACK HOVER */
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+  color: rgba(232, 220, 200, 0.6) !important;
+}
+
+/* LUXURIOUS BUTTON STYLING */
 .dark-theme button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #765532 !important; /* Primary color */
-  color: #ffffff !important;
+  background: var(--button-bg-primary) !important;
+  color: var(--theme-text-primary) !important;
   border: none !important;
-  border-radius: 6px !important;
-  padding: 10px 20px !important;
-  transition: none !important; /* Remove transition to prevent black */
+  border-radius: 10px !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.025em !important;
+  box-shadow: var(--button-shadow) !important;
+  transition: all var(--animate-medium) var(--animate-spring) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
+/* PREMIUM BUTTON HOVER EFFECTS */
 .dark-theme button:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #765532 !important; /* Keep same color - NO BLACK */
+  transform: translateY(-2px) !important;
+  box-shadow: var(--button-shadow-hover) !important;
+  background: var(--button-bg-primary) !important;
 }
 
+/* SECONDARY BUTTON STYLING */
 .dark-theme .btn-secondary:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important; /* Secondary buttons */
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important;
+  background: var(--button-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+  border: var(--glass-border) !important;
 }
 
 .dark-theme .btn-secondary:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important; /* Keep same color - NO BLACK */
+  transform: translateY(-2px) !important;
+  box-shadow: var(--theme-shadow-hover) !important;
+  background: var(--button-bg-secondary) !important;
 }
 
 /* TABLE ELEMENTS */
 .dark-theme table:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important;
-  border-radius: 8px !important;
+  background: var(--theme-bg-card) !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 12px !important;
   overflow: hidden !important;
+  box-shadow: var(--theme-shadow-soft) !important;
 }
 
-.dark-theme table th:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #2a2318 !important; /* Darker for headers */
-  color: #f5f1eb !important;
-  border-bottom: 1px solid #5a4b35 !important;
-  padding: 12px !important;
+.dark-theme th:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+  font-weight: 600 !important;
+  padding: 16px !important;
+  border-bottom: var(--glass-border) !important;
 }
 
-.dark-theme table td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #e6ddd1 !important;
-  border-bottom: 1px solid rgba(90, 75, 53, 0.3) !important;
-  padding: 12px !important;
+.dark-theme td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  padding: 14px 16px !important;
+  border-bottom: var(--theme-border-light) !important;
+  transition: background-color var(--animate-fast) ease !important;
 }
 
-.dark-theme table tr:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: rgba(90, 75, 53, 0.2) !important;
+.dark-theme tr:hover td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass-light) !important;
 }
 
 /* DROPDOWN AND MENU ELEMENTS */
@@ -176,130 +254,181 @@
 }
 
 .dark-theme .p-card:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important;
-  border-radius: 8px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  background: var(--theme-bg-card) !important;
+  border: none !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+  color: var(--theme-text-primary) !important;
 }
 
-.dark-theme .p-card-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .p-card-body:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: transparent !important;
-  color: #e6ddd1 !important;
+.dark-theme .p-card .p-card-body:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
 }
 
-.dark-theme .p-card-title:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #f5f1eb !important;
+.dark-theme .p-card .p-card-title:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-text-primary) !important;
 }
 
-.dark-theme .p-inputtext:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important;
-  border-radius: 4px !important;
+.dark-theme .p-card .p-card-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-text-secondary) !important;
 }
 
-.dark-theme .p-inputtext:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+/* PRIMEVUE FOCUS STATES */
+.dark-theme .p-inputtext:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-dropdown:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
   border-color: #765532 !important;
   box-shadow: 0 0 0 2px rgba(118, 85, 50, 0.3) !important;
 }
 
-.dark-theme .p-button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #765532 !important;
-  color: #ffffff !important;
-  border: none !important;
-  border-radius: 6px !important;
-}
-
-.dark-theme .p-button:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #765532 !important; /* Keep same color - NO BLACK */
-}
-
-.dark-theme .p-dropdown:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+/* PRIMEVUE PANELS AND OVERLAYS */
+.dark-theme .p-overlaypanel:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-tooltip:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-menu:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
   background-color: #3d3426 !important;
   color: #f5f1eb !important;
   border: 1px solid #5a4b35 !important;
-  border-radius: 4px !important;
-}
-
-.dark-theme .p-dropdown-panel:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  border: 1px solid #5a4b35 !important;
-  border-radius: 6px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 
-.dark-theme .p-dropdown-item:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #f5f1eb !important;
+/* PREMIUM NAVIGATION ENHANCEMENTS */
+.dark-theme .header-nav:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme nav:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-nav-bg) !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  border-bottom: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  position: relative !important;
 }
 
-.dark-theme .p-dropdown-item:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important; /* Keep same as base - NO BLACK */
+.dark-theme .header-nav::before:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme nav::before:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--theme-accent-light) 50%, transparent 100%);
+  opacity: 0.1;
+  z-index: -1;
 }
 
-.dark-theme .p-tabmenu:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #2a2318 !important;
-  border-bottom: 1px solid #5a4b35 !important;
-}
-
-.dark-theme .p-tabmenu .p-tabmenuitem .p-menuitem-link:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: transparent !important;
-  color: #e6ddd1 !important;
-  border-bottom: 2px solid transparent !important;
-  padding: 12px 20px !important;
-}
-
-.dark-theme .p-tabmenu .p-tabmenuitem.p-highlight .p-menuitem-link:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #f5f1eb !important;
-  border-bottom: 2px solid #765532 !important; /* Primary color accent */
-}
-
-.dark-theme .p-carousel:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #2a2318 !important;
-}
-
-.dark-theme .p-carousel-item:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-}
-
-.dark-theme .p-dialog:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important;
-  border-radius: 8px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
-}
-
-.dark-theme .p-dialog-header:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #2a2318 !important;
-  color: #f5f1eb !important;
-  border-bottom: 1px solid #5a4b35 !important;
-  border-radius: 8px 8px 0 0 !important;
-}
-
-.dark-theme .p-dialog-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  color: #e6ddd1 !important;
-}
-
-/* SCROLLBAR STYLING */
+/* PREMIUM SCROLLBAR STYLING */
 .dark-theme ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 12px !important;
+  height: 12px !important;
 }
 
 .dark-theme ::-webkit-scrollbar-track {
-  background: #2a2318 !important;
+  background: var(--theme-bg-secondary) !important;
+  border-radius: 6px !important;
 }
 
 .dark-theme ::-webkit-scrollbar-thumb {
-  background: #5a4b35 !important;
-  border-radius: 4px !important;
+  background: linear-gradient(135deg, var(--theme-accent-muted) 0%, var(--theme-accent-light) 100%) !important;
+  border-radius: 6px !important;
+  border: 2px solid var(--theme-bg-secondary) !important;
 }
 
 .dark-theme ::-webkit-scrollbar-thumb:hover {
-  background: #765532 !important;
+  background: linear-gradient(135deg, var(--theme-accent-light) 0%, var(--theme-accent-hover) 100%) !important;
+}
+
+/* PREMIUM TABLE STYLING */
+.dark-theme table:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+}
+
+.dark-theme th:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+  font-weight: 600 !important;
+  padding: 16px !important;
+  border-bottom: var(--glass-border) !important;
+}
+
+.dark-theme td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  padding: 14px 16px !important;
+  border-bottom: var(--theme-border-light) !important;
+  transition: background-color var(--animate-fast) ease !important;
+}
+
+.dark-theme tr:hover td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass-light) !important;
+}
+
+/* PREMIUM MODAL AND OVERLAY STYLING */
+.dark-theme .modal:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .overlay:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .popup:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass) !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  border: var(--glass-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--theme-shadow-hover) !important;
+}
+
+/* PREMIUM SELECTION STYLING */
+.dark-theme ::selection {
+  background: var(--theme-accent-light) !important;
+  color: var(--theme-bg-primary) !important;
+}
+
+.dark-theme ::-moz-selection {
+  background: var(--theme-accent-light) !important;
+  color: var(--theme-bg-primary) !important;
+}
+
+/* ENHANCED FOCUS OUTLINES */
+.dark-theme *:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  outline: 2px solid var(--theme-accent-light) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* PREMIUM LOADING STATES */
+.dark-theme .loading:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .spinner:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass) !important;
+  border: var(--glass-border) !important;
+  border-radius: 12px !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+}
+
+/* AESTHETIC ANIMATIONS */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.dark-theme .shimmer:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, var(--theme-accent-light), transparent);
+  animation: shimmer 2s infinite;
+  opacity: 0.3;
+}
+
+/* PREMIUM TOOLTIP STYLING */
+.dark-theme .tooltip:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass) !important;
+  color: var(--theme-text-primary) !important;
+  border: var(--glass-border) !important;
+  border-radius: 8px !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
 }
 
 /* SPECIFIC APP COMPONENTS */
@@ -523,23 +652,6 @@
   background-color: #3d3426 !important;
   color: #f5f1eb !important;
   border: 1px solid #5a4b35 !important;
-}
-
-/* PRIMEVUE FOCUS STATES */
-.dark-theme .p-inputtext:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .p-dropdown:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  border-color: #765532 !important;
-  box-shadow: 0 0 0 2px rgba(118, 85, 50, 0.3) !important;
-}
-
-/* PRIMEVUE PANELS AND OVERLAYS */
-.dark-theme .p-overlaypanel:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .p-tooltip:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .p-menu:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* FORCE OVERRIDE ANY REMAINING BLUE ELEMENTS */
