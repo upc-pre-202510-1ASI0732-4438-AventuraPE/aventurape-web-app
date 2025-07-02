@@ -8,14 +8,14 @@
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
-  --vt-c-indigo: #2c3e50;
+  --vt-c-indigo: #765532; /* Changed from blue to brown */
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
   --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-1: #765532; /* Use brown instead of indigo */
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
@@ -34,20 +34,102 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+  
+  /* FORCE BROWN PALETTE GLOBALLY */
+  --primary-lighter: #faf6f2; /* Light theme navbar */
+  --primary-light: #765532; /* Brown for text */
+  --primary-color: #765532; /* Brown primary */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
+/* Light Theme */
+.light-theme {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-mute: var(--vt-c-white-mute);
 
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
+  --color-border: var(--vt-c-divider-light-2);
+  --color-border-hover: var(--vt-c-divider-light-1);
 
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1);
+
+  /* Custom theme variables */
+  --theme-bg-primary: #f8f5f0;
+  --theme-bg-secondary: #ffffff;
+  --theme-bg-card: #ffffff;
+  --theme-text-primary: #333333;
+  --theme-text-secondary: #666666;
+  --theme-border: #e0e0e0;
+  --theme-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --theme-nav-bg: #faf6f2;
+  
+  /* Ensure consistent brown palette */
+  --primary-lighter: #faf6f2; /* Light navbar bg */
+  --primary-light: #765532; /* Brown text */
+  --primary-color: #765532; /* Brown primary */
+}
+
+/* Dark Theme - CONSISTENT BROWN/BEIGE PALETTE ONLY */
+.dark-theme {
+  --color-background: #2a2318; /* Dark brown base */
+  --color-background-soft: #3d3426; /* Card background */
+  --color-background-mute: #4f4230; /* Hover states */
+
+  --color-border: #5a4b35; /* Brown borders */
+  --color-border-hover: #765532; /* Primary color borders */
+
+  --color-heading: #f5f1eb; /* Light beige for headers */
+  --color-text: #f5f1eb; /* FORCE BEIGE TEXT - NOT BLUE */
+
+  /* Override Vue variables to use brown palette */
+  --vt-c-text-light-1: #f5f1eb; /* Override to beige */
+  --vt-c-text-light-2: #e6ddd1; /* Override to beige */
+  --vt-c-text-dark-1: #f5f1eb; /* Override to beige */
+  --vt-c-text-dark-2: #e6ddd1; /* Override to beige */
+
+  /* Custom theme variables - CONSISTENT BROWN PALETTE */
+  --theme-bg-primary: #2a2318; /* Dark brown base */
+  --theme-bg-secondary: #3d3426; /* Card background */
+  --theme-bg-card: #3d3426; /* Same as secondary */
+  --theme-bg-glass: #3d3426; /* Glass effect with brown */
+  --theme-text-primary: #f5f1eb; /* Light beige */
+  --theme-text-secondary: #e6ddd1; /* Body text */
+  --theme-text-muted: #A88662; /* Muted text */
+  --theme-border: #5a4b35; /* Brown border */
+  --theme-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Simple brown shadow */
+  --theme-nav-bg: #2a2318; /* Consistent dark brown for nav */
+  
+  /* Brown accent colors only - NO BLUE */
+  --theme-accent: #765532; /* Primary brown */
+  --theme-accent-primary: #765532; /* Primary brown */
+  --theme-accent-light: #A88662; /* Primary light */
+  --theme-accent-hover: #A88662; /* Same as light - NO BLACK HOVER */
+  --theme-accent-muted: #5a4b35; /* Muted accent */
+  
+  /* Brown borders and dividers */
+  --theme-border-hover: #765532; /* Primary on hover */
+  --theme-border-focus: #A88662; /* Primary light on focus */
+  
+  /* Brown shadows - NO BLACK */
+  --theme-shadow-hover: 0 4px 12px rgba(118, 85, 50, 0.2); /* Brown shadow */
+  --theme-shadow-glow: 0 0 20px rgba(118, 85, 50, 0.2); /* Brown glow */
+  --theme-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3); /* Card shadow */
+  
+  /* Consistent effects */
+  --glass-backdrop: blur(10px) saturate(120%);
+  --glass-border: 1px solid #5a4b35;
+  --glass-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  
+  /* Navigation specific variables */
+  --primary-lighter: #2a2318 !important; /* Override for navbar - FORCE BROWN */
+  --primary-light: #f5f1eb !important; /* Override for nav text - FORCE BEIGE */
+  --error-color: #e74c3c; /* Keep red for errors */
+  
+  /* Animation durations */
+  --animate-fast: 0.2s;
+  --animate-medium: 0.4s;
+  --animate-slow: 0.6s;
+  --animate-bezier: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 *,
@@ -83,4 +165,20 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Force dark theme on html and body */
+html.dark-theme {
+  background-color: var(--theme-bg-primary, #1a1a1a) !important;
+  color: var(--theme-text-primary, #ffffff) !important;
+}
+
+body.dark-theme {
+  background-color: var(--theme-bg-primary, #1a1a1a) !important;
+  color: var(--theme-text-primary, #ffffff) !important;
+}
+
+#app.dark-theme {
+  background-color: var(--theme-bg-primary, #1a1a1a) !important;
+  color: var(--theme-text-primary, #ffffff) !important;
 }
