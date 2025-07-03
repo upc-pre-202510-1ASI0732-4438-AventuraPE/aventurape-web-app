@@ -38,6 +38,13 @@
   "activities": {
     "title": "Actividades",
     "details": "Detalles de la Actividad",
+    "importantInfo": {
+      "title": "Información Importante",
+      "item1": "Esta actividad incluye todo lo necesario para que disfrutes al máximo.",
+      "item2": "No olvides traer ropa cómoda y muchas ganas de divertirte.",
+      "item3": "¡Recuerda que en la actividad  podrás conocer a mucha gente nueva!",
+      "item4": "No olvides traer tu cámara para capturar los mejores momentos"
+    },
     "description": "Descripción",
     "location": "Ubicación",
     "date": "Fecha",
@@ -51,6 +58,16 @@
     "noComments": "No hay comentarios aún",
     "addComment": "Agregar Comentario"
   },
+  "makeComment": {
+    "title": "Comparte tu experiencia",
+    "rating": "¿Cómo calificarías esta actividad?",
+    "ratingPlaceholder": "Selecciona una calificación",
+    "commonRating": "estrellas",
+    "reviewComment": "Tu comentario",
+    "placeholder": "¿Qué te pareció esta actividad? ¿La recomendarías a otros aventureros?",
+    "char-counter": "caracteres restantes",
+    "submit": "Publicar reseña"
+  },
   "favorites": {
     "title": "Mis Favoritos",
     "noFavorites": "No tienes actividades favoritas aún",
@@ -60,9 +77,30 @@
     "title": "Mi Perfil",
     "personalInfo": "Información Personal",
     "name": "Nombre",
+    "lastName": "Apellido",
     "email": "Correo Electrónico",
     "phone": "Teléfono",
-    "preferences": "Preferencias"
+    "preferences": "Preferencias",
+    "loading": "Cargando perfil...",
+    "hi": "Hola",
+    "createdAt": "Crea tu perfil",
+    "namePlaceholder": "Ingresa tu nombre",
+    "lastNamePlaceholder": "Ingresa tu apellido",
+    "emailPlaceholder": "ejemplo@correo.com",
+    "gender": "Género",
+    "street": "Calle",
+    "genderPlaceholder": "Selecciona tu género",
+    "streetPlaceholder": "Ingresa tu dirección",
+    "numberStreet": "Número de Calle",
+    "numberExclamation": "Solo se permiten números",
+    "city": "Ciudad",
+    "cityPlaceholder": "Tu ciudad",
+    "postalCode": "Código Postal",
+    "postalCodeValidation": "El código postal debe tener 5 dígitos",
+    "country": "País",
+    "countryPlaceholder": "Tu país",
+    "submit": "Guardar Perfil",
+    "editProfile": "Perfil de"
   },
   "common": {
     "loading": "Cargando...",
