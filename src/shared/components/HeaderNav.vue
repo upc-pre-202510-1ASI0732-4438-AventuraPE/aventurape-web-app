@@ -1,12 +1,14 @@
-
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/domains/IAM/services/authentication.store.js';
+import { useTheme } from '@/shared/composables/useTheme.js';
+import ThemeToggle from '@/shared/components/ThemeToggle.vue';
 import Cookies from 'js-cookie';
 
 const router = useRouter();
 const authStore = useAuthenticationStore();
+const { initializeTheme } = useTheme();
 const roles = ref([]);
 
 const fetchRoles = async () => {
@@ -26,7 +28,10 @@ const fetchRoles = async () => {
   }
 };
 
-onMounted(fetchRoles);
+onMounted(() => {
+  fetchRoles();
+  initializeTheme();
+});
 
 //Administrador
 const hasAdminRole = computed(() => Array.isArray(roles.value) && roles.value.includes('ROLE_ADMIN'));
@@ -57,6 +62,11 @@ const getHomeRoute = () => {
   if (hasEntrepreneurRole.value) return '/entrepreneur-home';
   if (hasAdventurousRole.value) return '/adventurous-home';
   return '/sign-in'; // Fallback
+}
+
+// Component registration
+const components = {
+  ThemeToggle
 }
 </script>
 
@@ -140,6 +150,11 @@ const getHomeRoute = () => {
           </a>
         </div>
 
+        <!-- Theme Toggle -->
+        <div class="nav-item theme-toggle-container" @click="closeMobileMenu">
+          <ThemeToggle />
+        </div>
+
       </div>
     </nav>
   </header>
@@ -153,6 +168,7 @@ const getHomeRoute = () => {
   top: 0;
   width: 100%;
   z-index: 1000;
+  transition: background-color 0.3s ease;
 }
 
 .nav-container {
@@ -185,8 +201,13 @@ const getHomeRoute = () => {
 .nav-item a:hover {
   color: #765532;
 }
+
 .nav-item.sign-out {
   margin-left: auto !important;
+}
+
+.nav-item.theme-toggle-container {
+  margin-left: 10px;
 }
 
 .sign-out a {
@@ -219,7 +240,7 @@ span{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transform: translateY(-150%);
     opacity: 0;
-    transition: transform 0.3s ease-in-out, opacity 0.3s;
+    transition: transform 0.3s ease-in-out, opacity 0.3s, background-color 0.3s ease;
     z-index: 999;
     height: auto;
     visibility: hidden;

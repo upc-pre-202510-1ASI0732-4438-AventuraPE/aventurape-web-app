@@ -1,4 +1,9 @@
 import './assets/main.css'
+import './assets/theme.css'
+import './assets/user-themes.css'
+import './assets/login-protection.css'
+import './assets/aggressive-dark.css'
+// import './assets/beautiful-dark.css' // Commented out - conflicts with brown palette
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/index.js'
@@ -7,8 +12,8 @@ import ToastService from 'primevue/toastservice'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { createPinia } from 'pinia'
-import { faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-library.add(faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt)
+import { faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt, faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
+library.add(faHome, faSearch, faHeart, faUser, faBars, faChartBar, faDollarSign, faSignOutAlt, faSun, faMoon)
 import Checkbox from 'primevue/checkbox';
 import emailjs from '@emailjs/browser';
 emailjs.init("eCqd55MH38eEgZvfa");
