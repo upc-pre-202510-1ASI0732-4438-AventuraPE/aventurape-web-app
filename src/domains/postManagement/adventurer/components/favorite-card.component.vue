@@ -48,15 +48,32 @@ export default {
         name: 'activity-detail',
         params: { id: this.activity.Id || this.activity.id }
       });
+    },
+
+    handleImageError(event) {
+      console.warn('Error loading image:', this.activity.image);
+      // Opcional: establecer una imagen por defecto
+      // event.target.src = '/path/to/default-image.jpg';
+    },
+
+    handleImageLoad(event) {
+      console.log('Image loaded successfully:', this.activity.image);
     }
   }};
 </script>
 <template>
   <Card class="favorite-card" @click="goToDetail">
     <template #header>
-      <img :src="activity.image" :alt="activity.nameActivity" />
-      <div class="card-price-tag">
-        <span>S/. {{ activity.cost?.toFixed(2) }}</span>
+      <div class="image-container">
+        <img 
+          :src="activity.image" 
+          :alt="activity.nameActivity"
+          @error="handleImageError"
+          @load="handleImageLoad"
+        />
+        <div class="card-price-tag">
+          <span>S/. {{ activity.cost?.toFixed(2) }}</span>
+        </div>
       </div>
     </template>
     <template #title>{{ activity.nameActivity }}</template>
@@ -104,80 +121,55 @@ export default {
   border: 1px solid rgba(118, 85, 50, 0.05);
 }
 
+/* DARK MODE STYLES FOR FAVORITE CARD */
+.dark-theme .favorite-card {
+  background: var(--theme-bg-card) !important;
+  border: none !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+}
+
+.dark-theme .favorite-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--theme-shadow-hover) !important;
+}
+
 .favorite-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 15px 30px rgba(118, 85, 50, 0.15);
 }
 
 /* Control de tamaño para imágenes en el encabezado */
+.image-container {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 :deep(.p-card-header) {
   height: 200px;
   overflow: hidden;
   position: relative;
+  background: transparent !important;
+  padding: 0 !important;
 }
 
+.image-container img,
 :deep(.p-card-header img) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background-color: #f5f5f5;
 }
 
-:deep(.p-card-body) {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 15px !important;
-}
-
-.favorite-card:hover :deep(.p-card-header img) {
-  transform: scale(1.08);
-}
-
-:deep(.p-card-body) {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 18px !important;
-  background: linear-gradient(to bottom, #fff, #f9f5f0);
-}
-
-:deep(.p-card-title) {
-  font-weight: 700;
-  font-size: 1.2rem;
-  color: #765532;
-  margin-bottom: 12px !important;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  position: relative;
-  padding-bottom: 8px;
-}
-
-:deep(.p-card-title):after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 3px;
-  background: linear-gradient(to right, #A88662, #D4B08C);
-  border-radius: 3px;
-}
-
-:deep(.p-card-subtitle) {
-  padding: 0;
-  margin-bottom: 15px !important;
-}
-
-:deep(.p-card-content) {
-  flex: 1;
-  padding: 5px 0 15px 0 !important;
-  margin-bottom: 0 !important;
-  display: flex;
-  flex-direction: column;
-}
-
+.favorite-card:hover .image-container img,
 .favorite-card:hover :deep(.p-card-header img) {
   transform: scale(1.08);
 }
@@ -254,6 +246,7 @@ export default {
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -273,13 +266,15 @@ export default {
 }
 
 .p-button-primary {
-  background: linear-gradient(135deg, #765532, #A88662) !important;
+  background: linear-gradient(135deg, #8b6914, #a67c00) !important;
   border: none !important;
-  box-shadow: 0 4px 10px rgba(118, 85, 50, 0.25) !important;
+  box-shadow: 0 4px 10px rgba(139, 105, 20, 0.25) !important;
+  color: #f8f4ee !important;
 }
 
 .p-button-primary:hover {
-  box-shadow: 0 6px 15px rgba(118, 85, 50, 0.35) !important;
+  background: linear-gradient(135deg, #a67c00, #c4a876) !important;
+  box-shadow: 0 6px 15px rgba(139, 105, 20, 0.35) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -295,8 +290,29 @@ export default {
   transform: translateY(-2px) !important;
 }
 
-/* Efecto de superposición con información */
-:deep(.p-card-header)::after {
+/* Card price tag styles */
+.card-price-tag {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #8b6914, #a67c00);
+  color: #f8f4ee;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.dark-theme .card-price-tag {
+  background: linear-gradient(135deg, #6b4e3d, #8b5a4a);
+  color: #f8f4ee;
+}
+
+/* Efecto de superposición con información - REMOVIDO PARA MEJOR VISIBILIDAD DE IMAGEN */
+/* :deep(.p-card-header)::after {
   content: '';
   position: absolute;
   top: 0;
@@ -304,5 +320,97 @@ export default {
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.5) 100%);
+} */
+
+/* ENHANCED DARK MODE STYLES FOR FAVORITE CARDS */
+.dark-theme :deep(.p-card-body) {
+  background: var(--theme-bg-card) !important;
+}
+
+.dark-theme .image-container {
+  background: #3d3426;
+}
+
+.dark-theme :deep(.p-card-header) {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+.dark-theme .image-container img,
+.dark-theme :deep(.p-card-header img) {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  filter: brightness(1) contrast(1) !important;
+  background-color: #3d3426;
+  border-radius: 0;
+  z-index: 1;
+  position: relative;
+}
+
+/* Asegurar que ningún pseudo-elemento oculte la imagen en dark mode */
+.dark-theme :deep(.p-card-header)::before,
+.dark-theme :deep(.p-card-header)::after {
+  display: none !important;
+}
+
+/* Forzar visibilidad de imagen en cualquier condición */
+.dark-theme .favorite-card img,
+.dark-theme .favorite-card :deep(img),
+.dark-theme .image-container img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.dark-theme :deep(.p-card-title) {
+  color: var(--theme-text-primary) !important;
+}
+
+.dark-theme :deep(.p-card-title):after {
+  background: linear-gradient(to right, var(--theme-accent-light), var(--theme-accent-hover)) !important;
+}
+
+.dark-theme .card-meta {
+  color: var(--theme-text-secondary) !important;
+}
+
+.dark-theme .meta-item {
+  background-color: var(--theme-bg-glass) !important;
+  color: var(--theme-text-secondary) !important;
+}
+
+.dark-theme .meta-item i {
+  color: var(--theme-accent-light) !important;
+}
+
+.dark-theme .card-description {
+  color: var(--theme-text-secondary) !important;
+}
+
+/* IMPROVED BUTTON COLORS FOR DARK MODE */
+.dark-theme .p-button-primary {
+  background: linear-gradient(135deg, #6b4e3d, #8b5a4a) !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(107, 78, 61, 0.3) !important;
+  color: #f8f4ee !important;
+}
+
+.dark-theme .p-button-primary:hover {
+  background: linear-gradient(135deg, #8b5a4a, #a67c5e) !important;
+  box-shadow: 0 6px 15px rgba(107, 78, 61, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+.dark-theme .p-button-danger {
+  background: var(--theme-bg-glass) !important;
+  border: 1px solid #ff6b6b !important;
+  color: #ff6b6b !important;
+}
+
+.dark-theme .p-button-danger:hover {
+  background: rgba(255, 107, 107, 0.1) !important;
+  box-shadow: 0 4px 8px rgba(255, 107, 107, 0.15) !important;
 }
 </style>

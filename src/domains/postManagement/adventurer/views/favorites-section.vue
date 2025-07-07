@@ -130,6 +130,11 @@ export default {
   height: 4px;
   background: linear-gradient(90deg, var(--primary-light), var(--primary-color));
   border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+.dark-theme .favorites-header::after {
+  background: linear-gradient(90deg, var(--theme-accent-light), var(--theme-accent)) !important;
 }
 
 .favorites-title {
@@ -138,6 +143,11 @@ export default {
   font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: -0.5px;
+  transition: color 0.3s ease;
+}
+
+.dark-theme .favorites-title {
+  color: var(--theme-text-primary) !important;
 }
 
 .favorites-subtitle {
@@ -145,6 +155,11 @@ export default {
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
+  transition: color 0.3s ease;
+}
+
+.dark-theme .favorites-subtitle {
+  color: var(--theme-text-secondary) !important;
 }
 
 .favorites-grid {
@@ -170,6 +185,27 @@ export default {
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(118, 85, 50, 0.08);
   border: 1px solid rgba(118, 85, 50, 0.1);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dark mode styles for empty states */
+.dark-theme .loading-state, 
+.dark-theme .error-state, 
+.dark-theme .empty-state {
+  background: linear-gradient(to bottom right, var(--theme-bg-card), var(--theme-bg-secondary)) !important;
+  border: 1px solid var(--theme-border) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark-theme .loading-state p,
+.dark-theme .error-state p,
+.dark-theme .empty-state p {
+  color: var(--theme-text-secondary) !important;
+}
+
+.dark-theme .error-state h3,
+.dark-theme .empty-state h2 {
+  color: var(--theme-text-primary) !important;
 }
 
 .custom-spinner ::v-deep(.p-progress-spinner-circle) {
