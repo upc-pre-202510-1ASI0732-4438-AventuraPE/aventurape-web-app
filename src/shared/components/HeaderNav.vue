@@ -2,13 +2,14 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/domains/IAM/services/authentication.store.js';
-import { useTheme } from '@/shared/composables/useTheme.js';
-import ThemeToggle from '@/shared/components/ThemeToggle.vue';
+import LanguageSwitcher from './LanguageSwitcher.vue';
 import Cookies from 'js-cookie';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const router = useRouter();
 const authStore = useAuthenticationStore();
-const { initializeTheme } = useTheme();
 const roles = ref([]);
 
 const fetchRoles = async () => {
@@ -28,10 +29,7 @@ const fetchRoles = async () => {
   }
 };
 
-onMounted(() => {
-  fetchRoles();
-  initializeTheme();
-});
+onMounted(fetchRoles);
 
 //Administrador
 const hasAdminRole = computed(() => Array.isArray(roles.value) && roles.value.includes('ROLE_ADMIN'));
@@ -53,7 +51,7 @@ const closeMobileMenu = () => {
 
 // Update the signOut function in HeaderNav.vue to add more debugging
 const signOut = () => {
-  if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+  if (confirm(t('common.logout'))) {
     authStore.signOut(router);
   }
 };
@@ -62,11 +60,6 @@ const getHomeRoute = () => {
   if (hasEntrepreneurRole.value) return '/entrepreneur-home';
   if (hasAdventurousRole.value) return '/adventurous-home';
   return '/sign-in'; // Fallback
-}
-
-// Component registration
-const components = {
-  ThemeToggle
 }
 </script>
 
@@ -82,40 +75,40 @@ const components = {
       <div class="nav-items" :class="{ 'mobile-open': isMobileMenuOpen }">
 
         <div class="nav-item home" @click="closeMobileMenu">
-          <!--Estoy añadiendo aca tambien al admin-->
           <router-link :to="getHomeRoute()">
             <font-awesome-icon icon="home" />
-            <span>Inicio</span>
+            <span>{{ $t('navbar.home') }}</span>
           </router-link>
         </div>
+
         <!-- Opciones para el rol Administrador -->
         <template v-if="hasAdminRole">
           <div class="nav-item search" @click="closeMobileMenu">
             <router-link to="/buscar-admin">
               <font-awesome-icon icon="search" />
-              <span>Buscar actividades</span>
+              <span>{{ $t('navbar.explore') }}</span>
             </router-link>
           </div>
         </template>
 
         <!-- Opciones para el rol Adventurer -->
-        <template v-if="hasAdventurousRole ">
+        <template v-if="hasAdventurousRole">
           <div class="nav-item search" @click="closeMobileMenu">
             <router-link to="/buscar">
               <font-awesome-icon icon="search" />
-              <span>Buscar</span>
+              <span>{{ $t('navbar.explore') }}</span>
             </router-link>
           </div>
           <div class="nav-item favorites" @click="closeMobileMenu">
             <router-link to="/favoritos">
               <font-awesome-icon icon="heart" />
-              <span>Favoritos</span>
+              <span>{{ $t('navbar.favorites') }}</span>
             </router-link>
           </div>
           <div class="nav-item account" @click="closeMobileMenu">
             <router-link to="/adventurer/profile">
               <font-awesome-icon icon="user" />
-              <span>Mi Cuenta</span>
+              <span>{{ $t('navbar.profile') }}</span>
             </router-link>
           </div>
         </template>
@@ -137,22 +130,22 @@ const components = {
           <div class="nav-item account" @click="closeMobileMenu">
             <router-link to="/entrepreneur/profile">
               <font-awesome-icon icon="user" />
-              <span>Mi cuenta</span>
+              <span>{{ $t('navbar.profile') }}</span>
             </router-link>
           </div>
         </template>
+
+        <!-- Selector de idioma -->
+        <div class="nav-item language-switcher" @click="closeMobileMenu">
+          <LanguageSwitcher />
+        </div>
 
         <!-- Botón de cerrar sesión para todos los usuarios -->
         <div class="nav-item sign-out" @click="closeMobileMenu">
           <a href="#" @click.prevent="signOut">
             <font-awesome-icon icon="sign-out-alt" />
-            <span>Cerrar Sesión</span>
+            <span>{{ $t('navbar.logout') }}</span>
           </a>
-        </div>
-
-        <!-- Theme Toggle -->
-        <div class="nav-item theme-toggle-container" @click="closeMobileMenu">
-          <ThemeToggle />
         </div>
 
       </div>
@@ -168,7 +161,6 @@ const components = {
   top: 0;
   width: 100%;
   z-index: 1000;
-  transition: background-color 0.3s ease;
 }
 
 .nav-container {
@@ -201,13 +193,8 @@ const components = {
 .nav-item a:hover {
   color: #765532;
 }
-
 .nav-item.sign-out {
   margin-left: auto !important;
-}
-
-.nav-item.theme-toggle-container {
-  margin-left: 10px;
 }
 
 .sign-out a {
@@ -240,7 +227,7 @@ span{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transform: translateY(-150%);
     opacity: 0;
-    transition: transform 0.3s ease-in-out, opacity 0.3s, background-color 0.3s ease;
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
     z-index: 999;
     height: auto;
     visibility: hidden;

@@ -230,25 +230,25 @@ export default {
               <template #header>
                 <div class="panel-header">
                   <i class="pi pi-info-circle"></i>
-                  <span>Información importante</span>
+                  <span>{{ $t('activities.importantInfo.title') }}</span>
                 </div>
               </template>
               <ul class="info-list">
                 <li>
                   <i class="pi pi-check-circle"></i>
-                  <span>Esta actividad incluye todo lo necesario para que disfrutes al máximo.</span>
+                  <span>{{ $t('activities.importantInfo.item1') }}</span>
                 </li>
                 <li>
                   <i class="pi pi-info-circle"></i>
-                  <span>No olvides traer ropa cómoda y muchas ganas de divertirte.</span>
+                  <span>{{ $t('activities.importantInfo.item2') }}</span>
                 </li>
                 <li>
                   <i class="pi pi-calendar"></i>
-                  <span>¡Recuerda que en la actividad  podrás conocer a mucha gente nueva!</span>
+                  <span>{{ $t('activities.importantInfo.item3') }}</span>
                 </li>
                 <li>
                   <i class="pi pi-users"></i>
-                  <span>No olvides traer tu cámara para capturar los mejores momentos</span>
+                  <span>{{ $t('activities.importantInfo.item4') }}</span>
                 </li>
               </ul>
             </Panel>

@@ -73,28 +73,26 @@ export class ActivityApiService {
         return http.get('/users/entrepreneurs', config);
     }
 
+    // Obtener todos los usuarios
     async getAllUsers() {
         return http.get('/users');
     }
 
+    // Añadir una publicación a favoritos
+    // /api/v1/favorite-publications/create-favorite-publication
     async addToFavorites(favoritePublication) {
         return http.post('/favorite-publications/create-favorite-publication', favoritePublication);
     }
 
 
+    // Eliminar una publicación de favoritos
     async removeFromFavorites(favoriteId) {
         return http.delete(`/favorite-publications/delete-favorite-publication/${favoriteId}`);
     }
 
+    // Obtener las publicaciones favoritas del usuario
+///api/v1/favorite-publications/getFavoritePublicationByProfileId/{profileId}
     async getFavoritePublicationsByProfileId(userId) {
         return http.get(`/favorite-publications/getFavoritePublicationByProfileId/${userId}`);
-    }
-
-    async getFavoritesCountByPublicationId(publicationId) {
-        return http.get(`/favorite-publications/count-by-publication/${publicationId}`);
-    }
-
-    async getCommentsCountByPublicationId(publicationId) {
-      return http.get(`/publication/${publicationId}/comments/count`);
     }
 }

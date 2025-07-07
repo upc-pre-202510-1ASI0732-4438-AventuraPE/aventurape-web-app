@@ -1,5 +1,6 @@
 <script setup>
 import HeaderNav from './shared/components/HeaderNav.vue';
+import BarbaraChat from './shared/components/BarbaraChat.vue';
 import { ref, computed, onMounted } from 'vue';
 import { useAuthenticationStore } from '@/domains/IAM/services/authentication.store.js';
 import { useTheme } from '@/shared/composables/useTheme.js';
@@ -22,6 +23,9 @@ onMounted(() => {
     <main class="main-content" :class="{ 'no-header': !isAuthenticated, 'dark-theme': isDarkMode }">
       <router-view />
     </main>
+    
+    <!-- Chat de Barbara Nexus - disponible para todos los usuarios -->
+    <BarbaraChat />
   </div>
 </template>
 

@@ -138,7 +138,7 @@ export default {
         this.errorMessage = "Por favor, verifique que no es un robot.";
         this.$toast.add({
           severity: "error",
-          summary: "Error",
+          summary: "",
           detail: "Por favor, verifique que no es un robot",
           life: 3000,
         });
@@ -173,9 +173,9 @@ export default {
       try {
         await authenticationStore.signUp(signUpRequest, this.$router, this.$toast);
       } catch (error) {
-        console.error("Error en el registro:", error);
+        console.error("Credenciales incorrectas:", error);
         this.errorMessage =
-            error.response?.data?.message || "Error al registrarse. Inténtalo de nuevo.";
+            error.response?.data?.message || "Inténtalo de nuevo.";
       }
     }
   }
