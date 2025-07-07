@@ -53,7 +53,7 @@
       <div class="chat-messages" ref="messagesContainer">
         <div 
           v-for="(message, index) in messages" 
-          :key="index" 
+          :key="`message-${index}-${message.timestamp.getTime()}-${message.id || Math.random()}`" 
           :class="['message', message.type]"
         >
           <div class="message-content">
@@ -73,17 +73,24 @@
         </div>
       </div>
 
-      <div class="chat-input">
+      <form class="chat-input" @submit.prevent="handleSubmit">
         <input 
           v-model="currentMessage" 
-          @keyup.enter="sendMessage"
           placeholder="Escribe tu mensaje..."
-          :disabled="isLoading"
+          :disabled="isLoading || isSubmitting"
+          ref="messageInput"
         />
-        <button class="send-icon-btn" @click="sendMessage" :disabled="isLoading || !currentMessage.trim()">
-          <font-awesome-icon icon="paper-plane" :class="['send-icon-minimal', { 'disabled': isLoading || !currentMessage.trim() }]" />
+        <button 
+          type="submit" 
+          class="send-icon-btn" 
+          :disabled="isLoading || isSubmitting || !currentMessage.trim()"
+        >
+          <font-awesome-icon 
+            icon="paper-plane" 
+            :class="['send-icon-minimal', { 'disabled': isLoading || isSubmitting || !currentMessage.trim() }]" 
+          />
         </button>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -104,8 +111,11 @@ export default {
       messages: [],
       currentMessage: '',
       isLoading: false,
+      isSubmitting: false,
       unreadMessages: 0,
-      userId: null
+      userId: null,
+      currentRequest: null,
+      welcomeMessageAdded: false
     };
   },
   
@@ -113,21 +123,33 @@ export default {
     // Obtener ID del usuario autenticado
     this.userId = Cookies.get('userId') || `guest_${Date.now()}`;
     
-    // Mensaje de bienvenida
-    this.addMessage({
-      text: '¡Hola! Soy Barbara, tu asistente virtual de AventuraPe. ¿En qué puedo ayudarte hoy? Puedo recomendarte aventuras, ayudarte a encontrar actividades o responder cualquier pregunta sobre turismo en Perú.',
-      type: 'bot',
-      timestamp: new Date()
-    });
+    // Agregar mensaje de bienvenida solo una vez
+    this.addWelcomeMessage();
   },
 
   methods: {
+    addWelcomeMessage() {
+      if (this.welcomeMessageAdded) return;
+      
+      this.addMessage({
+        id: 'welcome-message',
+        text: '¡Hola! Soy Barbara, tu asistente virtual de AventuraPe. ¿En qué puedo ayudarte hoy? Puedo recomendarte aventuras, ayudarte a encontrar actividades o responder cualquier pregunta sobre turismo en Perú.',
+        type: 'bot',
+        timestamp: new Date()
+      });
+      
+      this.welcomeMessageAdded = true;
+    },
+
     toggleChat() {
       this.isOpen = !this.isOpen;
       if (this.isOpen) {
         this.unreadMessages = 0;
+        // Asegurar que el mensaje de bienvenida esté presente
+        this.addWelcomeMessage();
         this.$nextTick(() => {
           this.scrollToBottom();
+          this.$refs.messageInput?.focus();
         });
       } else {
         this.isMaximized = false;
@@ -157,50 +179,94 @@ export default {
         this.scrollToBottom();
       });
     },
+
+    async handleSubmit() {
+      if (this.isSubmitting || this.isLoading || !this.currentMessage.trim()) {
+        return;
+      }
+      await this.sendMessage();
+    },
+
     async sendMessage() {
-      if (!this.currentMessage.trim() || this.isLoading) return;
+      if (this.isSubmitting || this.isLoading || !this.currentMessage.trim()) {
+        return;
+      }
+
+      if (this.currentRequest) {
+        this.currentRequest.abort();
+      }
 
       const userMessage = this.currentMessage.trim();
+      
       this.addMessage({
+        id: `user-${Date.now()}-${Math.random()}`,
         text: userMessage,
         type: 'user',
         timestamp: new Date()
       });
 
       this.currentMessage = '';
+      this.isSubmitting = true;
       this.isLoading = true;
 
       try {
-        const response = await BarbaraNexusService.sendMessage(userMessage, this.userId);
+        const controller = new AbortController();
+        this.currentRequest = controller;
+
+        const response = await BarbaraNexusService.sendMessage(userMessage, this.userId, controller.signal);
+        
+        if (controller.signal.aborted) {
+          return;
+        }
         
         if (response.success) {
           this.addMessage({
+            id: `bot-${Date.now()}-${Math.random()}`,
             text: response.data.response,
             type: 'bot',
             timestamp: new Date()
           });
         } else {
           this.addMessage({
+            id: `error-${Date.now()}-${Math.random()}`,
             text: 'Lo siento, no pude procesar tu mensaje. Inténtalo de nuevo.',
             type: 'bot',
             timestamp: new Date()
           });
         }
       } catch (error) {
-        this.addMessage({
-          text: 'Error de conexión. Verifica tu internet e inténtalo de nuevo.',
-          type: 'bot',
-          timestamp: new Date()
-        });
+        if (error.name !== 'AbortError') {
+          this.addMessage({
+            id: `connection-error-${Date.now()}-${Math.random()}`,
+            text: 'Error de conexión. Verifica tu internet e inténtalo de nuevo.',
+            type: 'bot',
+            timestamp: new Date()
+          });
+        }
       } finally {
         this.isLoading = false;
+        this.isSubmitting = false;
+        this.currentRequest = null;
         this.$nextTick(() => {
           this.scrollToBottom();
+          this.$refs.messageInput?.focus();
         });
       }
     },
 
     addMessage(message) {
+      if (message.id && this.messages.some(m => m.id === message.id)) {
+        return;
+      }
+      
+      const lastMessage = this.messages[this.messages.length - 1];
+      if (lastMessage && 
+          lastMessage.text === message.text && 
+          lastMessage.type === message.type &&
+          Math.abs(lastMessage.timestamp.getTime() - message.timestamp.getTime()) < 2000) {
+        return;
+      }
+      
       this.messages.push(message);
       if (!this.isOpen) {
         this.unreadMessages++;
@@ -306,8 +372,8 @@ export default {
   position: absolute;
   bottom: 80px;
   right: 0;
-  width: 380px;
-  height: 550px;
+  width: 420px;
+  height: 600px;
   background: var(--white);
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -321,8 +387,8 @@ export default {
 .chat-window.maximized {
   width: 90vw;
   height: 90vh;
-  max-width: 900px;
-  max-height: 700px;
+  max-width: 1000px;
+  max-height: 800px;
   left: 50%;
   top: 50%;
   right: auto;
