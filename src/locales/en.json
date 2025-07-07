@@ -1,0 +1,117 @@
+{
+  "navbar": {
+    "explore": "Explore",
+    "myActivities": "My Activities",
+    "favorites": "Favorites",
+    "profile": "Profile",
+    "home": "Home",
+    "logout": "Logout"
+  },
+  "home": {
+    "title": "Welcome, Adventurer",
+    "subtitle": "Discover new experiences near you",
+    "searchPlaceholder": "Search activities...",
+    "noActivities": "No activities available",
+    "loadingActivities": "Loading activities...",
+    "popularActivities": "Popular Activities",
+    "nearbyActivities": "Nearby Activities",
+    "noResults": "No activities found for"
+  },
+  "buttons": {
+    "join": "Join",
+    "viewMore": "View More",
+    "viewDetails": "View Details",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "search": "Search",
+    "filter": "Filter",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites",
+    "listView": "List view",
+    "gridView": "Grid view",
+    "clearSearch": "Clear search"
+  },
+  "activities": {
+    "title": "Activities",
+    "details": "Activity Details",
+    "importantInfo": {
+      "title": "Important Information",
+      "item1": "This activity includes everything you need to enjoy it to the fullest.",
+      "item2": "Don't forget to wear comfortable clothes and bring lots of energy.",
+      "item3": "Remember that in this activity you will meet many new people!",
+      "item4": "Don't forget to bring your camera to capture the best moments"
+    },
+    "description": "Description",
+    "location": "Location",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "capacity": "Capacity",
+    "available": "spots available",
+    "participants": "Participants",
+    "comments": "Comments",
+    "writeComment": "Write a comment",
+    "noComments": "No comments yet",
+    "addComment": "Add Comment"
+  },
+  "makeComment": {
+    "title": "Write a Review",
+    "rating": "How would you rate this activity?",
+    "ratingPlaceholder": "Select a rating",
+    "commonRating": "stars",
+    "reviewComment": "Your review",
+    "placeholder": "How was your experience? Share your thoughts with others.",
+    "char-counter": "characters remaining",
+    "submit": "Submit Review"
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "noFavorites": "You don't have favorite activities yet",
+    "addFavorites": "Explore activities and add them to your favorites"
+  },
+  "profile": {
+    "title": "My Profile",
+    "personalInfo": "Personal Information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "preferences": "Preferences",
+    "loading": "Loading profile...",
+    "hi": "Hello",
+    "createdAt": "Create your profile",
+    "namePlaceholder": "Enter your name",
+    "lastNamePlaceholder": "Enter your last name",
+    "emailPlaceholder": "example@mail.com",
+    "gender": "Gender",
+    "street": "Street",
+    "genderPlaceholder": "Select your gender",
+    "streetPlaceholder": "Enter your street",
+    "numberStreet": "Street Number",
+    "numberExclamation": "Only numbers are allowed",
+    "city": "City",
+    "cityPlaceholder": "Your city",
+    "postalCode": "Postal Code",
+    "postalCodeValidation": "The postal code must be 5 digits",
+    "country": "Country",
+    "countryPlaceholder": "Your country",
+    "submit": "Save Profile",
+    "editProfile": "Profile of"
+
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "logout": "Are you sure you want to logout?",
+    "of": "of"
+  }
+}
