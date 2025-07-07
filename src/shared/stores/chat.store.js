@@ -7,9 +7,12 @@ export const useChatStore = defineStore('chat', {
     messages: [],
     isOpen: false,
     isLoading: false,
+    isSubmitting: false,
     unreadCount: 0,
     userId: null,
-    isConnected: false
+    isConnected: false,
+    currentRequest: null,
+    welcomeMessageAdded: false
   }),
 
   getters: {
@@ -19,17 +22,34 @@ export const useChatStore = defineStore('chat', {
 
   actions: {
     async sendMessage(message) {
+      if (this.isSubmitting || this.isLoading || !message.trim()) {
+        return;
+      }
+
       if (!this.userId) {
         this.userId = Cookies.get('userId') || `guest_${Date.now()}`;
       }
 
+      if (this.currentRequest) {
+        this.currentRequest.abort();
+      }
+
+      this.isSubmitting = true;
       this.isLoading = true;
       
       try {
-        const response = await BarbaraNexusService.sendMessage(message, this.userId);
+        const controller = new AbortController();
+        this.currentRequest = controller;
+
+        const response = await BarbaraNexusService.sendMessage(message, this.userId, controller.signal);
+        
+        if (controller.signal.aborted) {
+          return;
+        }
         
         if (response.success) {
           this.addMessage({
+            id: `store-bot-${Date.now()}-${Math.random()}`,
             text: response.data.response,
             type: 'bot',
             timestamp: new Date()
@@ -37,24 +57,42 @@ export const useChatStore = defineStore('chat', {
           this.isConnected = true;
         } else {
           this.addMessage({
+            id: `store-error-${Date.now()}-${Math.random()}`,
             text: 'Error al procesar el mensaje',
             type: 'bot',
             timestamp: new Date()
           });
         }
       } catch (error) {
-        this.addMessage({
-          text: 'Error de conexión',
-          type: 'bot',
-          timestamp: new Date()
-        });
-        this.isConnected = false;
+        if (error.name !== 'AbortError') {
+          this.addMessage({
+            id: `store-connection-error-${Date.now()}-${Math.random()}`,
+            text: 'Error de conexión',
+            type: 'bot',
+            timestamp: new Date()
+          });
+          this.isConnected = false;
+        }
       } finally {
         this.isLoading = false;
+        this.isSubmitting = false;
+        this.currentRequest = null;
       }
     },
 
     addMessage(message) {
+      if (message.id && this.messages.some(m => m.id === message.id)) {
+        return;
+      }
+      
+      const lastMessage = this.messages[this.messages.length - 1];
+      if (lastMessage && 
+          lastMessage.text === message.text && 
+          lastMessage.type === message.type &&
+          Math.abs(lastMessage.timestamp.getTime() - message.timestamp.getTime()) < 2000) {
+        return;
+      }
+      
       this.messages.push(message);
       if (!this.isOpen) {
         this.unreadCount++;
@@ -83,14 +121,16 @@ export const useChatStore = defineStore('chat', {
     clearMessages() {
       this.messages = [];
       this.unreadCount = 0;
+      this.welcomeMessageAdded = false;
     },
 
-    addWelcomeMessage() {
-      this.addMessage({
-        text: '¡Hola! Soy Barbara, tu asistente virtual de AventuraPe. ¿En qué puedo ayudarte hoy? Puedo recomendarte aventuras, ayudarte a encontrar actividades o responder cualquier pregunta sobre turismo en Perú.',
-        type: 'bot',
-        timestamp: new Date()
-      });
+    cancelCurrentRequest() {
+      if (this.currentRequest) {
+        this.currentRequest.abort();
+        this.currentRequest = null;
+      }
+      this.isLoading = false;
+      this.isSubmitting = false;
     }
   }
 }); 
