@@ -17,7 +17,7 @@ export function useTheme() {
     const html = document.documentElement
     const body = document.body
     const app = document.getElementById('app')
-    
+
     if (isDarkMode.value) {
       html.classList.add('dark-theme')
       html.classList.remove('light-theme')

@@ -189,8 +189,8 @@ export default {
 }
 
 /* Dark mode styles for empty states */
-.dark-theme .loading-state, 
-.dark-theme .error-state, 
+.dark-theme .loading-state,
+.dark-theme .error-state,
 .dark-theme .empty-state {
   background: linear-gradient(to bottom right, var(--theme-bg-card), var(--theme-bg-secondary)) !important;
   border: 1px solid var(--theme-border) !important;

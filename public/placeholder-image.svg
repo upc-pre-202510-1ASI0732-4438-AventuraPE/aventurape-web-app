@@ -1,0 +1,7 @@
+<!-- Placeholder SVG for missing images -->
+<svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="200" fill="#f5f5f5"/>
+  <path d="M150 70C158.837 70 166 77.163 166 86C166 94.837 158.837 102 150 102C141.163 102 134 94.837 134 86C134 77.163 141.163 70 150 70Z" fill="#cccccc"/>
+  <path d="M120 130L130 120L150 140L170 120L180 130V150H120V130Z" fill="#cccccc"/>
+  <text x="150" y="175" text-anchor="middle" fill="#999999" font-family="Arial, sans-serif" font-size="12">No image available</text>
+</svg>

@@ -2,9 +2,9 @@
   <div class="theme-toggle" @click="toggleTheme">
     <div class="toggle-container" :class="{ 'dark': isDarkMode }">
       <div class="toggle-circle">
-        <font-awesome-icon 
-          :icon="isDarkMode ? 'moon' : 'sun'" 
-          :class="{ 'icon-active': true }"
+        <font-awesome-icon
+            :icon="isDarkMode ? 'moon' : 'sun'"
+            :class="{ 'icon-active': true }"
         />
       </div>
     </div>
@@ -40,19 +40,19 @@ const { isDarkMode, toggleTheme } = useTheme()
   border-radius: 20px;
   position: relative;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.2),
-    0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.2),
+      0 4px 12px rgba(0, 0, 0, 0.15);
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .toggle-container.dark {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   border-color: rgba(100, 181, 246, 0.4);
-  box-shadow: 
-    inset 0 2px 4px rgba(0, 0, 0, 0.4),
-    0 4px 12px rgba(100, 181, 246, 0.2),
-    0 0 20px rgba(100, 181, 246, 0.1);
+  box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.4),
+      0 4px 12px rgba(100, 181, 246, 0.2),
+      0 0 20px rgba(100, 181, 246, 0.1);
 }
 
 .toggle-circle {
@@ -67,9 +67,9 @@ const { isDarkMode, toggleTheme } = useTheme()
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.3),
+      inset 0 1px 1px rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -77,10 +77,10 @@ const { isDarkMode, toggleTheme } = useTheme()
   transform: translateX(28px);
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   color: #64b5f6;
-  box-shadow: 
-    0 4px 8px rgba(0, 0, 0, 0.4),
-    0 0 15px rgba(100, 181, 246, 0.3),
-    inset 0 1px 1px rgba(100, 181, 246, 0.2);
+  box-shadow:
+      0 4px 8px rgba(0, 0, 0, 0.4),
+      0 0 15px rgba(100, 181, 246, 0.3),
+      inset 0 1px 1px rgba(100, 181, 246, 0.2);
   border-color: rgba(100, 181, 246, 0.3);
 }
 
@@ -118,16 +118,16 @@ const { isDarkMode, toggleTheme } = useTheme()
 
 @keyframes darkGlow {
   0% {
-    box-shadow: 
-      inset 0 2px 4px rgba(0, 0, 0, 0.4),
-      0 4px 12px rgba(100, 181, 246, 0.2),
-      0 0 20px rgba(100, 181, 246, 0.1);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(100, 181, 246, 0.2),
+        0 0 20px rgba(100, 181, 246, 0.1);
   }
   100% {
-    box-shadow: 
-      inset 0 2px 4px rgba(0, 0, 0, 0.4),
-      0 4px 12px rgba(100, 181, 246, 0.3),
-      0 0 25px rgba(100, 181, 246, 0.2);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.4),
+        0 4px 12px rgba(100, 181, 246, 0.3),
+        0 0 25px rgba(100, 181, 246, 0.2);
   }
 }
 
@@ -138,15 +138,15 @@ const { isDarkMode, toggleTheme } = useTheme()
 
 @keyframes lightPulse {
   0%, 100% {
-    box-shadow: 
-      inset 0 2px 4px rgba(0, 0, 0, 0.2),
-      0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.15);
   }
   50% {
-    box-shadow: 
-      inset 0 2px 4px rgba(0, 0, 0, 0.2),
-      0 4px 12px rgba(0, 0, 0, 0.15),
-      0 0 15px rgba(243, 156, 18, 0.3);
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        0 0 15px rgba(243, 156, 18, 0.3);
   }
 }
 
@@ -155,16 +155,16 @@ const { isDarkMode, toggleTheme } = useTheme()
     width: 50px;
     height: 28px;
   }
-  
+
   .toggle-circle {
     width: 24px;
     height: 24px;
   }
-  
+
   .toggle-container.dark .toggle-circle {
     transform: translateX(22px);
   }
-  
+
   .icon-active {
     font-size: 12px;
   }

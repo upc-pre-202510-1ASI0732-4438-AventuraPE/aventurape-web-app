@@ -34,7 +34,7 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
-  
+
   /* FORCE BROWN PALETTE GLOBALLY */
   --primary-lighter: #faf6f2; /* Light theme navbar */
   --primary-light: #765532; /* Brown for text */
@@ -62,7 +62,7 @@
   --theme-border: #e0e0e0;
   --theme-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --theme-nav-bg: #faf6f2;
-  
+
   /* Ensure consistent brown palette */
   --primary-lighter: #faf6f2; /* Light navbar bg */
   --primary-light: #765532; /* Brown text */
@@ -93,56 +93,56 @@
   --theme-bg-card: #2a2318; /* Solid warm card background */
   --theme-bg-glass: rgba(42, 35, 24, 0.85); /* Glass morphism effect */
   --theme-bg-glass-light: rgba(61, 52, 38, 0.7); /* Lighter glass effect */
-  
+
   /* Enhanced text hierarchy */
   --theme-text-primary: #f8f4ee; /* Hero text - luxurious cream */
   --theme-text-secondary: #e8dcc8; /* Body text - warm beige */
   --theme-text-muted: #c4a876; /* Muted text - golden brown */
   --theme-text-accent: #d4b896; /* Accent text - warm gold */
-  
+
   /* Sophisticated borders and dividers */
   --theme-border: rgba(118, 85, 50, 0.3); /* Subtle brown border */
   --theme-border-light: rgba(168, 134, 98, 0.2); /* Lighter border */
   --theme-border-accent: rgba(168, 134, 98, 0.5); /* Accent border */
-  
+
   /* Enhanced shadow system for depth */
   --theme-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(31, 26, 20, 0.6); /* Layered depth */
   --theme-shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(31, 26, 20, 0.4); /* Subtle shadow */
   --theme-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(118, 85, 50, 0.2); /* Elegant hover */
   --theme-shadow-glow: 0 0 24px rgba(168, 134, 98, 0.3), 0 0 8px rgba(168, 134, 98, 0.5); /* Warm glow */
-  
+
   /* Navigation with premium styling */
   --theme-nav-bg: linear-gradient(135deg, rgba(31, 26, 20, 0.95) 0%, rgba(42, 35, 24, 0.95) 100%);
   --theme-nav-glass: rgba(31, 26, 20, 0.9); /* Glass nav background */
-  
+
   /* Refined accent colors with warm brown tones */
   --theme-accent: #8b6914; /* Rich golden brown */
   --theme-accent-primary: #8b5a4a; /* Warm brown primary */
   --theme-accent-light: #c4a876; /* Light golden brown */
   --theme-accent-hover: #a67c5e; /* Warm hover brown */
   --theme-accent-muted: #6b5532; /* Muted brown accent */
-  
+
   /* Interactive states with smooth transitions */
   --theme-border-hover: rgba(168, 134, 98, 0.6); /* Enhanced hover border */
   --theme-border-focus: rgba(196, 168, 118, 0.8); /* Focus state with warmth */
-  
+
   /* Enhanced glass effects for modern look */
   --glass-backdrop: blur(16px) saturate(140%) brightness(1.1);
   --glass-border: 1px solid rgba(168, 134, 98, 0.3);
   --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(168, 134, 98, 0.1);
   --glass-bg: rgba(42, 35, 24, 0.8);
-  
+
   /* Button and interactive elements */
   --button-bg-primary: linear-gradient(135deg, #8b5a4a 0%, #a67c5e 100%);
   --button-bg-secondary: linear-gradient(135deg, #4a3f2f 0%, #5a4b35 100%);
   --button-shadow: 0 4px 16px rgba(139, 90, 74, 0.3);
   --button-shadow-hover: 0 8px 24px rgba(139, 90, 74, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
-  
+
   /* Navigation specific enhancements */
   --primary-lighter: rgba(31, 26, 20, 0.95) !important; /* Rich nav background */
   --primary-light: #f8f4ee !important; /* Luxurious nav text */
   --error-color: #e74c3c; /* Keep red for errors */
-  
+
   /* Animation system for smooth interactions */
   --animate-fast: 0.2s;
   --animate-medium: 0.4s;
@@ -188,40 +188,40 @@ body {
 
 /* PREMIUM DARK THEME BODY WITH TEXTURE */
 body.dark-theme {
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
-    #1f1a14 !important;
+  background:
+          radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+          radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+          #1f1a14 !important;
   color: var(--theme-text-primary) !important;
   position: relative;
 }
 
 /* PREMIUM DARK THEME ENFORCEMENT */
 html.dark-theme {
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
-    #1f1a14 !important;
+  background:
+          radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+          radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+          #1f1a14 !important;
   color: var(--theme-text-primary) !important;
 }
 
 body.dark-theme {
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
-    #1f1a14 !important;
+  background:
+          radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+          radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+          #1f1a14 !important;
   color: var(--theme-text-primary) !important;
 }
 
 #app.dark-theme {
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
-    #1f1a14 !important;
+  background:
+          radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+          radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+          #1f1a14 !important;
   color: var(--theme-text-primary) !important;
   min-height: 100vh;
   transition: all 0.4s var(--animate-bezier);

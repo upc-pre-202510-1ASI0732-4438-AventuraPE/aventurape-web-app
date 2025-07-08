@@ -1,16 +1,20 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/domains/IAM/services/authentication.store.js';
 import LanguageSwitcher from './LanguageSwitcher.vue';
+import ThemeToggle from './ThemeToggle.vue';
 import Cookies from 'js-cookie';
 import { useI18n } from 'vue-i18n';
+import { useTheme } from '@/shared/composables/useTheme.js';
 
 const { t } = useI18n();
+const { isDarkMode } = useTheme();
 
 const router = useRouter();
 const authStore = useAuthenticationStore();
 const roles = ref([]);
+const headerRef = ref(null);
 
 const fetchRoles = async () => {
   try {
@@ -30,6 +34,23 @@ const fetchRoles = async () => {
 };
 
 onMounted(fetchRoles);
+
+// Watch for theme changes and update header background
+watch(isDarkMode, (newVal) => {
+  if (headerRef.value) {
+    if (newVal) {
+      headerRef.value.style.background = 'rgba(42, 35, 24, 0.95)';
+      headerRef.value.style.backdropFilter = 'blur(10px)';
+      headerRef.value.style.borderBottom = '1px solid rgba(168, 134, 98, 0.2)';
+      headerRef.value.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3)';
+    } else {
+      headerRef.value.style.background = 'var(--primary-lighter)';
+      headerRef.value.style.backdropFilter = 'none';
+      headerRef.value.style.borderBottom = 'none';
+      headerRef.value.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
+    }
+  }
+}, { immediate: true });
 
 //Administrador
 const hasAdminRole = computed(() => Array.isArray(roles.value) && roles.value.includes('ROLE_ADMIN'));
@@ -65,8 +86,8 @@ const getHomeRoute = () => {
 
 
 <template>
-  <header class="header-nav">
-    <nav class="nav-container">
+  <header ref="headerRef" class="header-nav">
+    <nav class="nav-container" :class="{ 'dark-theme': isDarkMode }">
 
       <div class="mobile-menu-toggle" @click="toggleMobileMenu">
         <font-awesome-icon icon="bars" />
@@ -140,6 +161,11 @@ const getHomeRoute = () => {
           <LanguageSwitcher />
         </div>
 
+        <!-- Selector de tema -->
+        <div class="nav-item theme-toggle" @click="closeMobileMenu">
+          <ThemeToggle />
+        </div>
+
         <!-- Botón de cerrar sesión para todos los usuarios -->
         <div class="nav-item sign-out" @click="closeMobileMenu">
           <a href="#" @click.prevent="signOut">
@@ -161,6 +187,7 @@ const getHomeRoute = () => {
   top: 0;
   width: 100%;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .nav-container {
@@ -171,6 +198,25 @@ const getHomeRoute = () => {
   height: 60px;
   max-width: 1200px;
   margin: 0 auto;
+  background: inherit;
+  transition: all 0.3s ease;
+}
+
+/* Dark theme styles */
+.nav-container.dark-theme .nav-item a {
+  color: var(--theme-text-primary, #f8f4ee) !important;
+}
+
+.nav-container.dark-theme .nav-item a:hover {
+  color: var(--theme-text-accent, #d4b896) !important;
+}
+
+.nav-container.dark-theme .sign-out a {
+  color: var(--error-color, #e74c3c) !important;
+}
+
+.nav-container.dark-theme .mobile-menu-toggle {
+  color: var(--theme-text-primary, #f8f4ee) !important;
 }
 
 .nav-items {
@@ -205,6 +251,12 @@ const getHomeRoute = () => {
   display: none;
   cursor: pointer;
   font-size: 1.5rem;
+  color: var(--primary-light);
+  transition: color 0.3s ease;
+}
+
+.nav-container.dark-theme .mobile-menu-toggle {
+  color: var(--theme-text-primary, #f8f4ee);
 }
 span{
   margin-left: 5px;
@@ -231,6 +283,22 @@ span{
     z-index: 999;
     height: auto;
     visibility: hidden;
+  }
+
+  /* Dark theme for mobile menu */
+  .nav-container.dark-theme .nav-items {
+    background: var(--theme-nav-glass, rgba(42, 35, 24, 0.95)) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(168, 134, 98, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .nav-container.dark-theme .nav-items .nav-item {
+    border-top: 1px solid rgba(168, 134, 98, 0.2);
+  }
+
+  .nav-container.dark-theme .nav-item.sign-out {
+    border-top: 1px solid rgba(168, 134, 98, 0.3);
   }
 
   .nav-items.mobile-open {

@@ -65,11 +65,11 @@ export default {
   <Card class="favorite-card" @click="goToDetail">
     <template #header>
       <div class="image-container">
-        <img 
-          :src="activity.image" 
-          :alt="activity.nameActivity"
-          @error="handleImageError"
-          @load="handleImageLoad"
+        <img
+            :src="activity.image"
+            :alt="activity.nameActivity"
+            @error="handleImageError"
+            @load="handleImageLoad"
         />
         <div class="card-price-tag">
           <span>S/. {{ activity.cost?.toFixed(2) }}</span>
