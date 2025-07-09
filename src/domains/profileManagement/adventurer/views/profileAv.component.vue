@@ -152,7 +152,7 @@ export default {
 <template>
   <div class="adventurer-profile">
     <div v-if="loading" class="loading-container">
-      <i class="fa-solid fa-spinner fa-spin"></i> Cargando perfil...
+      <i class="fa-solid fa-spinner fa-spin"></i>{{ $t('profile.loading') }}
     </div>
 
     <div v-else-if="error" class="error-container">
@@ -170,39 +170,38 @@ export default {
     <div v-else-if="isNewProfile" class="form-container">
       <h2 class="form-title">
         <i class="fa-solid fa-user-plus form-icon"></i>
-         {{ userName }}! Crea tu perfil
+        {{ $t('profile.hi') }}, {{ userName }} ! {{ $t('profile.createdAt') }}
       </h2>
       <form @submit.prevent="createProfile">
         <div class="form-row">
           <div class="form-group">
             <label for="firstName">
-              <i class="fa-solid fa-user"></i> Nombre
+              <i class="fa-solid fa-user"></i> {{ $t('profile.name') }}
             </label>
-            <input id="firstName" v-model="adventurer.firstName" placeholder="Ingresa tu nombre" required />
-          </div>
+            <input id="firstName" v-model="adventurer.firstName" :placeholder="$t('profile.namePlaceholder')" required />          </div>
 
           <div class="form-group">
             <label for="lastName">
-              <i class="fa-solid fa-user"></i> Apellido
+              <i class="fa-solid fa-user"></i> {{ $t('profile.lastName') }}
             </label>
-            <input id="lastName" v-model="adventurer.lastName" placeholder="Ingresa tu apellido" required />
+            <input id="lastName" v-model="adventurer.lastName" :placeholder="$t('profile.lastNamePlaceholder')" required />
           </div>
         </div>
 
         <div class="form-group">
           <label for="email">
-            <i class="fa-solid fa-envelope"></i> Correo Electrónico
+            <i class="fa-solid fa-envelope"></i> {{ $t('profile.email') }}
           </label>
-          <input id="email" v-model="adventurer.email" type="email" placeholder="ejemplo@correo.com" required />
+          <input id="email" v-model="adventurer.email" type="email" :placeholder="$t('profile.emailPlaceholder')" required />
         </div>
 
 
         <div class="form-group">
           <label for="gender">
-            <i class="fa-solid fa-venus-mars"></i> Género
+            <i class="fa-solid fa-venus-mars"></i> {{ $t('profile.gender') }}
           </label>
           <select id="gender" v-model="adventurer.gender" required>
-            <option disabled value="">Seleccione Género</option>
+            <option disabled value="">{{ $t('profile.genderPlaceholder') }}</option>
             <option v-for="option in genderOptions" :key="option.value" :value="option.value">
               {{ option.label }}
             </option>
@@ -211,15 +210,15 @@ export default {
 
         <div class="form-group">
           <label for="street">
-            <i class="fa-solid fa-road"></i> Calle
+            <i class="fa-solid fa-road"></i> {{ $t('profile.street') }}
           </label>
-          <input id="street" v-model="adventurer.street" placeholder="Nombre de la calle" required />
+          <input id="street" v-model="adventurer.street" :placeholder="$t('profile.streetPlaceholder') " required />
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="number">
-              <i class="fa-solid fa-hashtag"></i> Número
+              <i class="fa-solid fa-hashtag"></i> {{ $t('profile.numberStreet') }}
             </label>
             <input
               id="number"
@@ -230,22 +229,22 @@ export default {
               @input="validateNumberInput($event.target.value)"
             />
             <span v-if="validationErrors.number" class="error-text">
-              <i class="fa-solid fa-circle-exclamation"></i> Solo se permiten números
+              <i class="fa-solid fa-circle-exclamation"></i> {{ $t('profile.numberExclamation') }}
             </span>
           </div>
 
           <div class="form-group">
             <label for="city">
-              <i class="fa-solid fa-city"></i> Ciudad
+              <i class="fa-solid fa-city"></i> {{ $t('profile.city') }}
             </label>
-            <input id="city" v-model="adventurer.city" placeholder="Tu ciudad" required />
+            <input id="city" v-model="adventurer.city" :placeholder="$t('profile.cityPlaceholder')" required />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label for="postalCode">
-              <i class="fa-solid fa-mailbox"></i> Código Postal
+              <i class="fa-solid fa-mailbox"></i> {{ $t('profile.postalCode') }}
             </label>
             <input
               id="postalCode"
@@ -256,27 +255,27 @@ export default {
               @input="validatePostalCodeInput($event.target.value)"
             />
             <span v-if="validationErrors.postalCode" class="error-text">
-              <i class="fa-solid fa-circle-exclamation"></i> El código postal debe tener 5 dígitos
+              <i class="fa-solid fa-circle-exclamation"></i> {{ $t('profile.postalCodeValidation') }}
             </span>
           </div>
 
           <div class="form-group">
             <label for="country">
-              <i class="fa-solid fa-globe"></i> País
+              <i class="fa-solid fa-globe"></i> {{ $t('profile.country') }}
             </label>
-            <input id="country" v-model="adventurer.country" placeholder="Tu país" required />
+            <input id="country" v-model="adventurer.country" :placeholder="$t('profile.countryPlaceholder')" required />
           </div>
         </div>
 
         <button type="submit" class="submit-btn">
-          <i class="fa-solid fa-save"></i> Guardar Perfil
+          <i class="fa-solid fa-save"></i> {{ $t('profile.submit') }}
         </button>
       </form>
     </div>
 
     <div v-else class="profile-container">
       <h2 class="profile-title">
-        <i class="fa-solid fa-user-check"></i> Perfil de {{ userName }}
+        <i class="fa-solid fa-user-check"></i> {{ $t('profile.editProfile') }} {{ userName }}
       </h2>
 
       <div class="profile-card">

@@ -2,11 +2,16 @@
 import FavoriteCard from '../components/favorite-card.component.vue';
 import { ActivityApiService } from '../../shared/services/activity-api.service';
 import Cookies from 'js-cookie';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'FavoritesView',
   components: {
     FavoriteCard
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -65,27 +70,27 @@ export default {
 <template>
   <div class="favorites-container">
     <div class="favorites-header">
-      <h1 class="favorites-title">Mis Actividades Favoritas</h1>
-      <p class="favorites-subtitle">Encuentra aquí todas las experiencias que has marcado como favoritas</p>
+      <h1 class="favorites-title">{{ $t('favorites.title') }}</h1>
+      <p class="favorites-subtitle">{{ $t('favorites.addFavorites') }}</p>
     </div>
 
     <div v-if="loading" class="loading-state">
       <ProgressSpinner class="custom-spinner" />
-      <p>Cargando tus favoritos...</p>
+      <p>{{ $t('common.loading') }}</p>
     </div>
 
     <div v-else-if="error" class="error-state">
       <i class="pi pi-exclamation-triangle error-icon"></i>
-      <h3>No pudimos cargar tus favoritos</h3>
+      <h3>{{ $t('common.error') }}</h3>
       <p>{{ error }}</p>
-      <Button label="Reintentar" @click="loadFavorites" icon="pi pi-refresh" class="retry-button"/>
+      <Button :label="$t('buttons.back')" @click="loadFavorites" icon="pi pi-refresh" class="retry-button"/>
     </div>
 
     <div v-else-if="favorites.length === 0" class="empty-state">
       <i class="pi pi-heart-fill empty-icon"></i>
-      <h2>No tienes actividades favoritas</h2>
-      <p>Explora actividades y marca como favorito las que te gusten para encontrarlas aquí</p>
-      <Button label="Explorar actividades" icon="pi pi-search" @click="$router.push({name: 'AdventurerSearch'})" class="explore-button"/>
+      <h2>{{ $t('favorites.noFavorites') }}</h2>
+      <p>{{ $t('favorites.addFavorites') }}</p>
+      <Button :label="$t('navbar.explore')" icon="pi pi-search" @click="$router.push({name: 'AdventurerSearch'})" class="explore-button"/>
     </div>
 
     <div v-else class="favorites-grid">
@@ -125,6 +130,11 @@ export default {
   height: 4px;
   background: linear-gradient(90deg, var(--primary-light), var(--primary-color));
   border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+.dark-theme .favorites-header::after {
+  background: linear-gradient(90deg, var(--theme-accent-light), var(--theme-accent)) !important;
 }
 
 .favorites-title {
@@ -133,6 +143,11 @@ export default {
   font-weight: 700;
   margin-bottom: 0.5rem;
   letter-spacing: -0.5px;
+  transition: color 0.3s ease;
+}
+
+.dark-theme .favorites-title {
+  color: var(--theme-text-primary) !important;
 }
 
 .favorites-subtitle {
@@ -140,6 +155,11 @@ export default {
   font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto;
+  transition: color 0.3s ease;
+}
+
+.dark-theme .favorites-subtitle {
+  color: var(--theme-text-secondary) !important;
 }
 
 .favorites-grid {
@@ -165,6 +185,27 @@ export default {
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(118, 85, 50, 0.08);
   border: 1px solid rgba(118, 85, 50, 0.1);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dark mode styles for empty states */
+.dark-theme .loading-state, 
+.dark-theme .error-state, 
+.dark-theme .empty-state {
+  background: linear-gradient(to bottom right, var(--theme-bg-card), var(--theme-bg-secondary)) !important;
+  border: 1px solid var(--theme-border) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark-theme .loading-state p,
+.dark-theme .error-state p,
+.dark-theme .empty-state p {
+  color: var(--theme-text-secondary) !important;
+}
+
+.dark-theme .error-state h3,
+.dark-theme .empty-state h2 {
+  color: var(--theme-text-primary) !important;
 }
 
 .custom-spinner ::v-deep(.p-progress-spinner-circle) {

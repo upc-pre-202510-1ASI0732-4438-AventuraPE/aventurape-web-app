@@ -63,12 +63,12 @@ export default {
   <div class="make-review">
     <div class="review-header">
       <i class="pi pi-comments"></i>
-      <h3 class="review-title">Comparte tu experiencia</h3>
+      <h3 class="review-title">{{ $t('makeComment.title') }}</h3>
     </div>
 
     <form @submit.prevent="submitReview" class="review-form">
       <div class="form-group rating-group">
-        <label>¿Cómo calificarías esta actividad?</label>
+        <label>{{ $t('makeComment.rating') }}</label>
         <div class="rating-selector">
           <span
               v-for="star in 5"
@@ -81,34 +81,34 @@ export default {
           >★</span>
         </div>
         <span class="rating-text" :class="{'rating-selected': reviewData.rating > 0}">
-          {{ reviewData.rating ? `${reviewData.rating} de 5 estrellas` : 'Selecciona una calificación' }}
+          {{ reviewData.rating ? `${reviewData.rating} ${$t('makeComment.commonRating')}` : $t('makeComment.ratingPlaceholder') }}
         </span>
       </div>
 
       <div class="form-group">
         <label for="reviewComment">
           <i class="pi pi-pencil"></i>
-          Tu comentario
+          {{ $t('makeComment.reviewComment') }}
         </label>
         <div class="textarea-container">
           <textarea
               id="reviewComment"
               v-model="reviewData.comment"
               required
-              placeholder="¿Qué te pareció esta actividad? ¿La recomendarías a otros aventureros?"
+              :placeholder="$t('makeComment.placeholder')"
               rows="4"
               :maxlength="maxLength"
               class="styled-textarea"
           ></textarea>
           <div class="char-counter" :class="{'warning': remainingChars < 50}">
-            {{ remainingChars }} caracteres restantes
+            {{ remainingChars }} {{ $t('makeComment.char-counter') }}
           </div>
         </div>
       </div>
 
       <button type="submit" class="submit-button" :disabled="!reviewData.rating || !reviewData.comment.trim()">
         <i class="pi pi-send"></i>
-        Publicar reseña
+        {{ $t('makeComment.submit') }}
       </button>
     </form>
   </div>

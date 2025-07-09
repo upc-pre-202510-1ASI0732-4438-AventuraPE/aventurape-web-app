@@ -1,0 +1,155 @@
+/* Login and Registration Page Protection */
+/* These styles ensure login/register pages remain unaffected by dark mode */
+
+/* Exclude sign-in and sign-up pages from theme changes */
+.sign-in-page, .sign-up-page, .login-container, .register-container {
+  background-color: #f8f5f0 !important;
+  color: #333333 !important;
+  /* Prevent theme variables from affecting these pages */
+}
+
+.sign-in-page *, .sign-up-page *, .login-container *, .register-container * {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+.sign-in-page .form-control, 
+.sign-up-page .form-control,
+.login-container .form-control,
+.register-container .form-control {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.sign-in-page .btn-primary,
+.sign-up-page .btn-primary,
+.login-container .btn-primary,
+.register-container .btn-primary {
+  background-color: #765532 !important;
+  color: #ffffff !important;
+  border-color: #765532 !important;
+}
+
+.sign-in-page .card,
+.sign-up-page .card,
+.login-container .card,
+.register-container .card {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Ensure login forms are not affected by dark theme */
+.dark-theme .sign-in-page,
+.dark-theme .sign-up-page,
+.dark-theme .login-container,
+.dark-theme .register-container {
+  background-color: #f8f5f0 !important;
+  color: #333333 !important;
+}
+
+.dark-theme .sign-in-page *,
+.dark-theme .sign-up-page *,
+.dark-theme .login-container *,
+.dark-theme .register-container * {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+.dark-theme .sign-in-page .form-control,
+.dark-theme .sign-up-page .form-control,
+.dark-theme .login-container .form-control,
+.dark-theme .register-container .form-control {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.dark-theme .sign-in-page .btn-primary,
+.dark-theme .sign-up-page .btn-primary,
+.dark-theme .login-container .btn-primary,
+.dark-theme .register-container .btn-primary {
+  background-color: #765532 !important;
+  color: #ffffff !important;
+  border-color: #765532 !important;
+}
+
+.dark-theme .sign-in-page .card,
+.dark-theme .sign-up-page .card,
+.dark-theme .login-container .card,
+.dark-theme .register-container .card {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* PrimeVue components in login pages */
+.dark-theme .sign-in-page .p-inputtext,
+.dark-theme .sign-up-page .p-inputtext,
+.dark-theme .login-container .p-inputtext,
+.dark-theme .register-container .p-inputtext {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.dark-theme .sign-in-page .p-button,
+.dark-theme .sign-up-page .p-button,
+.dark-theme .login-container .p-button,
+.dark-theme .register-container .p-button {
+  background-color: #765532 !important;
+  color: #ffffff !important;
+  border-color: #765532 !important;
+}
+
+.dark-theme .sign-in-page .p-card,
+.dark-theme .sign-up-page .p-card,
+.dark-theme .login-container .p-card,
+.dark-theme .register-container .p-card {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.dark-theme .sign-in-page .p-toast,
+.dark-theme .sign-up-page .p-toast,
+.dark-theme .login-container .p-toast,
+.dark-theme .register-container .p-toast {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+}
+
+/* Admin login protection */
+.dark-theme .sign-in-admin-page {
+  background-color: #f8f5f0 !important;
+  color: #333333 !important;
+}
+
+.dark-theme .sign-in-admin-page * {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+.dark-theme .sign-in-admin-page .form-control,
+.dark-theme .sign-in-admin-page .p-inputtext {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+}
+
+.dark-theme .sign-in-admin-page .btn-primary,
+.dark-theme .sign-in-admin-page .p-button {
+  background-color: #765532 !important;
+  color: #ffffff !important;
+  border-color: #765532 !important;
+}
+
+.dark-theme .sign-in-admin-page .card,
+.dark-theme .sign-in-admin-page .p-card {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border: 1px solid #e0e0e0 !important;
+}

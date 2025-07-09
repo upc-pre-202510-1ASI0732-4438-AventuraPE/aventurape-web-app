@@ -8,14 +8,14 @@
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
 
-  --vt-c-indigo: #2c3e50;
+  --vt-c-indigo: #765532; /* Changed from blue to brown */
 
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
   --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
-  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-1: #765532; /* Use brown instead of indigo */
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
@@ -34,20 +34,121 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+  
+  /* FORCE BROWN PALETTE GLOBALLY */
+  --primary-lighter: #faf6f2; /* Light theme navbar */
+  --primary-light: #765532; /* Brown for text */
+  --primary-color: #765532; /* Brown primary */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
+/* Light Theme */
+.light-theme {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-mute: var(--vt-c-white-mute);
 
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
+  --color-border: var(--vt-c-divider-light-2);
+  --color-border-hover: var(--vt-c-divider-light-1);
 
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1);
+
+  /* Custom theme variables */
+  --theme-bg-primary: #f8f5f0;
+  --theme-bg-secondary: #ffffff;
+  --theme-bg-card: #ffffff;
+  --theme-text-primary: #333333;
+  --theme-text-secondary: #666666;
+  --theme-border: #e0e0e0;
+  --theme-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --theme-nav-bg: #faf6f2;
+  
+  /* Ensure consistent brown palette */
+  --primary-lighter: #faf6f2; /* Light navbar bg */
+  --primary-light: #765532; /* Brown text */
+  --primary-color: #765532; /* Brown primary */
+}
+
+/* Dark Theme - AESTHETIC BROWN/BEIGE PALETTE WITH ENHANCED VISUALS */
+.dark-theme {
+  --color-background: #1f1a14; /* Deeper, richer dark brown base */
+  --color-background-soft: #2a2318; /* Layered background */
+  --color-background-mute: #3d3426; /* Card background with warmth */
+
+  --color-border: #4a3f2f; /* Softer, warmer borders */
+  --color-border-hover: #5a4b35; /* Enhanced border on hover */
+
+  --color-heading: #f8f4ee; /* Warmer, creamier headers */
+  --color-text: #f5f1eb; /* Premium beige text */
+
+  /* Enhanced Vue variables with warm tones */
+  --vt-c-text-light-1: #f8f4ee; /* Luxurious cream */
+  --vt-c-text-light-2: #e8dcc8; /* Warm secondary text */
+  --vt-c-text-dark-1: #f8f4ee; /* Consistent cream */
+  --vt-c-text-dark-2: #e8dcc8; /* Warm secondary */
+
+  /* Premium theme variables with enhanced aesthetics */
+  --theme-bg-primary: #1f1a14; /* Solid color instead of gradient for better compatibility */
+  --theme-bg-secondary: #2a2318; /* Solid layered background */
+  --theme-bg-card: #2a2318; /* Solid warm card background */
+  --theme-bg-glass: rgba(42, 35, 24, 0.85); /* Glass morphism effect */
+  --theme-bg-glass-light: rgba(61, 52, 38, 0.7); /* Lighter glass effect */
+  
+  /* Enhanced text hierarchy */
+  --theme-text-primary: #f8f4ee; /* Hero text - luxurious cream */
+  --theme-text-secondary: #e8dcc8; /* Body text - warm beige */
+  --theme-text-muted: #c4a876; /* Muted text - golden brown */
+  --theme-text-accent: #d4b896; /* Accent text - warm gold */
+  
+  /* Sophisticated borders and dividers */
+  --theme-border: rgba(118, 85, 50, 0.3); /* Subtle brown border */
+  --theme-border-light: rgba(168, 134, 98, 0.2); /* Lighter border */
+  --theme-border-accent: rgba(168, 134, 98, 0.5); /* Accent border */
+  
+  /* Enhanced shadow system for depth */
+  --theme-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(31, 26, 20, 0.6); /* Layered depth */
+  --theme-shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(31, 26, 20, 0.4); /* Subtle shadow */
+  --theme-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(118, 85, 50, 0.2); /* Elegant hover */
+  --theme-shadow-glow: 0 0 24px rgba(168, 134, 98, 0.3), 0 0 8px rgba(168, 134, 98, 0.5); /* Warm glow */
+  
+  /* Navigation with premium styling */
+  --theme-nav-bg: linear-gradient(135deg, rgba(31, 26, 20, 0.95) 0%, rgba(42, 35, 24, 0.95) 100%);
+  --theme-nav-glass: rgba(31, 26, 20, 0.9); /* Glass nav background */
+  
+  /* Refined accent colors with warm brown tones */
+  --theme-accent: #8b6914; /* Rich golden brown */
+  --theme-accent-primary: #8b5a4a; /* Warm brown primary */
+  --theme-accent-light: #c4a876; /* Light golden brown */
+  --theme-accent-hover: #a67c5e; /* Warm hover brown */
+  --theme-accent-muted: #6b5532; /* Muted brown accent */
+  
+  /* Interactive states with smooth transitions */
+  --theme-border-hover: rgba(168, 134, 98, 0.6); /* Enhanced hover border */
+  --theme-border-focus: rgba(196, 168, 118, 0.8); /* Focus state with warmth */
+  
+  /* Enhanced glass effects for modern look */
+  --glass-backdrop: blur(16px) saturate(140%) brightness(1.1);
+  --glass-border: 1px solid rgba(168, 134, 98, 0.3);
+  --glass-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(168, 134, 98, 0.1);
+  --glass-bg: rgba(42, 35, 24, 0.8);
+  
+  /* Button and interactive elements */
+  --button-bg-primary: linear-gradient(135deg, #8b5a4a 0%, #a67c5e 100%);
+  --button-bg-secondary: linear-gradient(135deg, #4a3f2f 0%, #5a4b35 100%);
+  --button-shadow: 0 4px 16px rgba(139, 90, 74, 0.3);
+  --button-shadow-hover: 0 8px 24px rgba(139, 90, 74, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  
+  /* Navigation specific enhancements */
+  --primary-lighter: rgba(31, 26, 20, 0.95) !important; /* Rich nav background */
+  --primary-light: #f8f4ee !important; /* Luxurious nav text */
+  --error-color: #e74c3c; /* Keep red for errors */
+  
+  /* Animation system for smooth interactions */
+  --animate-fast: 0.2s;
+  --animate-medium: 0.4s;
+  --animate-slow: 0.8s;
+  --animate-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 *,
@@ -83,4 +184,45 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* PREMIUM DARK THEME BODY WITH TEXTURE */
+body.dark-theme {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+    #1f1a14 !important;
+  color: var(--theme-text-primary) !important;
+  position: relative;
+}
+
+/* PREMIUM DARK THEME ENFORCEMENT */
+html.dark-theme {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+    #1f1a14 !important;
+  color: var(--theme-text-primary) !important;
+}
+
+body.dark-theme {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+    #1f1a14 !important;
+  color: var(--theme-text-primary) !important;
+}
+
+#app.dark-theme {
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(168, 134, 98, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(196, 168, 118, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(139, 105, 20, 0.02) 0%, transparent 50%),
+    #1f1a14 !important;
+  color: var(--theme-text-primary) !important;
+  min-height: 100vh;
+  transition: all 0.4s var(--animate-bezier);
 }
