@@ -1,8 +1,8 @@
 services:
   - type: static_site
     name: aventurape-frontend
-    buildCommand: npm ci && npm run build
-    staticPublishPath: ./dist
+    buildCommand: npm install && npm run build
+    publishPath: ./dist
     envVars:
       - key: NODE_ENV
         value: production
