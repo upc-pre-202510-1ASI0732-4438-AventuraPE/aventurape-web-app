@@ -1,9 +1,14 @@
 <script>
 import { useAuthenticationStore } from "../services/authentication.store.js";
 import { SignInRequest } from "../model/sign-in.request.js";
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: "sign-in",
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       username: "",
@@ -39,7 +44,7 @@ export default {
         this.$toast.add({
           severity: "error",
           summary: "",
-          detail: "Por favor, verifique que no es un robot",
+          detail: this.t('forms.required'),
           life: 3000,
         });
       }
@@ -52,23 +57,23 @@ export default {
   <div class="container">
     <div class="login">
       <img src="@/assets/images/aventurape_logo.png" alt="logo-AventuraPE" />
-      <h2 class="title">Bienvenido de vuelta!</h2>
+      <h2 class="title">{{ $t('auth.welcomeBack') }}</h2>
     </div>
     <form @submit.prevent="onSignIn">
       <div class="p-fluid">
         <div class="field mt-5">
           <div class="p-float-label">
             <InputText id="username" v-model="username" :class="{'p-invalid': submitted && !username}"/>
-            <label for="username">Usuario</label>
+            <label for="username">{{ $t('auth.username') }}</label>
           </div>
-          <small v-if="submitted && !username" class="p-invalid">Username es requerido.</small>
+          <small v-if="submitted && !username" class="p-invalid">{{ $t('forms.required') }}</small>
         </div>
         <div class="field mt-5">
           <div class="p-float-label">
             <InputText id="password" v-model="password" :class="{'p-invalid': submitted && !password}" type="password"/>
-            <label for="password">Contraseña</label>
+            <label for="password">{{ $t('auth.password') }}</label>
           </div>
-          <small v-if="submitted && !password" class="p-invalid">Contraseña es requerida</small>
+          <small v-if="submitted && !password" class="p-invalid">{{ $t('forms.required') }}</small>
         </div>
         <div class="recaptcha-container">
           <div
@@ -77,16 +82,16 @@ export default {
               data-callback="onRecaptchaVerify"
               data-expired-callback="onRecaptchaExpired">
           </div>
-          <small v-if="submitted && !recaptchaVerified" class="p-invalid">Por favor verifique que no es un robot</small>
+          <small v-if="submitted && !recaptchaVerified" class="p-invalid">{{ $t('forms.required') }}</small>
         </div>
         <div class="registration-question">
           <router-link style="text-decoration: none !important;" :to="{ path: '/sign-up' }">
-            <span class="text-registro">¿No tienes una cuenta aún?</span> <span class="route-to-registration">Crear cuenta</span>
+            <span class="text-registro">{{ $t('auth.dontHaveAccount') }}</span> <span class="route-to-registration">{{ $t('auth.createAccount') }}</span>
           </router-link>
         </div>
       </div>
       <div class="button-container">
-        <Button class="btn-register" type="submit">Iniciar sesión</Button>
+        <Button class="btn-register" type="submit">{{ $t('auth.login') }}</Button>
       </div>
     </form>
     <Toast />

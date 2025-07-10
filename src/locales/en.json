@@ -5,7 +5,28 @@
     "favorites": "Favorites",
     "profile": "Profile",
     "home": "Home",
-    "logout": "Logout"
+    "logout": "Logout",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "language": "Language"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "welcome": "Welcome",
+    "welcomeBack": "Welcome back!",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "login": "Login",
+    "register": "Register",
+    "forgotPassword": "Forgot your password?",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "createAccount": "Create account",
+    "loginToAccount": "Sign in to your account"
   },
   "home": {
     "title": "Welcome, Adventurer",
@@ -57,6 +78,13 @@
     "writeComment": "Write a comment",
     "noComments": "No comments yet",
     "addComment": "Add Comment"
+  },
+  "entrepreneurs": {
+    "title": "Entrepreneurs",
+    "viewProfile": "View profile",
+    "activities": "activities",
+    "statistics": "Statistics",
+    "subscriptions": "Subscriptions"
   },
   "makeComment": {
     "title": "Write a Review",
@@ -112,6 +140,21 @@
     "yes": "Yes",
     "no": "No",
     "logout": "Are you sure you want to logout?",
-    "of": "of"
+    "of": "of",
+    "welcome": "Welcome",
+    "welcomeAdventurer": "Welcome Adventurer",
+    "welcomeEntrepreneur": "Welcome Entrepreneur"
+  },
+  "roles": {
+    "adventurer": "Adventurer",
+    "entrepreneur": "Entrepreneur",
+    "admin": "Administrator"
+  },
+  "forms": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "passwordsNotMatch": "Passwords do not match",
+    "invalidFormat": "Invalid format"
   }
 }

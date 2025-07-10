@@ -1,7 +1,40 @@
 /* AESTHETIC DARK THEME - PREMIUM BROWN/BEIGE PALETTE */
 /* Enhanced visual design with modern aesthetics */
 
+/* Define theme variables */
+:root {
+  /* Light theme variables */
+  --theme-bg-primary: #f8f5f0;
+  --theme-bg-secondary: #ffffff;
+  --theme-bg-card: #ffffff;
+  --theme-text-primary: #333333;
+  --theme-text-secondary: #666666;
+  --theme-nav-bg: rgba(248, 245, 240, 0.95);
+  --theme-nav-glass: rgba(255, 255, 255, 0.1);
+  --theme-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --theme-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --glass-backdrop: blur(10px);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --animate-medium: 0.3s;
+  --animate-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .dark-theme {
+  /* Dark theme variables */
+  --theme-bg-primary: #1a1a1a !important;
+  --theme-bg-secondary: #242424 !important;
+  --theme-bg-card: #2a2a2a !important;
+  --theme-text-primary: #f5f5f5 !important;
+  --theme-text-secondary: #cccccc !important;
+  --theme-nav-bg: rgba(26, 26, 26, 0.95) !important;
+  --theme-nav-glass: rgba(42, 42, 42, 0.8) !important;
+  --theme-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  --theme-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  --glass-backdrop: blur(15px) !important;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+
   background: var(--theme-bg-primary) !important;
   color: var(--theme-text-primary) !important;
   transition: all 0.4s var(--animate-bezier) !important;
@@ -658,7 +691,6 @@ img {
 .dark-theme *:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) {
   /* Remove any blue colors that might be lingering */
   border-color: #5a4b35 !important;
-  background-color: inherit !important;
 }
 
 .dark-theme *[style*="background-color: blue"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
@@ -668,6 +700,56 @@ img {
   background-color: #3d3426 !important;
   color: #f5f1eb !important;
   border-color: #5a4b35 !important;
+}
+
+/* ENHANCED BUTTON STYLES FOR DARK MODE */
+.dark-theme .p-button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: linear-gradient(135deg, #8b5a4a 0%, #a16854 100%) !important;
+  border: 1px solid #5a4b35 !important;
+  color: #f5f1eb !important;
+  transition: all 0.3s ease !important;
+}
+
+.dark-theme .p-button:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: linear-gradient(135deg, #a16854 0%, #b8765f 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(139, 90, 74, 0.3) !important;
+}
+
+/* INPUT FOCUS STATES */
+.dark-theme .p-inputtext:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-dropdown:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  border-color: #8b5a4a !important;
+  box-shadow: 0 0 0 2px rgba(139, 90, 74, 0.2) !important;
+}
+
+/* PRIMEVUE COMPONENTS SPECIFIC OVERRIDES */
+.dark-theme .p-tabmenu .p-tabmenuitem .p-menuitem-link:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+  border-color: #5a4b35 !important;
+}
+
+.dark-theme .p-tabmenu .p-tabmenuitem.p-highlight .p-menuitem-link:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: #8b5a4a !important;
+  color: #f5f1eb !important;
+}
+
+/* CAROUSEL IMPROVEMENTS */
+.dark-theme .p-carousel:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+}
+
+.dark-theme .p-carousel .p-carousel-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: transparent !important;
+}
+
+.dark-theme .p-carousel .p-carousel-indicators .p-carousel-indicator button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: #5a4b35 !important;
+}
+
+.dark-theme .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: #8b5a4a !important;
 }
 
 /* ADDITIONAL NAVBAR BRAND AND LOGO FIXES */

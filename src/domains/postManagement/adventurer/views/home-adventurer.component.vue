@@ -33,7 +33,7 @@ export default {
     tabs() {
       return [
         { label: this.t('activities.title'), icon: 'pi pi-compass' },
-        { label: 'Emprendedores', icon: 'pi pi-users' }
+        { label: this.t('entrepreneurs.title'), icon: 'pi pi-users' }
       ];
     },
     carouselItems() {

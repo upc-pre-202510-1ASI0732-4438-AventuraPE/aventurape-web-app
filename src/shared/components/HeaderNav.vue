@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/domains/IAM/services/authentication.store.js';
-import LanguageSwitcher from './LanguageSwitcher.vue';
+import AppControls from './AppControls.vue';
 import Cookies from 'js-cookie';
 import { useI18n } from 'vue-i18n';
 
@@ -118,13 +118,13 @@ const getHomeRoute = () => {
           <div class="nav-item stats" @click="closeMobileMenu">
             <router-link to="/entrepreneur/statistics">
               <font-awesome-icon icon="chart-bar" />
-              <span>Estadísticas</span>
+              <span>{{ $t('entrepreneurs.statistics') }}</span>
             </router-link>
           </div>
           <div class="nav-item subs" @click="closeMobileMenu">
             <router-link to="/entrepreneur/subscriptions">
               <font-awesome-icon icon="dollar-sign" />
-              <span>Suscripciones</span>
+              <span>{{ $t('entrepreneurs.subscriptions') }}</span>
             </router-link>
           </div>
           <div class="nav-item account" @click="closeMobileMenu">
@@ -135,9 +135,9 @@ const getHomeRoute = () => {
           </div>
         </template>
 
-        <!-- Selector de idioma -->
-        <div class="nav-item language-switcher" @click="closeMobileMenu">
-          <LanguageSwitcher />
+        <!-- Selector de idioma y modo oscuro -->
+        <div class="nav-item controls-group" @click="closeMobileMenu">
+          <AppControls />
         </div>
 
         <!-- Botón de cerrar sesión para todos los usuarios -->
@@ -195,6 +195,12 @@ const getHomeRoute = () => {
 }
 .nav-item.sign-out {
   margin-left: auto !important;
+}
+
+.nav-item.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .sign-out a {

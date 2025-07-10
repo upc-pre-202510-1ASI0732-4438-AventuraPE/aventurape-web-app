@@ -1,9 +1,14 @@
 <script>
 import { useAuthenticationStore } from "../services/authentication.store.js";
 import router from "@/router/index.js";
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: "authentication-section",
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       authenticationStore: useAuthenticationStore(),
@@ -78,22 +83,22 @@ export default {
 
 <template>
   <div v-if="isSignedIn">
-    <a class="welcome"> Bienvenido,
+    <a class="welcome"> {{ $t('auth.welcome') }},
       <span>{{ currentUsername }}</span>
     </a>
-    <a class="signout" @click="onSignOut">Sign Out <i class="pi pi-sign-out" style="font-size: 1rem"></i>
+    <a class="signout" @click="onSignOut">{{ $t('auth.signOut') }} <i class="pi pi-sign-out" style="font-size: 1rem"></i>
     </a>
   </div>
   <div v-else>
     <div class="desktop-buttons">
-      <pv-button :class="['signin', { active: activeButton === 'sign-in' }]" @click="onSignIn">Iniciar Sesión</pv-button>
-      <pv-button :class="['signup', { active: activeButton === 'sign-up' }]" @click="onSignUp">Registrarse</pv-button>
+      <pv-button :class="['signin', { active: activeButton === 'sign-in' }]" @click="onSignIn">{{ $t('auth.signIn') }}</pv-button>
+      <pv-button :class="['signup', { active: activeButton === 'sign-up' }]" @click="onSignUp">{{ $t('auth.signUp') }}</pv-button>
     </div>
     <div class="mobile-menu">
       <pv-button icon="pi pi-bars" @click="toggleMenu"></pv-button>
       <div :class="['dropdown-menu', { closing: closingMenu }]" v-if="showMenu">
-        <pv-button :class="['signin', { active: activeButton === 'sign-in' }]" @click="onSignIn">Iniciar Sesión</pv-button>
-        <pv-button :class="['signup', { active: activeButton === 'sign-up' }]" @click="onSignUp">Registrarse</pv-button>
+        <pv-button :class="['signin', { active: activeButton === 'sign-in' }]" @click="onSignIn">{{ $t('auth.signIn') }}</pv-button>
+        <pv-button :class="['signup', { active: activeButton === 'sign-up' }]" @click="onSignUp">{{ $t('auth.signUp') }}</pv-button>
       </div>
     </div>
   </div>

@@ -5,7 +5,28 @@
     "favorites": "Favoritos",
     "profile": "Perfil",
     "home": "Inicio",
-    "logout": "Cerrar Sesión"
+    "logout": "Cerrar Sesión",
+    "darkMode": "Modo Oscuro",
+    "lightMode": "Modo Claro",
+    "language": "Idioma"
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar Sesión",
+    "welcome": "Bienvenido",
+    "welcomeBack": "Bienvenido de vuelta!",
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "alreadyHaveAccount": "¿Ya tienes cuenta?",
+    "dontHaveAccount": "¿No tienes cuenta?",
+    "createAccount": "Crear cuenta",
+    "loginToAccount": "Inicia sesión en tu cuenta"
   },
   "home": {
     "title": "Bienvenido, Aventurero",
@@ -57,6 +78,13 @@
     "writeComment": "Escribir comentario",
     "noComments": "No hay comentarios aún",
     "addComment": "Agregar Comentario"
+  },
+  "entrepreneurs": {
+    "title": "Emprendedores",
+    "viewProfile": "Ver perfil",
+    "activities": "actividades",
+    "statistics": "Estadísticas",
+    "subscriptions": "Suscripciones"
   },
   "makeComment": {
     "title": "Comparte tu experiencia",
@@ -112,6 +140,21 @@
     "yes": "Sí",
     "no": "No",
     "logout": "¿Estás seguro que deseas cerrar sesión?",
-    "of": "de"
+    "of": "de",
+    "welcome": "Bienvenido",
+    "welcomeAdventurer": "Bienvenido Aventurero",
+    "welcomeEntrepreneur": "Bienvenido Emprendedor"
+  },
+  "roles": {
+    "adventurer": "Aventurero",
+    "entrepreneur": "Emprendedor",
+    "admin": "Administrador"
+  },
+  "forms": {
+    "required": "Este campo es obligatorio",
+    "invalidEmail": "Ingrese un email válido",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+    "passwordsNotMatch": "Las contraseñas no coinciden",
+    "invalidFormat": "Formato inválido"
   }
 }

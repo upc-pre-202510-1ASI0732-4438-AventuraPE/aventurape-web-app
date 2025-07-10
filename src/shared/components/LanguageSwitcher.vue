@@ -6,7 +6,7 @@
       :class="{ 'active': isOpen }"
     >
       <i class="pi pi-globe"></i>
-      <span class="current-language">{{ currentLanguage.toUpperCase() }}</span>
+      <span class="current-language">{{ currentLanguageData?.flag }} {{ currentLanguage.toUpperCase() }}</span>
       <i class="pi pi-chevron-down arrow" :class="{ 'rotated': isOpen }"></i>
     </button>
 
@@ -15,11 +15,11 @@
         <button
           v-for="lang in availableLanguages"
           :key="lang.code"
-          @click="changeLanguage(lang.code)"
+          @click="selectLanguage(lang.code)"
           class="language-option"
           :class="{ 'selected': currentLanguage === lang.code }"
         >
-          <img :src="lang.flag" :alt="lang.name" class="flag-icon">
+          <span class="flag-icon">{{ lang.flag }}</span>
           <span>{{ lang.name }}</span>
           <i v-if="currentLanguage === lang.code" class="pi pi-check"></i>
         </button>
@@ -30,37 +30,25 @@
 
 <script>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { setLocale } from '../../i18n'
+import { useLocalization } from '../composables/useLocalization.js'
 
 export default {
   name: 'LanguageSwitcher',
   setup() {
-    const { locale } = useI18n()
+    const { currentLanguage, availableLanguages, changeLanguage } = useLocalization()
     const isOpen = ref(false)
     const switcher = ref(null)
 
-    const availableLanguages = [
-      {
-        code: 'es',
-        name: 'Español',
-        flag: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAyNCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE4IiBmaWxsPSIjQUEwMDIyIi8+CjxyZWN0IHk9IjYiIHdpZHRoPSIyNCIgaGVpZ2h0PSI2IiBmaWxsPSIjRkZEQTAwIi8+Cjwvc3ZnPgo='
-      },
-      {
-        code: 'en',
-        name: 'English',
-        flag: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAyNCAxOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjE4IiBmaWxsPSIjMDA1MkI0Ii8+CjxyZWN0IHk9IjIiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjYiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyIiBmaWxsPSIjRkZGRkZGIi8+CjxyZWN0IHk9IjEwIiB3aWR0aD0iMjQiIGhlaWdodD0iMiIgZmlsbD0iI0ZGRkZGRiIvPgo8cmVjdCB5PSIxNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjIiIGZpbGw9IiNGRkZGRkYiLz4KPC9zdmc+Cg=='
-      }
-    ]
-
-    const currentLanguage = computed(() => locale.value)
+    const currentLanguageData = computed(() => 
+      availableLanguages.find(lang => lang.code === currentLanguage.value)
+    )
 
     const toggleDropdown = () => {
       isOpen.value = !isOpen.value
     }
 
-    const changeLanguage = (langCode) => {
-      setLocale(langCode)
+    const selectLanguage = (langCode) => {
+      changeLanguage(langCode)
       isOpen.value = false
     }
 
@@ -83,8 +71,9 @@ export default {
       switcher,
       availableLanguages,
       currentLanguage,
+      currentLanguageData,
       toggleDropdown,
-      changeLanguage
+      selectLanguage
     }
   }
 }
@@ -171,10 +160,8 @@ export default {
 }
 
 .flag-icon {
-  width: 20px;
-  height: 15px;
-  border-radius: 2px;
-  object-fit: cover;
+  font-size: 16px;
+  margin-right: 8px;
 }
 
 /* Animaciones del dropdown */

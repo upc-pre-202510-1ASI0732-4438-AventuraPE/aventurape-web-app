@@ -23,6 +23,12 @@ import 'primevue/resources/themes/lara-light-indigo/theme.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 
+// Initialize theme
+import { useTheme } from './shared/composables/useTheme.js'
+
+// Initialize theme immediately
+const themeManager = useTheme()
+themeManager.initializeTheme()
 
 import Button from 'primevue/button'
 import Dropdown from 'primevue/dropdown'
