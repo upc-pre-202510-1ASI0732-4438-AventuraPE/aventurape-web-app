@@ -1,4 +1,6 @@
 <script>
+import { useI18n } from 'vue-i18n'
+
 export default {
   name: "ActivityFormModal",
   props: {
@@ -10,6 +12,10 @@ export default {
       type: Object,
       default: null
     }
+  },
+  setup() {
+    const { t } = useI18n()
+    return { t }
   },
   data() {
     return {
@@ -108,7 +114,7 @@ export default {
   <div v-if="show" class="modal-backdrop">
     <div class="modal-container">
       <div class="modal-header">
-        <h2 class="modal-title">{{ editingPublication ? 'Editar Actividad' : 'Nueva Actividad' }}</h2>
+        <h2 class="modal-title">{{ editingPublication ? $t('entrepreneurs.editActivity') : $t('entrepreneurs.createActivity') }}</h2>
         <button @click="closeModal" class="close-button">
           <i class="fas fa-times"></i>
         </button>
@@ -117,30 +123,30 @@ export default {
       <div class="modal-body">
         <form @submit.prevent="savePublication">
           <div class="form-group">
-            <label for="title">Título</label>
-            <input type="text" id="title" v-model="publication.nameActivity" required placeholder="Nombre de la actividad">
+            <label for="title">{{ $t('entrepreneurs.activityName') }}</label>
+            <input type="text" id="title" v-model="publication.nameActivity" required :placeholder="$t('entrepreneurs.activityName')">
           </div>
 
           <div class="form-group">
-            <label for="description">Descripción</label>
-            <textarea id="description" v-model="publication.description" required placeholder="Describe tu actividad..."></textarea>
+            <label for="description">{{ $t('entrepreneurs.description') }}</label>
+            <textarea id="description" v-model="publication.description" required :placeholder="$t('entrepreneurs.description')"></textarea>
           </div>
 
           <div class="form-row">
             <div class="form-group half-width">
-              <label for="duration">Duración (min)</label>
+              <label for="duration">{{ $t('entrepreneurs.duration') }}</label>
               <input type="number" id="duration" v-model="publication.timeDuration" required min="1">
             </div>
 
             <div class="form-group half-width">
-              <label for="capacity">Capacidad</label>
+              <label for="capacity">{{ $t('entrepreneurs.capacity') }}</label>
               <input type="number" id="capacity" v-model="publication.cantPeople" required min="1">
             </div>
           </div>
 
           <!-- Replace the existing image input with this -->
           <div class="form-group">
-            <label for="image-upload">Imagen</label>
+            <label for="image-upload">{{ $t('entrepreneurs.image') }}</label>
             <div class="image-upload-container">
               <div v-if="imagePreview" class="image-preview-container">
                 <img :src="imagePreview" alt="Preview" class="image-preview">
@@ -165,14 +171,14 @@ export default {
           </div>
 
           <div class="form-group">
-            <label for="price">Precio ($)</label>
+            <label for="price">{{ $t('entrepreneurs.cost') }}</label>
             <input type="number" id="price" v-model="publication.cost" required min="0" step="0.01">
           </div>
 
           <div class="form-actions">
-            <button type="button" @click="closeModal" class="btn-secondary">Cancelar</button>
+            <button type="button" @click="closeModal" class="btn-secondary">{{ $t('buttons.cancel') }}</button>
             <button type="submit" class="btn-primary">
-              {{ editingPublication ? 'Actualizar' : 'Publicar' }}
+              {{ editingPublication ? $t('entrepreneurs.updateActivity') : $t('entrepreneurs.saveActivity') }}
             </button>
           </div>
         </form>

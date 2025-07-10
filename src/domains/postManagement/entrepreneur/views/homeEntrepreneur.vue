@@ -164,7 +164,7 @@ export default {
   <div class="home-container">
     <div class="hero-section">
       <h1 class="page-title">{{ $t('auth.welcome') }} {{ userName }}</h1>
-      <p class="subtitle">Gestiona y promociona tus actividades</p>
+      <p class="subtitle">{{ $t('entrepreneurs.dashboard') }}</p>
     </div>
 
     <div v-if="error" class="error-message">
@@ -175,7 +175,7 @@ export default {
     <div class="actions">
       <button @click="openFormModal()" class="btn-primary action-button">
         <i class="fas fa-plus"></i>
-        <span>Nueva Actividad</span>
+        <span>{{ $t('entrepreneurs.createActivity') }}</span>
       </button>
     </div>
 

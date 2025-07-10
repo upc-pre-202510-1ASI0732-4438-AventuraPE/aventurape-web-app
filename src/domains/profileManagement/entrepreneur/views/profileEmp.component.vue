@@ -1,11 +1,15 @@
 <script>
-  import { Entrepreneur } from "@/domains/profileManagement/shared/models/Entrepreneur.entity.js";
-  import { Profile } from "@/domains/profileManagement/shared/services/profile-api.service.js";
-  import '@fortawesome/vue-fontawesome';
+import { Entrepreneur } from "@/domains/profileManagement/shared/models/Entrepreneur.entity.js";
+import { Profile } from "@/domains/profileManagement/shared/services/profile-api.service.js";
+import '@fortawesome/vue-fontawesome';
+import { useI18n } from 'vue-i18n';
 
-
-  export default {
-    name: "EntrepreneurProfile",
+export default {
+  name: "EntrepreneurProfile",
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
     data() {
       return {
         entrepreneur: new Entrepreneur(),
@@ -99,12 +103,12 @@
       },
       async createProfile() {
         if (!this.isNewProfile) {
-          this.error = "Ya tienes un perfil creado.";
+          this.error = this.t('profile.entrepreneur.alreadyExists');
           return;
         }
 
         if (!this.validateForm()) {
-          this.error = "Por favor corrige los errores de validación antes de continuar.";
+          this.error = this.t('profile.entrepreneur.validationError');
           return;
         }
 
@@ -127,7 +131,7 @@
           };
 
           if (!this.entrepreneur.emailAddress) {
-            this.error = "Por favor ingresa tu correo electrónico.";
+            this.error = this.t('profile.entrepreneur.emailRequired');
             this.loading = false;
             return;
           }
@@ -136,9 +140,9 @@
           await this.fetchEntrepreneurProfile(); // actualizar vista con datos reales
         } catch (err) {
           if (err.response && err.response.status === 401) {
-            this.error = "Tu sesión ha expirado. Por favor inicia sesión nuevamente.";
+            this.error = this.t('profile.entrepreneur.sessionExpired');
           } else {
-            this.error = `Error al crear perfil: ${err.message}`;
+            this.error = `${this.t('profile.entrepreneur.createError')}: ${err.message}`;
           }
         } finally {
           this.loading = false;
@@ -179,7 +183,7 @@
         const profileToken = localStorage.getItem("token");
 
         if (!token) {
-          this.error = "No se encontró tu información de usuario. Por favor inicia sesión nuevamente.";
+          this.error = this.t('common.userNotFound');
           return false;
         }
 
@@ -196,15 +200,14 @@
           return true;
         }
       }
-    },
-
+    }
   }
-  </script>
+</script>
 <template>
   <div class="entrepreneur-profile">
     <div v-if="loading" class="loading-container">
       <div class="spinner"></div>
-      <p>Cargando perfil...</p>
+      <p>{{ $t('profile.loading') }}</p>
     </div>
 
     <div v-else-if="error" class="error-container">
@@ -217,28 +220,28 @@
 
     <div v-else-if="isNewProfile" class="form-container">
       <h2 class="profile-title">
-        <i class="fa-solid fa-user-tie"></i> Perfil de {{ userName }}
+        <i class="fa-solid fa-user-tie"></i> {{ $t('profile.editProfile') }} {{ userName }}
       </h2>
       <form @submit.prevent="createProfile">
         <div class="form-group">
           <label for="nameEntrepreneurship">
-            <i class="fa-solid fa-store"></i> Nombre del emprendimiento
+            <i class="fa-solid fa-store"></i> {{ $t('profile.entrepreneur.businessName') }}
           </label>
           <input
               id="nameEntrepreneurship"
               v-model="entrepreneur.nameEntrepreneurship"
-              placeholder="Ingresa el nombre de tu emprendimiento"
+              :placeholder="$t('profile.entrepreneur.businessNamePlaceholder')"
               required
           />
           <div class="form-group">
             <label for="emailAddress">
-              <i class="fa-solid fa-envelope"></i> Correo Electrónico
+              <i class="fa-solid fa-envelope"></i> {{ $t('profile.email') }}
             </label>
             <input
                 id="emailAddress"
                 v-model="entrepreneur.emailAddress"
                 type="email"
-                placeholder="ejemplo@correo.com"
+                :placeholder="$t('profile.emailPlaceholder')"
                 required
             />
           </div>
@@ -247,19 +250,19 @@
         <div class="form-row">
           <div class="form-group">
             <label for="street">
-              <i class="fa-solid fa-road"></i> Calle
+              <i class="fa-solid fa-road"></i> {{ $t('profile.street') }}
             </label>
             <input
                 id="street"
                 v-model="entrepreneur.street"
-                placeholder="Nombre de la calle"
+                :placeholder="$t('profile.streetPlaceholder')"
                 required
             />
           </div>
 
           <div class="form-group">
             <label for="number">
-              <i class="fa-solid fa-hashtag"></i> Número (9 dígitos)
+              <i class="fa-solid fa-hashtag"></i> {{ $t('profile.numberStreet') }} (9 {{ $t('profile.entrepreneur.digits') }})
             </label>
             <input
                 id="number"
@@ -272,7 +275,7 @@
                 type="tel"
             />
             <span class="error-text" v-if="validationErrors.number">
-              <i class="fa-solid fa-circle-exclamation"></i> El número debe contener exactamente 9 dígitos
+              <i class="fa-solid fa-circle-exclamation"></i> {{ $t('profile.entrepreneur.numberValidation') }}
             </span>
           </div>
         </div>
@@ -280,19 +283,19 @@
         <div class="form-row">
           <div class="form-group">
             <label for="city">
-              <i class="fa-solid fa-city"></i> Ciudad
+              <i class="fa-solid fa-city"></i> {{ $t('profile.city') }}
             </label>
             <input
                 id="city"
                 v-model="entrepreneur.city"
-                placeholder="Ciudad"
+                :placeholder="$t('profile.cityPlaceholder')"
                 required
             />
           </div>
 
           <div class="form-group">
             <label for="postalCode">
-              <i class="fa-solid fa-mailbox"></i> Código Postal (5 dígitos)
+              <i class="fa-solid fa-mailbox"></i> {{ $t('profile.postalCode') }} (5 {{ $t('profile.entrepreneur.digits') }})
             </label>
             <input
                 id="postalCode"
@@ -305,33 +308,33 @@
                 type="tel"
             />
             <span class="error-text" v-if="validationErrors.postalCode">
-              <i class="fa-solid fa-circle-exclamation"></i> El código postal debe contener exactamente 5 dígitos
+              <i class="fa-solid fa-circle-exclamation"></i> {{ $t('profile.postalCodeValidation') }}
             </span>
           </div>
         </div>
 
         <div class="form-group">
           <label for="country">
-            <i class="fa-solid fa-globe"></i> País
+            <i class="fa-solid fa-globe"></i> {{ $t('profile.country') }}
           </label>
           <input
               id="country"
               v-model="entrepreneur.country"
-              placeholder="País"
+              :placeholder="$t('profile.countryPlaceholder')"
               required
           />
         </div>
 
 
         <button type="submit" class="submit-btn">
-          <i class="fa-solid fa-floppy-disk"></i> Guardar Perfil
+          <i class="fa-solid fa-floppy-disk"></i> {{ $t('profile.submit') }}
         </button>
       </form>
     </div>
 
     <div v-else class="profile-container">
       <h2 class="profile-title">
-        <i class="fa-solid fa-user-tie"></i> Perfil de {{userName}}
+        <i class="fa-solid fa-user-tie"></i> {{ $t('profile.editProfile') }} {{userName}}
       </h2>
       <div class="profile-card">
         <div class="profile-header">
@@ -347,7 +350,7 @@
               <i class="fa-solid fa-envelope"></i>
             </div>
             <div class="detail-content">
-              <span class="detail-label">Correo electrónico</span>
+              <span class="detail-label">{{ $t('profile.email') }}</span>
               <span class="detail-value">{{ entrepreneur.emailAddress }}</span>
             </div>
           </div>
@@ -357,7 +360,7 @@
               <i class="fa-solid fa-location-dot"></i>
             </div>
             <div class="detail-content">
-              <span class="detail-label">Dirección</span>
+              <span class="detail-label">{{ $t('profile.entrepreneur.address') }}</span>
               <span class="detail-value">{{ entrepreneur.streetAddress || `${entrepreneur.street}, ${entrepreneur.number} ${entrepreneur.city}` }}</span>
             </div>
           </div>
@@ -367,7 +370,7 @@
               <i class="fa-solid fa-building"></i>
             </div>
             <div class="detail-content">
-              <span class="detail-label">País / Código Postal</span>
+              <span class="detail-label">{{ $t('profile.country') }} / {{ $t('profile.postalCode') }}</span>
               <span class="detail-value">{{ entrepreneur.country }} - {{ entrepreneur.postalCode }}</span>
             </div>
           </div>

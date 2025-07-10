@@ -84,7 +84,27 @@
     "viewProfile": "Ver perfil",
     "activities": "actividades",
     "statistics": "Estadísticas",
-    "subscriptions": "Suscripciones"
+    "subscriptions": "Suscripciones",
+    "myPublications": "Mis Publicaciones",
+    "createActivity": "Crear Actividad",
+    "editActivity": "Editar Actividad",
+    "deleteActivity": "Eliminar Actividad",
+    "noActivities": "No tienes actividades publicadas",
+    "createFirst": "Crea tu primera actividad para empezar",
+    "activityName": "Nombre de la Actividad",
+    "description": "Descripción",
+    "capacity": "Capacidad",
+    "duration": "Duración (horas)",
+    "cost": "Costo",
+    "image": "Imagen",
+    "saveActivity": "Guardar Actividad",
+    "updateActivity": "Actualizar Actividad",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar esta actividad?",
+    "deleteWarning": "Esta acción no se puede deshacer",
+    "activityCreated": "Actividad creada exitosamente",
+    "activityUpdated": "Actividad actualizada exitosamente",
+    "activityDeleted": "Actividad eliminada exitosamente",
+    "dashboard": "Panel de Control"
   },
   "makeComment": {
     "title": "Comparte tu experiencia",
@@ -128,7 +148,48 @@
     "country": "País",
     "countryPlaceholder": "Tu país",
     "submit": "Guardar Perfil",
-    "editProfile": "Perfil de"
+    "editProfile": "Perfil de",
+    "entrepreneur": {
+      "businessName": "Nombre del emprendimiento",
+      "businessNamePlaceholder": "Ingresa el nombre de tu emprendimiento",
+      "address": "Dirección",
+      "digits": "dígitos",
+      "numberValidation": "El número debe contener exactamente 9 dígitos"
+    }
+  },
+  "statistics": {
+    "subtitle": "Visualiza tus actividades mejor puntuadas",
+    "sortBy": "Ordenar por",
+    "bestRated": "Mejor puntuados",
+    "mostCommented": "Más comentados"
+  },
+  "subscriptions": {
+    "title": "Mi membresía",
+    "subtitle": "Visualiza información sobre tu pago único",
+    "loading": "Cargando información de membresía...",
+    "activePlan": "Plan Activo",
+    "unique": "único",
+    "yourBenefits": "Tus beneficios",
+    "benefit1": "Publica talleres, eventos y experiencias ilimitadas",
+    "benefit2": "Accede a una comunidad activa de aventureros",
+    "benefit3": "Promociona tu negocio y aumenta tu visibilidad",
+    "importantInfo": "Información importante",
+    "info1": "Una vez verificado el pago, tu acceso no tiene fecha de caducidad",
+    "info2": "El pago único te da acceso permanente a la plataforma",
+    "paymentProof": "Comprobante de Pago",
+    "verified": "Verificado",
+    "paymentProofAlt": "Comprobante de Pago",
+    "proofReceived": "Comprobante recibido correctamente",
+    "membershipActive": "Tu membresía está activa",
+    "updateProof": "Actualizar comprobante",
+    "needVerification": "Necesitamos verificar tu pago",
+    "uploadInstructions": "Por favor, sube una imagen clara de tu comprobante de pago para activar completamente tu membresía.",
+    "clickToUpload": "Haz clic aquí para subir tu comprobante",
+    "dragDrop": "o arrastra y suelta la imagen aquí",
+    "sendProof": "Enviar comprobante",
+    "updateProofTitle": "Actualiza tu comprobante de pago",
+    "updateProofInstructions": "Selecciona una nueva imagen para reemplazar tu comprobante actual.",
+    "clickToSelect": "Haz clic aquí para seleccionar un archivo"
   },
   "common": {
     "loading": "Cargando...",
@@ -143,7 +204,12 @@
     "of": "de",
     "welcome": "Bienvenido",
     "welcomeAdventurer": "Bienvenido Aventurero",
-    "welcomeEntrepreneur": "Bienvenido Emprendedor"
+    "welcomeEntrepreneur": "Bienvenido Emprendedor",
+    "userNotFound": "No se encontró información de usuario. Por favor inicie sesión nuevamente.",
+    "userDataError": "No se pudo obtener la información del usuario.",
+    "errorLoading": "Error al cargar información",
+    "cancel": "Cancelar",
+    "update": "Actualizar"
   },
   "roles": {
     "adventurer": "Aventurero",

@@ -1,4 +1,6 @@
 <script>
+import { useI18n } from 'vue-i18n'
+
 export default {
   name: "ActivityList",
   props: {
@@ -12,6 +14,10 @@ export default {
     }
   },
   emits: ['edit', 'delete'],
+  setup() {
+    const { t } = useI18n()
+    return { t }
+  },
   methods: {
     onEdit(publication) {
       this.$emit('edit', publication);
@@ -26,21 +32,21 @@ export default {
 <template>
   <div class="content">
     <div class="content-header">
-      <h2 class="section-title">Mis Actividades</h2>
-      <div class="publication-count">{{ publications.length }} actividades</div>
+      <h2 class="section-title">{{ $t('entrepreneurs.myPublications') }}</h2>
+      <div class="publication-count">{{ publications.length }} {{ $t('entrepreneurs.activities') }}</div>
     </div>
 
     <div v-if="loading" class="loading-container">
       <div class="loading-spinner"></div>
-      <p>Cargando...</p>
+      <p>{{ $t('common.loading') }}</p>
     </div>
 
     <div v-else-if="publications.length === 0" class="empty-state">
       <div class="empty-icon">
         <i class="fas fa-clipboard-list"></i>
       </div>
-      <p>No tienes actividades publicadas aún.</p>
-      <p class="empty-hint">¡Crea tu primera actividad con el botón "Nueva Actividad"!</p>
+      <p>{{ $t('entrepreneurs.noActivities') }}</p>
+      <p class="empty-hint">{{ $t('entrepreneurs.createFirst') }}</p>
     </div>
 
     <div v-else class="publications-list">
@@ -64,10 +70,10 @@ export default {
           </div>
           <div class="publication-actions">
             <button @click="onEdit(pub)" class="btn-edit">
-              <i class="fas fa-edit action-icon"></i> Editar
+              <i class="fas fa-edit action-icon"></i> {{ $t('entrepreneurs.editActivity') }}
             </button>
             <button @click="onDelete(pub)" class="btn-delete">
-              <i class="fas fa-trash-alt action-icon"></i> Eliminar
+              <i class="fas fa-trash-alt action-icon"></i> {{ $t('entrepreneurs.deleteActivity') }}
             </button>
           </div>
         </div>

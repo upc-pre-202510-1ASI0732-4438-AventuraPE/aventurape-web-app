@@ -22,26 +22,26 @@
 
 .dark-theme {
   /* Dark theme variables */
-  --theme-bg-primary: #1a1a1a !important;
-  --theme-bg-secondary: #242424 !important;
-  --theme-bg-card: #2a2a2a !important;
-  --theme-text-primary: #f5f5f5 !important;
+  --theme-bg-primary: #181818 !important;
+  --theme-bg-secondary: #202020 !important;
+  --theme-bg-card: rgba(42, 42, 42, 0.7) !important; /* More transparent cards */
+  --theme-text-primary: #f0f0f0 !important;
   --theme-text-secondary: #cccccc !important;
   --theme-nav-bg: rgba(26, 26, 26, 0.95) !important;
-  --theme-nav-glass: rgba(42, 42, 42, 0.8) !important;
-  --theme-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-  --theme-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
-  --glass-backdrop: blur(15px) !important;
-  --glass-border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  --theme-nav-glass: rgba(42, 42, 42, 0.6) !important; /* More subtle glass effect */
+  --theme-shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
+  --theme-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+  --glass-backdrop: blur(10px) !important;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08) !important; /* Very subtle borders */
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
 
   background: var(--theme-bg-primary) !important;
   color: var(--theme-text-primary) !important;
   transition: all 0.4s var(--animate-bezier) !important;
 
-  --primary-lighter: var(--theme-nav-glass) !important;
+  --primary-lighter: rgba(168, 134, 98, 0.1) !important; /* Much more subtle background */
   --primary-light: var(--theme-text-primary) !important;
-  --primary-color: #8b5a4a !important; /* Warm brown that matches our palette */
+  --primary-color: #a88662 !important; /* Warm brown that matches our palette */
 }
 
 /* ===== GLOBAL IMAGE VISIBILITY RULES ===== */
@@ -108,25 +108,33 @@ img {
   color: var(--theme-text-primary) !important;
 }
 
-/* CLEAN CARDS WITHOUT BORDERS */
+/* CLEAN CARDS WITHOUT HEAVY BACKGROUNDS */
 .dark-theme [class*="card"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="container"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="wrapper"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="panel"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme [class*="section"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: var(--theme-bg-card) !important;
+  background: transparent !important; /* Remove heavy card backgrounds */
   color: var(--theme-text-primary) !important;
   border: none !important;
-  border-radius: 12px !important;
-  box-shadow: var(--theme-shadow-soft) !important;
-  backdrop-filter: var(--glass-backdrop) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important; /* Remove heavy shadows initially */
   transition: all var(--animate-medium) var(--animate-bezier) !important;
 }
 
-/* ENHANCED HOVER EFFECTS WITHOUT BORDER CHANGES */
+/* SUBTLE HIGHLIGHT ON HOVER */
 .dark-theme [class*="card"]:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  transform: translateY(-4px) !important;
-  box-shadow: var(--theme-shadow-hover) !important;
+  background: rgba(42, 42, 42, 0.3) !important; /* Very subtle background on hover */
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important; /* Gentle shadow on hover */
+}
+
+/* HERO SECTIONS GET SUBTLE BACKGROUND */
+.dark-theme .hero-section:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme [class*="hero"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: rgba(168, 134, 98, 0.08) !important; /* Very subtle warm background */
+  border-radius: 12px !important;
+  border: 1px solid rgba(168, 134, 98, 0.15) !important;
 }
 
 /* ENHANCED TEXT ELEMENTS WITH TYPOGRAPHY */
@@ -153,28 +161,28 @@ img {
   text-shadow: 0 0 8px var(--theme-accent-light) !important;
 }
 
-/* IMPROVED FORM ELEMENTS WITHOUT UGLY BORDERS */
+/* IMPROVED FORM ELEMENTS WITH MINIMAL STYLING */
 .dark-theme input:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme textarea:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme select:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: #2a2318 !important;
+  background: rgba(42, 42, 42, 0.4) !important; /* Subtle background */
   color: var(--theme-text-primary) !important;
-  border: 1px solid rgba(168, 134, 98, 0.2) !important;
-  border-radius: 8px !important;
-  padding: 12px 16px !important;
+  border: 1px solid rgba(168, 134, 98, 0.15) !important; /* Very subtle border */
+  border-radius: 6px !important;
+  padding: 10px 14px !important;
   transition: all var(--animate-medium) var(--animate-bezier) !important;
   font-size: 14px !important;
   font-weight: 400 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: none !important; /* Remove shadow */
 }
 
 .dark-theme input:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme textarea:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
 .dark-theme select:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  border-color: #c4a876 !important;
-  box-shadow: 0 0 0 3px rgba(196, 168, 118, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  background: #332a1d !important;
-  transform: translateY(-1px) !important;
+  border-color: rgba(168, 134, 98, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(168, 134, 98, 0.15) !important; /* Subtle focus ring */
+  background: rgba(42, 42, 42, 0.6) !important;
+  transform: none !important; /* Remove transform */
   outline: none !important;
 }
 
@@ -183,18 +191,18 @@ img {
   color: rgba(232, 220, 200, 0.6) !important;
 }
 
-/* LUXURIOUS BUTTON STYLING */
+/* ELEGANT BUTTON STYLING */
 .dark-theme button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: var(--button-bg-primary) !important;
-  color: var(--theme-text-primary) !important;
+  background: rgba(168, 134, 98, 0.8) !important; /* Subtle button background */
+  color: #ffffff !important;
   border: none !important;
-  border-radius: 10px !important;
-  padding: 12px 24px !important;
-  font-weight: 600 !important;
+  border-radius: 6px !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
   font-size: 14px !important;
   letter-spacing: 0.025em !important;
-  box-shadow: var(--button-shadow) !important;
-  transition: all var(--animate-medium) var(--animate-spring) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important; /* Subtle shadow */
+  transition: all var(--animate-medium) var(--animate-bezier) !important;
   cursor: pointer !important;
   position: relative !important;
   overflow: hidden !important;
@@ -202,9 +210,9 @@ img {
 
 /* PREMIUM BUTTON HOVER EFFECTS */
 .dark-theme button:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  transform: translateY(-2px) !important;
-  box-shadow: var(--button-shadow-hover) !important;
-  background: var(--button-bg-primary) !important;
+  transform: translateY(-1px) !important; /* Subtle lift */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  background: rgba(168, 134, 98, 0.9) !important;
 }
 
 /* SECONDARY BUTTON STYLING */
@@ -702,83 +710,80 @@ img {
   border-color: #5a4b35 !important;
 }
 
-/* ENHANCED BUTTON STYLES FOR DARK MODE */
-.dark-theme .p-button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: linear-gradient(135deg, #8b5a4a 0%, #a16854 100%) !important;
-  border: 1px solid #5a4b35 !important;
-  color: #f5f1eb !important;
-  transition: all 0.3s ease !important;
+/* PREVENT LARGE UGLY BOXES - SPECIFIC COMPONENT FIXES */
+
+/* Activity cards and publication cards - minimal background */
+.dark-theme .activity-card,
+.dark-theme .publication-card,
+.dark-theme .entrepreneur-card,
+.dark-theme .subscription-card,
+.dark-theme .proof-card {
+  background: rgba(42, 42, 42, 0.2) !important; /* Very subtle background */
+  border: 1px solid rgba(168, 134, 98, 0.1) !important; /* Almost invisible border */
+  box-shadow: none !important;
 }
 
-.dark-theme .p-button:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: linear-gradient(135deg, #a16854 0%, #b8765f 100%) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(139, 90, 74, 0.3) !important;
+.dark-theme .activity-card:hover,
+.dark-theme .publication-card:hover,
+.dark-theme .entrepreneur-card:hover {
+  background: rgba(42, 42, 42, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* INPUT FOCUS STATES */
-.dark-theme .p-inputtext:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .p-dropdown:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  border-color: #8b5a4a !important;
-  box-shadow: 0 0 0 2px rgba(139, 90, 74, 0.2) !important;
-}
-
-/* PRIMEVUE COMPONENTS SPECIFIC OVERRIDES */
-.dark-theme .p-tabmenu .p-tabmenuitem .p-menuitem-link:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: var(--theme-bg-card) !important;
-  color: var(--theme-text-primary) !important;
-  border-color: #5a4b35 !important;
-}
-
-.dark-theme .p-tabmenu .p-tabmenuitem.p-highlight .p-menuitem-link:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: #8b5a4a !important;
-  color: #f5f1eb !important;
-}
-
-/* CAROUSEL IMPROVEMENTS */
-.dark-theme .p-carousel:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: var(--theme-bg-card) !important;
-}
-
-.dark-theme .p-carousel .p-carousel-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+/* List components should not have heavy backgrounds */
+.dark-theme .activity-list,
+.dark-theme .publication-list,
+.dark-theme .entrepreneurs-grid,
+.dark-theme .activities-grid {
   background: transparent !important;
 }
 
-.dark-theme .p-carousel .p-carousel-indicators .p-carousel-indicator button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: #5a4b35 !important;
+/* Modal and dialog improvements */
+.dark-theme .p-dialog,
+.dark-theme .modal-content {
+  background: rgba(32, 32, 32, 0.95) !important; /* Semi-transparent modal */
+  border: 1px solid rgba(168, 134, 98, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
 }
 
-.dark-theme .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background: #8b5a4a !important;
+/* Loading states should be subtle */
+.dark-theme .loading-state,
+.dark-theme .empty-state {
+  background: transparent !important;
+  color: var(--theme-text-secondary) !important;
 }
 
-/* ADDITIONAL NAVBAR BRAND AND LOGO FIXES */
-.dark-theme .navbar-brand:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .logo:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .brand:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #f5f1eb !important;
-  background-color: transparent !important;
+/* Navigation improvements */
+.dark-theme .header-nav {
+  background: rgba(24, 24, 24, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid rgba(168, 134, 98, 0.1) !important;
 }
 
-/* BREADCRUMB AND NAVIGATION ELEMENTS */
-.dark-theme .breadcrumb:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .pagination:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  background-color: #3d3426 !important;
-  color: #f5f1eb !important;
-  border: 1px solid #5a4b35 !important;
+/* Form containers should be minimal */
+.dark-theme .form-container,
+.dark-theme .profile-container {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
-.dark-theme .breadcrumb-item:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .page-link:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #f5f1eb !important;
-  background-color: #3d3426 !important;
-  border-color: #5a4b35 !important;
+/* Error and message containers */
+.dark-theme .error-message,
+.dark-theme .success-message,
+.dark-theme .warning-message {
+  background: rgba(220, 53, 69, 0.15) !important;
+  border: 1px solid rgba(220, 53, 69, 0.3) !important;
+  border-radius: 6px !important;
 }
 
-.dark-theme .breadcrumb-item:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
-.dark-theme .page-link:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
-  color: #A88662 !important;
-  background-color: #4f4230 !important;
+.dark-theme .success-message {
+  background: rgba(40, 167, 69, 0.15) !important;
+  border-color: rgba(40, 167, 69, 0.3) !important;
+}
+
+.dark-theme .warning-message {
+  background: rgba(255, 193, 7, 0.15) !important;
+  border-color: rgba(255, 193, 7, 0.3) !important;
 }
 
 

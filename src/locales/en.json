@@ -84,7 +84,27 @@
     "viewProfile": "View profile",
     "activities": "activities",
     "statistics": "Statistics",
-    "subscriptions": "Subscriptions"
+    "subscriptions": "Subscriptions",
+    "myPublications": "My Publications",
+    "createActivity": "Create Activity",
+    "editActivity": "Edit Activity",
+    "deleteActivity": "Delete Activity",
+    "noActivities": "You don't have any published activities",
+    "createFirst": "Create your first activity to get started",
+    "activityName": "Activity Name",
+    "description": "Description",
+    "capacity": "Capacity",
+    "duration": "Duration (hours)",
+    "cost": "Cost",
+    "image": "Image",
+    "saveActivity": "Save Activity",
+    "updateActivity": "Update Activity",
+    "confirmDelete": "Are you sure you want to delete this activity?",
+    "deleteWarning": "This action cannot be undone",
+    "activityCreated": "Activity created successfully",
+    "activityUpdated": "Activity updated successfully",
+    "activityDeleted": "Activity deleted successfully",
+    "dashboard": "Dashboard"
   },
   "makeComment": {
     "title": "Write a Review",
@@ -123,12 +143,51 @@
     "city": "City",
     "cityPlaceholder": "Your city",
     "postalCode": "Postal Code",
-    "postalCodeValidation": "The postal code must be 5 digits",
-    "country": "Country",
+    "postalCodeValidation": "The postal code must be 5 digits",    "country": "Country",
     "countryPlaceholder": "Your country",
     "submit": "Save Profile",
-    "editProfile": "Profile of"
-
+    "editProfile": "Profile of",
+    "entrepreneur": {
+      "businessName": "Business name",
+      "businessNamePlaceholder": "Enter your business name",
+      "address": "Address",
+      "digits": "digits",
+      "numberValidation": "The number must contain exactly 9 digits"
+    }
+  },
+  "statistics": {
+    "subtitle": "View your best rated activities",
+    "sortBy": "Sort by",
+    "bestRated": "Best rated",
+    "mostCommented": "Most commented"
+  },
+  "subscriptions": {
+    "title": "My membership",
+    "subtitle": "View information about your one-time payment",
+    "loading": "Loading membership information...",
+    "activePlan": "Active Plan",
+    "unique": "one-time",
+    "yourBenefits": "Your benefits",
+    "benefit1": "Publish unlimited workshops, events and experiences",
+    "benefit2": "Access an active community of adventurers",
+    "benefit3": "Promote your business and increase your visibility",
+    "importantInfo": "Important information",
+    "info1": "Once the payment is verified, your access has no expiration date",
+    "info2": "The one-time payment gives you permanent access to the platform",
+    "paymentProof": "Payment Proof",
+    "verified": "Verified",
+    "paymentProofAlt": "Payment Proof",
+    "proofReceived": "Proof received correctly",
+    "membershipActive": "Your membership is active",
+    "updateProof": "Update proof",
+    "needVerification": "We need to verify your payment",
+    "uploadInstructions": "Please upload a clear image of your payment proof to fully activate your membership.",
+    "clickToUpload": "Click here to upload your proof",
+    "dragDrop": "or drag and drop the image here",
+    "sendProof": "Send proof",
+    "updateProofTitle": "Update your payment proof",
+    "updateProofInstructions": "Select a new image to replace your current proof.",
+    "clickToSelect": "Click here to select a file"
   },
   "common": {
     "loading": "Loading...",
@@ -143,7 +202,12 @@
     "of": "of",
     "welcome": "Welcome",
     "welcomeAdventurer": "Welcome Adventurer",
-    "welcomeEntrepreneur": "Welcome Entrepreneur"
+    "welcomeEntrepreneur": "Welcome Entrepreneur",
+    "userNotFound": "User information not found. Please log in again.",
+    "userDataError": "Could not get user information.",
+    "errorLoading": "Error loading information",
+    "cancel": "Cancel",
+    "update": "Update"
   },
   "roles": {
     "adventurer": "Adventurer",
