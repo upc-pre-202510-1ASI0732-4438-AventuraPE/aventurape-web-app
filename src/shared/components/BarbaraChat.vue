@@ -13,7 +13,7 @@
         <div class="avatar-container">
           <img
             src="https://i.ibb.co/ymf4N6vQ/Imagen-de-Whats-App-2025-07-05-a-las-22-32-33-5626ea5e.jpg"
-            alt="Barbara  Assistant"
+            alt="Barbara Assistant"
             class="neural-avatar"
           />
           <div class="ai-pulse"></div>
@@ -44,16 +44,16 @@
               <div class="quantum-border"></div>
               <img
                 src="https://i.ibb.co/ymf4N6vQ/Imagen-de-Whats-App-2025-07-05-a-las-22-32-33-5626ea5e.jpg"
-                alt="Barbara Neural Assistant"
+                alt="Barbara Assistant"
                 class="neural-avatar-header"
               />
               <div class="energy-orb"></div>
             </div>
             <div class="ai-identity">
-              <h3 class="neural-title">Barbara Neural Assistant</h3>
+              <h3 class="neural-title">Barbara Assistant</h3>
               <div class="status-indicator">
                 <div class="quantum-dot"></div>
-                <span class="neural-status">Sistema Activo</span>
+                <span class="neural-status">Conectado</span>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
                 <div class="brain-wave">
                   <div class="synapse" v-for="n in 6" :key="n" :style="{ animationDelay: `${n * 0.1}s` }"></div>
                 </div>
-                <span class="processing-text">Procesando datos neurales...</span>
+                <span class="processing-text">Escribiendo...</span>
               </div>
             </div>
             <div class="message-aura processing-aura"></div>
@@ -117,7 +117,7 @@
           <div class="input-field-container">
             <input 
               v-model="currentMessage" 
-              placeholder="Transmite tu consulta neural..."
+              placeholder="Escribe tu mensaje aquí..."
               :disabled="isLoading || isSubmitting"
               ref="messageInput"
               class="neural-field"
@@ -176,7 +176,7 @@ export default {
       
       this.addMessage({
         id: 'welcome-message',
-        text: '🤖 Sistemas neurales activados. Soy Barbara, tu asistente de IA para AventuraPe. Mi base de datos contiene información sobre experiencias únicas en Perú. ¿Qué aventura deseas explorar?',
+        text: '👋 ¡Hola! Soy Barbara, tu asistente de IA para AventuraPe. Estoy aquí para ayudarte a descubrir experiencias únicas en Perú. ¿Qué aventura te gustaría explorar?',
         type: 'bot',
         timestamp: new Date(),
         isNew: true
@@ -262,7 +262,7 @@ export default {
         } else {
           this.addMessage({
             id: `error-${Date.now()}-${Math.random()}`,
-            text: '⚡ Error en la transmisión neural. Reintentando conexión...',
+            text: '⚡ Error en la conexión. Intentando nuevamente...',
             type: 'bot',
             timestamp: new Date(),
             isNew: true
@@ -272,7 +272,7 @@ export default {
         if (error.name !== 'AbortError') {
           this.addMessage({
             id: `connection-error-${Date.now()}-${Math.random()}`,
-            text: '🔌 Conexión neural interrumpida. Verificando sistemas...',
+            text: '🔌 Conexión interrumpida. Verificando conexión...',
             type: 'bot',
             timestamp: new Date(),
             isNew: true
@@ -347,8 +347,8 @@ export default {
 
 /* ===== BOTÓN FLOTANTE FUTURISTA ===== */
 .chat-toggle {
-  width: 75px;
-  height: 75px;
+  width: 90px;
+  height: 90px;
   background: linear-gradient(135deg, var(--primary-color, #765532) 0%, #8a6640 50%, var(--primary-color, #765532) 100%);
   border-radius: 50%;
   display: flex;
@@ -380,8 +380,8 @@ export default {
 
 .holographic-ring {
   position: absolute;
-  width: 85px;
-  height: 85px;
+  width: 100px;
+  height: 100px;
   border: 2px solid transparent;
   border-radius: 50%;
   background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.4), transparent, rgba(255, 215, 0, 0.2));
@@ -396,8 +396,8 @@ export default {
 
 .neural-core {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -408,8 +408,8 @@ export default {
 
 .avatar-container {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
 }
 
 .neural-avatar {
@@ -463,11 +463,11 @@ export default {
 /* ===== VENTANA DE CHAT NEURAL ===== */
 .neural-chat-window {
   position: fixed;
-  bottom: 90px;
+  bottom: 105px;
   right: 20px;
-  width: 450px;
-  height: 650px;
-  max-height: calc(100vh - 120px);
+  width: 520px;
+  height: 720px;
+  max-height: calc(100vh - 135px);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 245, 240, 0.95));
   border-radius: 20px;
   display: flex;
@@ -555,8 +555,8 @@ export default {
 
 .neural-avatar-frame {
   position: relative;
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   transition: all 0.3s ease;
 }
 
@@ -613,7 +613,7 @@ export default {
 
 .neural-title {
   margin: 0;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   background: linear-gradient(45deg, #ffffff, #ffd700);
   -webkit-background-clip: text;
@@ -643,7 +643,7 @@ export default {
 }
 
 .neural-status {
-  font-size: 12px;
+  font-size: 14px;
   opacity: 0.9;
   font-weight: 500;
 }
@@ -796,7 +796,7 @@ export default {
 .message-text {
   margin-bottom: 8px;
   line-height: 1.5;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -807,7 +807,7 @@ export default {
 }
 
 .timestamp {
-  font-size: 11px;
+  font-size: 12px;
   opacity: 0.7;
   font-weight: 600;
 }
@@ -930,11 +930,11 @@ export default {
 
 .neural-field {
   width: 100%;
-  padding: 16px 20px;
+  padding: 18px 22px;
   border: 2px solid rgba(118, 85, 50, 0.2);
   border-radius: 30px;
   outline: none;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
@@ -980,8 +980,8 @@ export default {
 
 .quantum-transmitter {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   background: linear-gradient(135deg, rgba(118, 85, 50, 0.8) 0%, var(--primary-color, #765532) 100%);
   border: 2px solid rgba(118, 85, 50, 0.3);
   border-radius: 50%;
@@ -1041,7 +1041,7 @@ export default {
 
 .transmission-icon {
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   position: relative;
   z-index: 1;
   transition: all 0.3s ease;
@@ -1115,10 +1115,10 @@ export default {
   
   .neural-chat-window {
     width: calc(100vw - 30px);
-    height: calc(100vh - 120px);
+    height: calc(100vh - 135px);
     right: 15px;
-    bottom: 85px;
-    max-height: calc(100vh - 120px);
+    bottom: 100px;
+    max-height: calc(100vh - 135px);
   }
   
   .neural-chat-window.maximized,
@@ -1135,23 +1135,23 @@ export default {
   }
   
   .chat-toggle {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .holographic-ring {
+    width: 85px;
+    height: 85px;
+  }
+  
+  .neural-core {
     width: 60px;
     height: 60px;
   }
   
-  .holographic-ring {
-    width: 70px;
-    height: 70px;
-  }
-  
-  .neural-core {
+  .avatar-container {
     width: 50px;
     height: 50px;
-  }
-  
-  .avatar-container {
-    width: 40px;
-    height: 40px;
   }
   
   .neural-header {
@@ -1159,7 +1159,11 @@ export default {
   }
   
   .neural-title {
-    font-size: 14px;
+    font-size: 16px;
+  }
+  
+  .neural-status {
+    font-size: 12px;
   }
   
   .neural-messages {
@@ -1172,7 +1176,7 @@ export default {
   }
   
   .message-text {
-    font-size: 13px;
+    font-size: 15px;
   }
   
   .neural-input-zone {
@@ -1180,17 +1184,17 @@ export default {
   }
   
   .neural-field {
-    padding: 14px 18px;
-    font-size: 13px;
+    padding: 16px 20px;
+    font-size: 15px;
   }
   
   .quantum-transmitter {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
   }
   
   .transmission-icon {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -1202,11 +1206,11 @@ export default {
   
   .neural-chat-window {
     width: calc(100vw - 20px);
-    height: calc(100vh - 100px);
+    height: calc(100vh - 110px);
     right: 10px;
-    bottom: 75px;
+    bottom: 90px;
     border-radius: 20px 20px 0 0;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 110px);
   }
   
   .neural-chat-window.maximized,
@@ -1223,23 +1227,40 @@ export default {
   }
   
   .chat-toggle {
-    width: 55px;
-    height: 55px;
-  }
-  
-  .holographic-ring {
     width: 65px;
     height: 65px;
   }
   
+  .holographic-ring {
+    width: 75px;
+    height: 75px;
+  }
+  
   .neural-core {
+    width: 55px;
+    height: 55px;
+  }
+  
+  .avatar-container {
     width: 45px;
     height: 45px;
   }
   
-  .avatar-container {
-    width: 35px;
-    height: 35px;
+  .neural-title {
+    font-size: 15px;
+  }
+  
+  .neural-status {
+    font-size: 11px;
+  }
+  
+  .message-text {
+    font-size: 14px;
+  }
+  
+  .neural-field {
+    padding: 14px 18px;
+    font-size: 14px;
   }
 }
 </style>
