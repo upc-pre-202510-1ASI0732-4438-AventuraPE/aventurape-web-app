@@ -1,7 +1,6 @@
 services:
-  - type: web
+  - type: static_site
     name: aventurape-frontend
-    env: static
     buildCommand: npm ci && npm run build
     staticPublishPath: ./dist
     envVars:
