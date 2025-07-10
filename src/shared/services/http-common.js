@@ -1,11 +1,14 @@
 import axios from "axios";
 import {authenticationInterceptor} from "@/domains/IAM/services/authentication.interceptor.js";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
+
 const http = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1',
+    baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json'
-    }
+    },
+    timeout: 30000
 });
 
 http.defaults.headers.common['Content-type'] = 'application/json';

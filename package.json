@@ -5,8 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "node --max-http-header-size=16384 ./node_modules/vite/bin/vite.js",
-    "build": "vite build",
+    "build": "vite build --mode production",
     "preview": "vite preview"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
