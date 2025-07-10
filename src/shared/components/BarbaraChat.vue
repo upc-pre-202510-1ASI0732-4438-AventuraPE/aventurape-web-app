@@ -349,8 +349,8 @@ export default {
 .chat-toggle {
   width: 90px;
   height: 90px;
-  background: linear-gradient(135deg, var(--primary-color, #765532) 0%, #8a6640 50%, var(--primary-color, #765532) 100%);
-  border-radius: 50%;
+ /*background: linear-gradient(135deg, var(--primary-color, #765532) 0%, #8a6640 50%, var(--primary-color, #765532) 100%);
+ */ border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -555,8 +555,8 @@ export default {
 
 .neural-avatar-frame {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   transition: all 0.3s ease;
 }
 
@@ -584,7 +584,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 60%;
   position: relative;
   z-index: 1;
 }
