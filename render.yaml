@@ -1,7 +1,7 @@
 services:
   - type: static_site
     name: aventurape-frontend
-    buildCommand: npm install && npx vite build --mode production
+    buildCommand: npm install && npm run build
     publishPath: ./dist
     envVars:
       - key: NODE_ENV
