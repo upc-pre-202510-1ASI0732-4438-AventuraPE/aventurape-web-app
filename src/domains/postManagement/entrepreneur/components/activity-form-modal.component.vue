@@ -54,12 +54,38 @@ export default {
     }
   },
   methods: {
-    savePublication() {
+    /*savePublication() {
       if (this.imageFile) {
         this.readFileAsBase64(this.imageFile, (base64Image) => {
           this.publication.image = base64Image;
           this.$emit('save', this.publication);
         });
+      } else {
+        this.$emit('save', this.publication);
+      }
+    },*/
+    async savePublication() {
+      if (this.imageFile) {
+        // Configura opciones de compresión
+        const options = {
+          maxSizeMB: 0.3, // Reduce a ~300 KB
+          maxWidthOrHeight: 1024,
+          useWebWorker: true
+        };
+
+        try {
+          const compressedFile = await imageCompression(this.imageFile, options);
+          this.readFileAsBase64(compressedFile, (base64Image) => {
+            this.publication.image = base64Image;
+            this.$emit('save', this.publication);
+          });
+        } catch (error) {
+          console.error("Error al comprimir imagen:", error);
+          this.readFileAsBase64(this.imageFile, (base64Image) => {
+            this.publication.image = base64Image;
+            this.$emit('save', this.publication);
+          });
+        }
       } else {
         this.$emit('save', this.publication);
       }
