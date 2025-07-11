@@ -96,6 +96,8 @@ export default {
 
         // Call the service to delete the comment
         const response = await this.activityApiService.deleteComment(publicationId, commentId);
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
         console.log('API response for comment deletion:', response);
 
         if (response) {
