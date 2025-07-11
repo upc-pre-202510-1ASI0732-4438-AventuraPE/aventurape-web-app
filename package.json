@@ -16,6 +16,7 @@
     "@googlemaps/js-api-loader": "^1.16.8",
     "@unhead/vue": "^2.0.8",
     "axios": "^1.9.0",
+    "browser-image-compression": "^2.0.2",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "pinia": "^3.0.2",
