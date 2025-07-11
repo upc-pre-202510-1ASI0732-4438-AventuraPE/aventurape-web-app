@@ -150,15 +150,18 @@ export default {
 }
 .activity-card {
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: var(--theme-bg-card, #ffffff);
+  color: var(--theme-text-primary, #333333);
+  border: 1px solid var(--theme-border, #e0e0e0);
 }
 
 .activity-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--theme-shadow, 0 8px 16px rgba(0, 0, 0, 0.1));
 }
 
 /* Control de tamaño para imágenes en el encabezado */
@@ -202,9 +205,10 @@ export default {
 .card-meta {
   display: flex;
   justify-content: space-between;
-  color: #555;
+  color: var(--theme-text-secondary, #555);
   font-size: 0.9rem;
   margin-bottom: 10px;
+  transition: color 0.3s ease;
 }
 
 .meta-item i {
@@ -212,7 +216,7 @@ export default {
 }
 
 .card-description {
-  color: #666;
+  color: var(--theme-text-secondary, #666);
   font-size: 0.95rem;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -220,5 +224,6 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 0 5px;
+  transition: color 0.3s ease;
 }
 </style>

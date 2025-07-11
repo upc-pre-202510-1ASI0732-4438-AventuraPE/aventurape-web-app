@@ -4,12 +4,17 @@ import { EntrepreneurStadisticsApiService } from '@/domains/statisticsManagement
 import { AuthenticationService } from '@/domains/IAM/services/authentication.service.js';
 import Cookies from 'js-cookie';
 import ActivityList from "@/domains/postManagement/entrepreneur/components/activity-list.component.vue";
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: "EntrepreneurStatistics",
   components: {
     ActivityList,
     PublicationCard
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -31,14 +36,14 @@ export default {
         const userId = localStorage.getItem("userId") || Cookies.get("userId");
 
         if (!userId) {
-          this.error = 'No se encontró información de usuario. Por favor inicie sesión nuevamente.';
+          this.error = this.t('common.userNotFound');
           this.loading = false;
           return;
         }
 
         const response = await authService.getUserById(userId);
         if (!response || !response.data || !response.data.id) {
-          this.error = 'No se pudo obtener la información del usuario.';
+          this.error = this.t('common.userDataError');
           this.loading = false;
           return;
         }
@@ -46,7 +51,7 @@ export default {
         this.entrepreneurId = response.data.id;
         this.fetchPublications();
       } catch (err) {
-        this.error = `Error al cargar información de usuario: ${err.message}`;
+        this.error = `${this.t('common.errorLoading')}: ${err.message}`;
         console.error("Error loading user info:", err);
         this.loading = false;
       }
@@ -94,7 +99,7 @@ export default {
 
         this.publications = publications;
       } catch (err) {
-        this.error = `Error al cargar publicaciones: ${err.message}`;
+        this.error = `${this.t('common.errorLoading')}: ${err.message}`;
         console.error("Error fetching publications:", err);
       } finally {
         this.loading = false;
@@ -112,8 +117,8 @@ export default {
 <template>
   <div class="home-container">
     <div class="hero-section">
-      <h1 class="page-title">Estadisticas</h1>
-      <p class="subtitle">Visualiza tus actividades mejor puntuadas</p>
+      <h1 class="page-title">{{ $t('entrepreneurs.statistics') }}</h1>
+      <p class="subtitle">{{ $t('statistics.subtitle') }}</p>
     </div>
 
     <div v-if="error" class="error-message">

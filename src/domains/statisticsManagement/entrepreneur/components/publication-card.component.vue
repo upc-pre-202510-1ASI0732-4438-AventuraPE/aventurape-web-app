@@ -1,4 +1,6 @@
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: "PublicationCard",
   props: {
@@ -10,6 +12,10 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -27,12 +33,12 @@ export default {
 <template>
   <div class="content">
     <div class="content-header">
-      <h2 class="section-title">Mis Publicaciones</h2>
+      <h2 class="section-title">{{ $t('entrepreneurs.myPublications') }}</h2>
       <div class="sort-dropdown">
-        <label for="sortSelect">Ordenar por:</label>
+        <label for="sortSelect">{{ $t('statistics.sortBy') }}:</label>
         <select id="sortSelect" v-model="selectedSort" @change="sortPublications">
-          <option value="rating">Mejor puntuados</option>
-          <option value="comments">Más comentados</option>
+          <option value="rating">{{ $t('statistics.bestRated') }}</option>
+          <option value="comments">{{ $t('statistics.mostCommented') }}</option>
         </select>
       </div>
 
@@ -40,14 +46,14 @@ export default {
 
     <div v-if="loading" class="loading-container">
       <div class="loading-spinner"></div>
-      <p>Cargando...</p>
+      <p>{{ $t('common.loading') }}</p>
     </div>
 
     <div v-else-if="publications.length === 0" class="empty-state">
       <div class="empty-icon">
         <i class="fas fa-clipboard-list"></i>
       </div>
-      <p>No tienes actividades publicadas aún.</p>
+      <p>{{ $t('entrepreneurs.noActivities') }}</p>
     </div>
 
     <div v-else class="publications-list">

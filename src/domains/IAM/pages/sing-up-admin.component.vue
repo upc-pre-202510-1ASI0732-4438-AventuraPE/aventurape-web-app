@@ -126,7 +126,7 @@ export default {
         this.errorMessage = "Por favor, verifique que no es un robot.";
         this.$toast.add({
           severity: "error",
-          summary: "Error",
+          summary: "",
           detail: "Por favor, verifique que no es un robot",
           life: 3000,
         });

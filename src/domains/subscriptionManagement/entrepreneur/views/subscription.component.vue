@@ -1,62 +1,47 @@
 <template>
   <div class="subscription-dashboard">
     <div class="hero-section">
-      <h1 class="page-title">Mi subscripción</h1>
-      <p class="subtitle">Visualiza información sobre tu subscripción</p>
+      <h1 class="page-title">{{ $t('subscriptions.title') }}</h1>
+      <p class="subtitle">{{ $t('subscriptions.subtitle') }}</p>
     </div>
 
     <!-- Estado de carga -->
     <div v-if="loading" class="loading-state">
       <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-      <p>Cargando información de suscripción...</p>
+      <p>{{ $t('subscriptions.loading') }}</p>
     </div>
 
     <!-- Dashboard principal -->
     <div v-else class="dashboard-container">
-      <!-- Panel izquierdo: Información de suscripción -->
+      <!-- Panel izquierdo: Información de membresía -->
       <div class="subscription-info-panel">
         <Card class="subscription-card">
           <template #header>
             <div class="subscription-header">
-              <h2>Plan Activo</h2>
+              <h2>{{ $t('subscriptions.activePlan') }}</h2>
             </div>
           </template>
           <template #content>
             <div class="plan-details">
-              <h3 class="plan-price">S/ 29.99<span>/mes</span></h3>
+              <h3 class="plan-price">S/ 109.99<span>/{{ $t('subscriptions.unique') }}</span></h3>
 
-              <h4>Tus beneficios</h4>
+              <h4>{{ $t('subscriptions.yourBenefits') }}</h4>
               <ul class="benefits-list">
-                <li><i class="pi pi-check"></i> Publica talleres, eventos y experiencias ilimitadas</li>
-                <li><i class="pi pi-check"></i> Accede a una comunidad activa de aventureros</li>
-                <li><i class="pi pi-check"></i> Promociona tu negocio y aumenta tu visibilidad</li>
+                <li><i class="pi pi-check"></i> {{ $t('subscriptions.benefit1') }}</li>
+                <li><i class="pi pi-check"></i> {{ $t('subscriptions.benefit2') }}</li>
+                <li><i class="pi pi-check"></i> {{ $t('subscriptions.benefit3') }}</li>
               </ul>
 
-              <h4>Información importante</h4>
+              <h4>{{ $t('subscriptions.importantInfo') }}</h4>
               <ul class="info-list">
-                <li><i class="pi pi-info-circle"></i> Para cancelar, debes notificarnos con 15 días de anticipación</li>
-                <li><i class="pi pi-wallet"></i> El pago debe realizarse antes del día 5 de cada mes</li>
+                <li><i class="pi pi-info-circle"></i> {{ $t('subscriptions.info1') }}</li>
+                <li><i class="pi pi-wallet"></i> {{ $t('subscriptions.info2') }}</li>
               </ul>
             </div>
           </template>
         </Card>
 
         <!-- Panel de preguntas frecuentes -->
-        <div class="faq-section">
-          <h3 class="faq-title">Preguntas frecuentes</h3>
-
-          <div class="faq-items">
-            <div class="faq-item" v-for="(question, index) in faqs" :key="index">
-              <div class="faq-question" @click="toggleFaq(index)">
-                <span>{{ question.question }}</span>
-                <i :class="{'pi': true, 'pi-chevron-down': !question.open, 'pi-chevron-up': question.open}"></i>
-              </div>
-              <div class="faq-answer" v-show="question.open">
-                <p>{{ question.answer }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <!-- Panel derecho: Comprobante de pago -->
@@ -64,23 +49,23 @@
         <Card class="proof-card">
           <template #header>
             <div class="proof-header">
-              <h2>Comprobante de Pago</h2>
-              <span v-if="proofingEntrepreneure" class="status-badge proof-badge">Verificado</span>
+              <h2>{{ $t('subscriptions.paymentProof') }}</h2>
+              <span v-if="proofingEntrepreneure" class="status-badge proof-badge">{{ $t('subscriptions.verified') }}</span>
             </div>
           </template>
           <template #content>
             <!-- Cuando hay comprobante -->
             <div v-if="proofingEntrepreneure" class="proof-content">
-              <img :src="getImageUrl(proofingEntrepreneure)" alt="Comprobante de Pago" class="proof-image" />
+              <img :src="getImageUrl(proofingEntrepreneure)" :alt="$t('subscriptions.paymentProofAlt')" class="proof-image" />
               <div class="proof-details">
-                <p><i class="pi pi-check-circle"></i> Comprobante recibido correctamente</p>
-                <p><i class="pi pi-calendar"></i> Verificado: {{ currentDate }}</p>
-                <p><i class="pi pi-info-circle"></i> Tu suscripción está activa</p>
+                <p><i class="pi pi-check-circle"></i> {{ $t('subscriptions.proofReceived') }}</p>
+                <p><i class="pi pi-calendar"></i> {{ $t('subscriptions.verified') }}: {{ currentDate }}</p>
+                <p><i class="pi pi-info-circle"></i> {{ $t('subscriptions.membershipActive') }}</p>
               </div>
 
               <button class="update-button" @click="showUploadDialog = true">
                 <i class="pi pi-upload"></i>
-                Actualizar comprobante
+                {{ $t('subscriptions.updateProof') }}
               </button>
             </div>
 
@@ -88,8 +73,8 @@
             <div v-else class="upload-content">
               <div class="upload-message">
                 <i class="pi pi-exclamation-circle warning-icon"></i>
-                <p class="marketing-message">Necesitamos verificar tu pago</p>
-                <p class="instruction-message">Por favor, sube una imagen clara de tu comprobante de pago para activar completamente tu suscripción mensual.</p>
+                <p class="marketing-message">{{ $t('subscriptions.needVerification') }}</p>
+                <p class="instruction-message">{{ $t('subscriptions.uploadInstructions') }}</p>
               </div>
 
               <div class="upload-area" @click="triggerFileInput" @dragover.prevent @drop.prevent="onFileDrop">
@@ -101,8 +86,8 @@
                     @change="handleFileUpload"
                 />
                 <i class="pi pi-cloud-upload upload-icon"></i>
-                <p>Haz clic aquí para subir tu comprobante</p>
-                <p class="upload-subtitle">o arrastra y suelta la imagen aquí</p>
+                <p>{{ $t('subscriptions.clickToUpload') }}</p>
+                <p class="upload-subtitle">{{ $t('subscriptions.dragDrop') }}</p>
               </div>
 
               <div v-if="selectedFile" class="selected-file">
@@ -115,7 +100,7 @@
                   @click="uploadComprobante"
               >
                 <i class="pi pi-check"></i>
-                Enviar comprobante
+                {{ $t('subscriptions.sendProof') }}
               </button>
             </div>
           </template>
@@ -126,7 +111,7 @@
     <!-- Diálogo para actualizar comprobante -->
     <Dialog
         v-model:visible="showUploadDialog"
-        header="Actualizar comprobante"
+        :header="$t('subscriptions.updateProof')"
         :style="{width: '650px'}"
         :modal="true"
         :closable="true"
@@ -135,8 +120,8 @@
       <div class="upload-dialog-content">
         <div class="upload-message">
           <i class="pi pi-sync warning-icon"></i>
-          <p class="marketing-message">Actualiza tu comprobante de pago</p>
-          <p class="instruction-message">Selecciona una nueva imagen para reemplazar tu comprobante actual.</p>
+          <p class="marketing-message">{{ $t('subscriptions.updateProofTitle') }}</p>
+          <p class="instruction-message">{{ $t('subscriptions.updateProofInstructions') }}</p>
         </div>
 
         <div class="upload-area dialog-upload-area" @click="triggerDialogFileInput" @dragover.prevent @drop.prevent="onDialogFileDrop">
@@ -148,8 +133,8 @@
               @change="handleDialogFileUpload"
           />
           <i class="pi pi-cloud-upload upload-icon"></i>
-          <p>Haz clic aquí para seleccionar un archivo</p>
-          <p class="upload-subtitle">o arrastra y suelta la imagen aquí</p>
+          <p>{{ $t('subscriptions.clickToSelect') }}</p>
+          <p class="upload-subtitle">{{ $t('subscriptions.dragDrop') }}</p>
         </div>
 
         <div v-if="dialogSelectedFile" class="selected-file">
@@ -160,14 +145,14 @@
       <template #footer>
         <div class="dialog-footer">
           <button class="dialog-cancel-btn" @click="showUploadDialog = false">
-            <i class="pi pi-times"></i> Cancelar
+            <i class="pi pi-times"></i> {{ $t('common.cancel') }}
           </button>
           <button
               class="dialog-update-btn"
               :disabled="!dialogSelectedFile"
               @click="updateComprobante"
           >
-            <i class="pi pi-check"></i> Actualizar
+            <i class="pi pi-check"></i> {{ $t('common.update') }}
           </button>
         </div>
       </template>
@@ -179,12 +164,17 @@
 import apiProofingEntrepreneure from '@/domains/subscriptionManagement/entrepreneur/services/apiProofingEntrepreneure.js';
 import Card from 'primevue/card';
 import Dialog from 'primevue/dialog';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: "SubscriptionDashboard",
   components: {
     Card,
     Dialog
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {

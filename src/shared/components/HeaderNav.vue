@@ -1,9 +1,12 @@
-
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthenticationStore } from '@/domains/IAM/services/authentication.store.js';
+import AppControls from './AppControls.vue';
 import Cookies from 'js-cookie';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const router = useRouter();
 const authStore = useAuthenticationStore();
@@ -48,7 +51,7 @@ const closeMobileMenu = () => {
 
 // Update the signOut function in HeaderNav.vue to add more debugging
 const signOut = () => {
-  if (confirm('¿Estás seguro que deseas cerrar sesión?')) {
+  if (confirm(t('common.logout'))) {
     authStore.signOut(router);
   }
 };
@@ -72,40 +75,40 @@ const getHomeRoute = () => {
       <div class="nav-items" :class="{ 'mobile-open': isMobileMenuOpen }">
 
         <div class="nav-item home" @click="closeMobileMenu">
-          <!--Estoy añadiendo aca tambien al admin-->
           <router-link :to="getHomeRoute()">
             <font-awesome-icon icon="home" />
-            <span>Inicio</span>
+            <span>{{ $t('navbar.home') }}</span>
           </router-link>
         </div>
+
         <!-- Opciones para el rol Administrador -->
-        <template v-if="hasAdminRole ">
+        <template v-if="hasAdminRole">
           <div class="nav-item search" @click="closeMobileMenu">
             <router-link to="/buscar-admin">
               <font-awesome-icon icon="search" />
-              <span>Buscar actividades</span>
+              <span>{{ $t('navbar.explore') }}</span>
             </router-link>
           </div>
         </template>
 
         <!-- Opciones para el rol Adventurer -->
-        <template v-if="hasAdventurousRole ">
+        <template v-if="hasAdventurousRole">
           <div class="nav-item search" @click="closeMobileMenu">
             <router-link to="/buscar">
               <font-awesome-icon icon="search" />
-              <span>Buscar</span>
+              <span>{{ $t('navbar.explore') }}</span>
             </router-link>
           </div>
           <div class="nav-item favorites" @click="closeMobileMenu">
             <router-link to="/favoritos">
               <font-awesome-icon icon="heart" />
-              <span>Favoritos</span>
+              <span>{{ $t('navbar.favorites') }}</span>
             </router-link>
           </div>
           <div class="nav-item account" @click="closeMobileMenu">
             <router-link to="/adventurer/profile">
               <font-awesome-icon icon="user" />
-              <span>Mi Cuenta</span>
+              <span>{{ $t('navbar.profile') }}</span>
             </router-link>
           </div>
         </template>
@@ -115,28 +118,33 @@ const getHomeRoute = () => {
           <div class="nav-item stats" @click="closeMobileMenu">
             <router-link to="/entrepreneur/statistics">
               <font-awesome-icon icon="chart-bar" />
-              <span>Estadísticas</span>
+              <span>{{ $t('entrepreneurs.statistics') }}</span>
             </router-link>
           </div>
           <div class="nav-item subs" @click="closeMobileMenu">
             <router-link to="/entrepreneur/subscriptions">
               <font-awesome-icon icon="dollar-sign" />
-              <span>Suscripciones</span>
+              <span>{{ $t('entrepreneurs.subscriptions') }}</span>
             </router-link>
           </div>
           <div class="nav-item account" @click="closeMobileMenu">
             <router-link to="/entrepreneur/profile">
               <font-awesome-icon icon="user" />
-              <span>Mi cuenta</span>
+              <span>{{ $t('navbar.profile') }}</span>
             </router-link>
           </div>
         </template>
+
+        <!-- Selector de idioma y modo oscuro -->
+        <div class="nav-item controls-group" @click="closeMobileMenu">
+          <AppControls />
+        </div>
 
         <!-- Botón de cerrar sesión para todos los usuarios -->
         <div class="nav-item sign-out" @click="closeMobileMenu">
           <a href="#" @click.prevent="signOut">
             <font-awesome-icon icon="sign-out-alt" />
-            <span>Cerrar Sesión</span>
+            <span>{{ $t('navbar.logout') }}</span>
           </a>
         </div>
 
@@ -187,6 +195,12 @@ const getHomeRoute = () => {
 }
 .nav-item.sign-out {
   margin-left: auto !important;
+}
+
+.nav-item.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .sign-out a {

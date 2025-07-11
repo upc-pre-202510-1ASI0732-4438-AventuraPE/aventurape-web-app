@@ -5,6 +5,7 @@ import ActivityList from '../components/activity-list.component.vue';
 import ConfirmationModal from '../components/confirmation-modal.component.vue';
 import ActivityFormModal from '../components/activity-form-modal.component.vue'
 import Cookies from 'js-cookie';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: "homeEntrepreneur",
@@ -12,6 +13,10 @@ export default {
     ActivityList,
     ActivityFormModal,
     ConfirmationModal
+  },
+  setup() {
+    const { t } = useI18n();
+    return { t };
   },
   data() {
     return {
@@ -158,8 +163,8 @@ export default {
 <template>
   <div class="home-container">
     <div class="hero-section">
-      <h1 class="page-title">Bienvenido {{ userName }}</h1>
-      <p class="subtitle">Gestiona y promociona tus actividades</p>
+      <h1 class="page-title">{{ $t('auth.welcome') }} {{ userName }}</h1>
+      <p class="subtitle">{{ $t('entrepreneurs.dashboard') }}</p>
     </div>
 
     <div v-if="error" class="error-message">
@@ -170,7 +175,7 @@ export default {
     <div class="actions">
       <button @click="openFormModal()" class="btn-primary action-button">
         <i class="fas fa-plus"></i>
-        <span>Nueva Actividad</span>
+        <span>{{ $t('entrepreneurs.createActivity') }}</span>
       </button>
     </div>
 

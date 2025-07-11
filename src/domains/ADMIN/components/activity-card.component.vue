@@ -1,4 +1,3 @@
-// src/domains/postManagement/adventurer/components/activity-card.component.vue
 <script>
 export default {
   name: "ActivityCard",
@@ -30,6 +29,14 @@ export default {
     timeDuration: {
       type: Number,
       default: 0
+    },
+    favoritesCount: {
+      type: Number,
+      default: 0
+    },
+    commentsCount: {
+      type: Number,
+      default: 0
     }
   },
   emits: ['delete'],
@@ -58,7 +65,6 @@ export default {
     }
   }
 };
-
 </script>
 
 <template>
@@ -82,8 +88,19 @@ export default {
 
     <template #content>
       <p class="card-description">{{ description }}</p>
+
+      <div class="stats-container">
+        <div class="stat-item">
+          <i class="pi pi-heart"></i>
+          <span>{{ favoritesCount }}</span>
+        </div>
+        <div class="stat-item">
+          <i class="pi pi-comments"></i>
+          <span>{{ commentsCount }}</span>
+        </div>
+      </div>
+
       <div class="card-actions">
-        <!-- Para eliminar -->
         <button class="btn-delete" @click.stop="onDelete">
           <i class="pi pi-trash"></i> Eliminar
         </button>
@@ -191,5 +208,33 @@ export default {
 
 .btn-delete:hover {
   background-color: #ffe5e5;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 5px 10px;
+  padding-top: 10px;
+  border-top: 1px dashed #eee;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.stat-item i {
+  font-size: 1.1rem;
+}
+
+.stat-item:first-child i {
+  color: #ff5252;
+}
+
+.stat-item:last-child i {
+  color: #3a7539;
 }
 </style>

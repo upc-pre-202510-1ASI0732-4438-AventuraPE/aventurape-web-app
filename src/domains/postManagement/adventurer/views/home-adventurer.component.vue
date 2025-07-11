@@ -4,6 +4,7 @@ import ActivityCard from '../components/activity-card.component.vue';
 import EntrepreneurCard from '../components/entrepreneur-card.component.vue';
 import Carousel from 'primevue/carousel';
 import TabMenu from 'primevue/tabmenu';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: "HomeAdventurer",
@@ -13,22 +14,28 @@ export default {
     Carousel,
     TabMenu
   },
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   data() {
     return {
       loading: false,
       loadingEntrepreneurs: false,
       activities: [],
       activeTab: 0,
-      tabs: [
-        { label: 'Aventuras', icon: 'pi pi-compass' },
-        { label: 'Emprendedores', icon: 'pi pi-users' }
-      ],
       entrepreneurs: [],
       activityApiService: new ActivityApiService()
     };
   },
 
   computed: {
+    tabs() {
+      return [
+        { label: this.t('activities.title'), icon: 'pi pi-compass' },
+        { label: this.t('entrepreneurs.title'), icon: 'pi pi-users' }
+      ];
+    },
     carouselItems() {
       // Si no hay actividades, devolver array vacío
       if (!this.activities || this.activities.length === 0) {
@@ -109,8 +116,8 @@ export default {
   <div class="home-container">
     <!-- Header con título -->
     <header class="home-header">
-      <h1>Descubre tu próxima aventura</h1>
-      <p>Explora actividades emocionantes y conoce a emprendedores locales</p>
+      <h1>{{ $t('home.title') }}</h1>
+      <p>{{ $t('home.subtitle') }}</p>
     </header>
 
     <!-- Carrusel de imágenes autoplay -->
@@ -118,12 +125,12 @@ export default {
       <!-- Estado de carga -->
       <div v-if="loading" class="carousel-loading">
         <i class="pi pi-spin pi-spinner"></i>
-        <p>Cargando actividades destacadas...</p>
+        <p>{{ $t('home.loadingActivities') }}</p>
       </div>
       <!-- Sin actividades -->
       <div v-else-if="carouselItems.length === 0" class="carousel-empty">
         <i class="pi pi-info-circle"></i>
-        <p>No hay actividades destacadas disponibles</p>
+        <p>{{ $t('home.noActivities') }}</p>
       </div>
 
       <!-- Carrusel con actividades -->
@@ -156,18 +163,18 @@ export default {
     <main class="main-content">
       <!-- Panel de Aventuras -->
       <div v-if="activeTab === 0" class="tab-content activities-panel">
-        <h2>Aventuras disponibles</h2>
+        <h2>{{ $t('home.popularActivities') }}</h2>
 
         <!-- Estado de carga -->
         <div v-if="loading" class="loading-state">
           <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-          <p>Cargando actividades...</p>
+          <p>{{ $t('common.loading') }}</p>
         </div>
 
         <!-- Sin resultados -->
         <div v-else-if="activities.length === 0" class="empty-state">
           <i class="pi pi-info-circle"></i>
-          <p>No hay actividades disponibles en este momento</p>
+          <p>{{ $t('home.noActivities') }}</p>
         </div>
 
         <!-- Lista de actividades -->
@@ -187,14 +194,13 @@ export default {
       </div>
 
       <!-- Panel de Emprendedores -->
-      <!-- Panel de Emprendedores -->
       <div v-if="activeTab === 1" class="tab-content entrepreneurs-panel">
         <h2>Emprendedores destacados</h2>
 
         <!-- Estado de carga -->
         <div v-if="loadingEntrepreneurs" class="loading-state">
           <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
-          <p>Cargando emprendedores...</p>
+          <p>{{ $t('common.loading') }}</p>
         </div>
 
         <!-- Sin resultados -->

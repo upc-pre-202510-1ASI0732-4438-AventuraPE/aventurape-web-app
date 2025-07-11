@@ -1,0 +1,791 @@
+/* AESTHETIC DARK THEME - PREMIUM BROWN/BEIGE PALETTE */
+/* Enhanced visual design with modern aesthetics */
+
+/* Define theme variables */
+:root {
+  /* Light theme variables */
+  --theme-bg-primary: #f8f5f0;
+  --theme-bg-secondary: #ffffff;
+  --theme-bg-card: #ffffff;
+  --theme-text-primary: #333333;
+  --theme-text-secondary: #666666;
+  --theme-nav-bg: rgba(248, 245, 240, 0.95);
+  --theme-nav-glass: rgba(255, 255, 255, 0.1);
+  --theme-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --theme-shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --glass-backdrop: blur(10px);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --animate-medium: 0.3s;
+  --animate-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark-theme {
+  /* Dark theme variables */
+  --theme-bg-primary: #181818 !important;
+  --theme-bg-secondary: #202020 !important;
+  --theme-bg-card: rgba(42, 42, 42, 0.7) !important; /* More transparent cards */
+  --theme-text-primary: #f0f0f0 !important;
+  --theme-text-secondary: #cccccc !important;
+  --theme-nav-bg: rgba(26, 26, 26, 0.95) !important;
+  --theme-nav-glass: rgba(42, 42, 42, 0.6) !important; /* More subtle glass effect */
+  --theme-shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
+  --theme-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+  --glass-backdrop: blur(10px) !important;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08) !important; /* Very subtle borders */
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
+
+  background: var(--theme-bg-primary) !important;
+  color: var(--theme-text-primary) !important;
+  transition: all 0.4s var(--animate-bezier) !important;
+
+  --primary-lighter: rgba(168, 134, 98, 0.1) !important; /* Much more subtle background */
+  --primary-light: var(--theme-text-primary) !important;
+  --primary-color: #a88662 !important; /* Warm brown that matches our palette */
+}
+
+/* ===== GLOBAL IMAGE VISIBILITY RULES ===== */
+/* Ensure all images are always visible in both light and dark mode */
+img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.dark-theme img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  filter: none !important;
+}
+
+/* Specific rules for card images */
+.dark-theme .p-card img,
+.dark-theme .favorite-card img,
+.dark-theme [class*="card"] img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  background-color: transparent !important;
+}
+
+/* ===== END GLOBAL IMAGE VISIBILITY RULES ===== */
+
+/* ENHANCED COMPONENT LEVEL OVERRIDES */
+.dark-theme .header-nav,
+.dark-theme .nav,
+.dark-theme .navbar {
+  --primary-lighter: var(--theme-nav-glass) !important;
+  --primary-light: var(--theme-text-primary) !important;
+  background: var(--theme-nav-bg) !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  border-bottom: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+}
+
+/* PREMIUM TEXT HIERARCHY */
+.dark-theme *:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container):not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-text-secondary) !important;
+}
+
+.dark-theme h1, .dark-theme h2, .dark-theme h3, .dark-theme h4, .dark-theme h5, .dark-theme h6 {
+  color: var(--theme-text-primary) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+}
+
+/* SOPHISTICATED STRUCTURAL ELEMENTS */
+.dark-theme div:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
+.dark-theme section:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
+.dark-theme main:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
+.dark-theme article:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
+.dark-theme aside:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
+.dark-theme header:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
+.dark-theme footer:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container),
+.dark-theme nav:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) {
+  background: var(--theme-bg-primary) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+/* CLEAN CARDS WITHOUT HEAVY BACKGROUNDS */
+.dark-theme [class*="card"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme [class*="container"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme [class*="wrapper"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme [class*="panel"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme [class*="section"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: transparent !important; /* Remove heavy card backgrounds */
+  color: var(--theme-text-primary) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: none !important; /* Remove heavy shadows initially */
+  transition: all var(--animate-medium) var(--animate-bezier) !important;
+}
+
+/* SUBTLE HIGHLIGHT ON HOVER */
+.dark-theme [class*="card"]:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: rgba(42, 42, 42, 0.3) !important; /* Very subtle background on hover */
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important; /* Gentle shadow on hover */
+}
+
+/* HERO SECTIONS GET SUBTLE BACKGROUND */
+.dark-theme .hero-section:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme [class*="hero"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: rgba(168, 134, 98, 0.08) !important; /* Very subtle warm background */
+  border-radius: 12px !important;
+  border: 1px solid rgba(168, 134, 98, 0.15) !important;
+}
+
+/* ENHANCED TEXT ELEMENTS WITH TYPOGRAPHY */
+.dark-theme p:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme span:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme div:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme li:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *), 
+.dark-theme th:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-text-secondary) !important;
+  line-height: 1.6 !important;
+}
+
+/* PREMIUM LINK STYLING */
+.dark-theme a:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-accent-light) !important;
+  text-decoration: none !important;
+  transition: all var(--animate-fast) var(--animate-bezier) !important;
+  position: relative !important;
+}
+
+.dark-theme a:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-accent-hover) !important;
+  text-shadow: 0 0 8px var(--theme-accent-light) !important;
+}
+
+/* IMPROVED FORM ELEMENTS WITH MINIMAL STYLING */
+.dark-theme input:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme textarea:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme select:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: rgba(42, 42, 42, 0.4) !important; /* Subtle background */
+  color: var(--theme-text-primary) !important;
+  border: 1px solid rgba(168, 134, 98, 0.15) !important; /* Very subtle border */
+  border-radius: 6px !important;
+  padding: 10px 14px !important;
+  transition: all var(--animate-medium) var(--animate-bezier) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  box-shadow: none !important; /* Remove shadow */
+}
+
+.dark-theme input:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme textarea:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme select:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  border-color: rgba(168, 134, 98, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(168, 134, 98, 0.15) !important; /* Subtle focus ring */
+  background: rgba(42, 42, 42, 0.6) !important;
+  transform: none !important; /* Remove transform */
+  outline: none !important;
+}
+
+.dark-theme input::placeholder,
+.dark-theme textarea::placeholder {
+  color: rgba(232, 220, 200, 0.6) !important;
+}
+
+/* ELEGANT BUTTON STYLING */
+.dark-theme button:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: rgba(168, 134, 98, 0.8) !important; /* Subtle button background */
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.025em !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important; /* Subtle shadow */
+  transition: all var(--animate-medium) var(--animate-bezier) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* PREMIUM BUTTON HOVER EFFECTS */
+.dark-theme button:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  transform: translateY(-1px) !important; /* Subtle lift */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  background: rgba(168, 134, 98, 0.9) !important;
+}
+
+/* SECONDARY BUTTON STYLING */
+.dark-theme .btn-secondary:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--button-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+  border: var(--glass-border) !important;
+}
+
+.dark-theme .btn-secondary:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--theme-shadow-hover) !important;
+  background: var(--button-bg-secondary) !important;
+}
+
+/* TABLE ELEMENTS */
+.dark-theme table:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+}
+
+.dark-theme th:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+  font-weight: 600 !important;
+  padding: 16px !important;
+  border-bottom: var(--glass-border) !important;
+}
+
+.dark-theme td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  padding: 14px 16px !important;
+  border-bottom: var(--theme-border-light) !important;
+  transition: background-color var(--animate-fast) ease !important;
+}
+
+.dark-theme tr:hover td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass-light) !important;
+}
+
+/* DROPDOWN AND MENU ELEMENTS */
+.dark-theme .dropdown-menu:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important;
+  color: #f5f1eb !important;
+  border: 1px solid #5a4b35 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark-theme .dropdown-item:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #f5f1eb !important;
+  padding: 8px 16px !important;
+}
+
+.dark-theme .dropdown-item:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important; /* Keep same as base - NO BLACK */
+}
+
+/* MODAL AND DIALOG ELEMENTS */
+.dark-theme .modal:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .modal-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important;
+  color: #f5f1eb !important;
+  border: 1px solid #5a4b35 !important;
+  border-radius: 8px !important;
+}
+
+.dark-theme .modal-overlay {
+  background-color: rgba(42, 35, 24, 0.8) !important; /* Brown overlay */
+}
+
+/* PRIMEVUE COMPONENTS - CONSISTENT STYLING */
+.dark-theme .p-component:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important;
+  color: #f5f1eb !important;
+  border-color: #5a4b35 !important;
+}
+
+.dark-theme .p-card:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+  border: none !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.dark-theme .p-card .p-card-body:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+  color: var(--theme-text-primary) !important;
+}
+
+.dark-theme .p-card .p-card-title:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-text-primary) !important;
+}
+
+.dark-theme .p-card .p-card-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: var(--theme-text-secondary) !important;
+}
+
+/* PRIMEVUE FOCUS STATES */
+.dark-theme .p-inputtext:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-dropdown:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  border-color: #765532 !important;
+  box-shadow: 0 0 0 2px rgba(118, 85, 50, 0.3) !important;
+}
+
+/* PRIMEVUE PANELS AND OVERLAYS */
+.dark-theme .p-overlaypanel:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-tooltip:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-menu:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important;
+  color: #f5f1eb !important;
+  border: 1px solid #5a4b35 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* PREMIUM NAVIGATION ENHANCEMENTS */
+.dark-theme .header-nav:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme nav:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-nav-bg) !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  border-bottom: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow) !important;
+  position: relative !important;
+}
+
+.dark-theme .header-nav::before:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme nav::before:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, var(--theme-accent-light) 50%, transparent 100%);
+  opacity: 0.1;
+  z-index: -1;
+}
+
+/* PREMIUM SCROLLBAR STYLING */
+.dark-theme ::-webkit-scrollbar {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+.dark-theme ::-webkit-scrollbar-track {
+  background: var(--theme-bg-secondary) !important;
+  border-radius: 6px !important;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--theme-accent-muted) 0%, var(--theme-accent-light) 100%) !important;
+  border-radius: 6px !important;
+  border: 2px solid var(--theme-bg-secondary) !important;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--theme-accent-light) 0%, var(--theme-accent-hover) 100%) !important;
+}
+
+/* PREMIUM TABLE STYLING */
+.dark-theme table:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-card) !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+}
+
+.dark-theme th:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-secondary) !important;
+  color: var(--theme-text-primary) !important;
+  font-weight: 600 !important;
+  padding: 16px !important;
+  border-bottom: var(--glass-border) !important;
+}
+
+.dark-theme td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  padding: 14px 16px !important;
+  border-bottom: var(--theme-border-light) !important;
+  transition: background-color var(--animate-fast) ease !important;
+}
+
+.dark-theme tr:hover td:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass-light) !important;
+}
+
+/* PREMIUM MODAL AND OVERLAY STYLING */
+.dark-theme .modal:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .overlay:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .popup:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass) !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  border: var(--glass-border) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--theme-shadow-hover) !important;
+}
+
+/* PREMIUM SELECTION STYLING */
+.dark-theme ::selection {
+  background: var(--theme-accent-light) !important;
+  color: var(--theme-bg-primary) !important;
+}
+
+.dark-theme ::-moz-selection {
+  background: var(--theme-accent-light) !important;
+  color: var(--theme-bg-primary) !important;
+}
+
+/* ENHANCED FOCUS OUTLINES */
+.dark-theme *:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  outline: 2px solid var(--theme-accent-light) !important;
+  outline-offset: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* PREMIUM LOADING STATES */
+.dark-theme .loading:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .spinner:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass) !important;
+  border: var(--glass-border) !important;
+  border-radius: 12px !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+}
+
+/* AESTHETIC ANIMATIONS */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.dark-theme .shimmer:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, var(--theme-accent-light), transparent);
+  animation: shimmer 2s infinite;
+  opacity: 0.3;
+}
+
+/* PREMIUM TOOLTIP STYLING */
+.dark-theme .tooltip:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background: var(--theme-bg-glass) !important;
+  color: var(--theme-text-primary) !important;
+  border: var(--glass-border) !important;
+  border-radius: 8px !important;
+  backdrop-filter: var(--glass-backdrop) !important;
+  box-shadow: var(--theme-shadow-soft) !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* SPECIFIC APP COMPONENTS */
+.dark-theme .home-container:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important;
+  color: #f5f1eb !important;
+  min-height: 100vh;
+}
+
+.dark-theme .main-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important;
+  color: #f5f1eb !important;
+}
+
+.dark-theme .activity-card:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important;
+  color: #f5f1eb !important;
+  border: 1px solid #5a4b35 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.dark-theme .activity-card:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark-theme .navigation-tabs:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important;
+  border-bottom: 1px solid #5a4b35 !important;
+}
+
+.dark-theme .activities-grid:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important;
+}
+
+/* LOADING AND EMPTY STATES */
+.dark-theme .loading-state:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .empty-state:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #A88662 !important; /* Use primary-light for loading states */
+}
+
+/* TEXT UTILITIES */
+.dark-theme .text-muted:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .text-secondary:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #A88662 !important; /* Muted text in primary-light */
+}
+
+/* NAVBAR SPECIFIC FIXES */
+.dark-theme .navbar:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .nav:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .navigation:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .header-nav:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important; /* Dark brown base */
+  color: #f5f1eb !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* FORCE HEADER NAV BACKGROUND - HIGHEST PRIORITY */
+.dark-theme .header-nav:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) {
+  background-color: #2a2318 !important; /* Force dark brown background */
+  --primary-lighter: #2a2318 !important; /* Override the CSS variable */
+}
+
+.dark-theme .header-nav .nav-items:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important; /* Force mobile menu background */
+}
+
+/* FORCE HEADER NAV BACKGROUND - NO MORE BLUE */
+.dark-theme .header-nav {
+  background-color: #2a2318 !important; /* Force dark brown background */
+  background: #2a2318 !important; /* Double force */
+  --primary-lighter: #2a2318 !important; /* Override CSS variable */
+}
+
+.dark-theme .header-nav .nav-container {
+  background-color: #2a2318 !important; /* Force container background */
+  background: #2a2318 !important; /* Double force */
+}
+
+/* FORCE ALL NAV ITEMS TO USE CORRECT COLORS */
+.dark-theme .header-nav .nav-items {
+  background-color: #2a2318 !important; /* Force nav items background */
+  background: #2a2318 !important; /* Double force */
+}
+
+/* MOBILE MENU BACKGROUND OVERRIDE */
+@media (max-width: 768px) {
+  .dark-theme .header-nav .nav-items {
+    background-color: #2a2318 !important; /* Force mobile menu background */
+    background: #2a2318 !important; /* Double force */
+  }
+}
+
+/* HOME PAGE TITLES OVERRIDE */
+.dark-theme h1:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme h2:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme h3:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .home-title:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .page-title:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #f5f1eb !important; /* Force beige for all titles */
+  background-color: transparent !important; /* Remove any background */
+}
+
+/* HOME CONTAINER BACKGROUND */
+.dark-theme .home-container:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .home-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .main-content:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important; /* Force dark brown background */
+  color: #f5f1eb !important; /* Force beige text */
+}
+
+/* INPUT ELEMENTS - COMPREHENSIVE FIX */
+.dark-theme input[type="text"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="email"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="password"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="number"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="search"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="url"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="tel"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="date"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="time"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme input[type="datetime-local"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important; /* Same as cards */
+  color: #f5f1eb !important;
+  border: 1px solid #5a4b35 !important; /* Subtle brown border */
+  border-radius: 4px !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+}
+
+/* FOCUS STATES FOR ALL INPUTS */
+.dark-theme input:focus:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  border-color: #765532 !important; /* Primary color on focus */
+  box-shadow: 0 0 0 2px rgba(118, 85, 50, 0.3) !important;
+  outline: none !important;
+}
+
+/* PLACEHOLDER TEXT STYLING */
+.dark-theme input::placeholder:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme textarea::placeholder:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #A88662 !important; /* Primary-light for placeholders */
+  opacity: 0.8 !important;
+}
+
+/* HEADER NAV COMPONENT SPECIFIC OVERRIDES */
+.dark-theme .header-nav:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) {
+  background-color: #2a2318 !important; /* Dark brown base */
+  color: #f5f1eb !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-theme .header-nav .nav-container:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: transparent !important;
+}
+
+.dark-theme .header-nav .nav-items:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #2a2318 !important; /* Ensure mobile menu has correct background */
+}
+
+.dark-theme .header-nav .nav-item a:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #f5f1eb !important;
+  background-color: transparent !important;
+}
+
+.dark-theme .header-nav .nav-item a:hover:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #A88662 !important; /* Primary-light on hover */
+}
+
+.dark-theme .header-nav .mobile-menu-toggle:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #f5f1eb !important;
+}
+
+.dark-theme .header-nav .sign-out a:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  color: #e74c3c !important; /* Keep error color for sign out */
+}
+
+/* ULTRA AGGRESSIVE HEADER NAV OVERRIDE - ELIMINATE ALL BLUE */
+.dark-theme .header-nav:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) * {
+  color: #f5f1eb !important; /* Force all children to be beige */
+}
+
+.dark-theme .header-nav:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) {
+  --color-text: #f5f1eb !important; /* Override CSS variable */
+  --color-heading: #f5f1eb !important; /* Override CSS variable */
+  --vt-c-text-light-1: #f5f1eb !important; /* Override Vue variable */
+  --primary-light: #f5f1eb !important; /* Override primary light */
+}
+
+/* SPECIFIC NAV ELEMENT TARGETING */
+.dark-theme .nav-item:not(.sign-in-page *):not(.sign-up-page *) a,
+.dark-theme .nav-item:not(.sign-in-page *):not(.sign-up-page *) span,
+.dark-theme .nav-item:not(.sign-in-page *):not(.sign-up-page *) {
+  color: #f5f1eb !important;
+}
+
+.dark-theme .nav-item:not(.sign-in-page *):not(.sign-up-page *) a:visited,
+.dark-theme .nav-item:not(.sign-in-page *):not(.sign-up-page *) a:link {
+  color: #f5f1eb !important;
+}
+
+/* TARGET ROUTER LINKS SPECIFICALLY */
+.dark-theme a[href^="/buscar"]:not(.sign-in-page *):not(.sign-up-page *),
+.dark-theme a[href^="/favoritos"]:not(.sign-in-page *):not(.sign-up-page *),
+.dark-theme a[href^="/adventurer"]:not(.sign-in-page *):not(.sign-up-page *),
+.dark-theme a[href^="/entrepreneur"]:not(.sign-in-page *):not(.sign-up-page *),
+.dark-theme a[href="/buscar-admin"]:not(.sign-in-page *):not(.sign-up-page *) {
+  color: #f5f1eb !important;
+}
+
+/* PRIMEVUE ADDITIONAL OVERRIDES - ENSURE NO BLUE REMAINS */
+.dark-theme .p-inputtext:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-dropdown:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-calendar .p-inputtext:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-multiselect:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-checkbox:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme .p-radiobutton:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important;
+  color: #f5f1eb !important;
+  border: 1px solid #5a4b35 !important;
+}
+
+/* FORCE OVERRIDE ANY REMAINING BLUE ELEMENTS */
+.dark-theme *:not(.sign-in-page):not(.sign-up-page):not(.login-container):not(.register-container) {
+  /* Remove any blue colors that might be lingering */
+  border-color: #5a4b35 !important;
+}
+
+.dark-theme *[style*="background-color: blue"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme *[style*="background: blue"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme *[style*="color: blue"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *),
+.dark-theme *[class*="blue"]:not(.sign-in-page *):not(.sign-up-page *):not(.login-container *):not(.register-container *) {
+  background-color: #3d3426 !important;
+  color: #f5f1eb !important;
+  border-color: #5a4b35 !important;
+}
+
+/* PREVENT LARGE UGLY BOXES - SPECIFIC COMPONENT FIXES */
+
+/* Activity cards and publication cards - minimal background */
+.dark-theme .activity-card,
+.dark-theme .publication-card,
+.dark-theme .entrepreneur-card,
+.dark-theme .subscription-card,
+.dark-theme .proof-card {
+  background: rgba(42, 42, 42, 0.2) !important; /* Very subtle background */
+  border: 1px solid rgba(168, 134, 98, 0.1) !important; /* Almost invisible border */
+  box-shadow: none !important;
+}
+
+.dark-theme .activity-card:hover,
+.dark-theme .publication-card:hover,
+.dark-theme .entrepreneur-card:hover {
+  background: rgba(42, 42, 42, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* List components should not have heavy backgrounds */
+.dark-theme .activity-list,
+.dark-theme .publication-list,
+.dark-theme .entrepreneurs-grid,
+.dark-theme .activities-grid {
+  background: transparent !important;
+}
+
+/* Modal and dialog improvements */
+.dark-theme .p-dialog,
+.dark-theme .modal-content {
+  background: rgba(32, 32, 32, 0.95) !important; /* Semi-transparent modal */
+  border: 1px solid rgba(168, 134, 98, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Loading states should be subtle */
+.dark-theme .loading-state,
+.dark-theme .empty-state {
+  background: transparent !important;
+  color: var(--theme-text-secondary) !important;
+}
+
+/* Navigation improvements */
+.dark-theme .header-nav {
+  background: rgba(24, 24, 24, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+  border-bottom: 1px solid rgba(168, 134, 98, 0.1) !important;
+}
+
+/* Form containers should be minimal */
+.dark-theme .form-container,
+.dark-theme .profile-container {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Error and message containers */
+.dark-theme .error-message,
+.dark-theme .success-message,
+.dark-theme .warning-message {
+  background: rgba(220, 53, 69, 0.15) !important;
+  border: 1px solid rgba(220, 53, 69, 0.3) !important;
+  border-radius: 6px !important;
+}
+
+.dark-theme .success-message {
+  background: rgba(40, 167, 69, 0.15) !important;
+  border-color: rgba(40, 167, 69, 0.3) !important;
+}
+
+.dark-theme .warning-message {
+  background: rgba(255, 193, 7, 0.15) !important;
+  border-color: rgba(255, 193, 7, 0.3) !important;
+}
+
+
+
+

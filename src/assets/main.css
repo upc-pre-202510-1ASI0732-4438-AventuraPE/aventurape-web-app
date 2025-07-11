@@ -1,3 +1,7 @@
+/* Import all theme-related CSS files */
+@import './base.css';
+@import './theme.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -8,8 +12,9 @@ body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #333;
-  background-color: #f8f5f0;
+  color: var(--theme-text-primary, #333);
+  background-color: var(--theme-bg-primary, #f8f5f0);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 
@@ -22,6 +27,15 @@ body {
   --error-color: #f15c5c;
   --white: #fff;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme adjustments - CONSISTENT BROWN PALETTE */
+.dark-theme {
+  --primary-lighter: #2a2318; /* Dark brown for navbar */
+  --primary-light: #f5f1eb; /* Light beige for nav text */
+  --text-dark: #f5f1eb; /* Light beige for dark theme text */
+  --text-light: #e6ddd1; /* Darker beige for secondary text */
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Simple brown shadow */
 }
 
 .container {

@@ -7,7 +7,7 @@
           <input
               type="text"
               v-model="searchQuery"
-              placeholder="Buscar actividades"
+              :placeholder="$t('home.searchPlaceholder')"
               class="search-input"
               v-focus
           />
@@ -24,7 +24,7 @@
       <div class="search-controls">
         <transition name="fade-slide">
           <span class="items-count" v-if="!loading">
-            {{ filteredActivities.length }} de {{ activities.length }} Actividades
+            {{ filteredActivities.length }} {{ $t('common.of') }} {{ activities.length }} {{ $t('activities.title') }}
           </span>
         </transition>
         <div class="view-options">
@@ -32,7 +32,7 @@
               class="view-btn list-view-btn"
               :class="{ active: viewMode === 'list' }"
               @click="viewMode = 'list'"
-              title="Vista de lista"
+              :title="$t('buttons.listView')"
           >
             <i class="pi pi-list"></i>
           </button>
@@ -40,7 +40,7 @@
               class="view-btn grid-view-btn"
               :class="{ active: viewMode === 'grid' }"
               @click="viewMode = 'grid'"
-              title="Vista de cuadrícula"
+              :title="$t('buttons.gridView')"
           >
             <i class="pi pi-th-large"></i>
           </button>
@@ -51,13 +51,13 @@
     <transition name="fade-slow" mode="out-in">
       <div v-if="loading" class="loading-message" key="loading">
         <i class="pi pi-spin pi-spinner"></i>
-        <span>Cargando actividades...</span>
+        <span>{{ $t('home.loadingActivities') }}</span>
       </div>
 
       <div v-else-if="filteredActivities.length === 0" class="no-results" key="empty">
         <i class="pi pi-search"></i>
-        <span>No se encontraron actividades para "{{ searchQuery }}"</span>
-        <button class="reset-search-btn" @click="clearSearch">Limpiar búsqueda</button>
+        <span>{{ $t('home.noResults') }} "{{ searchQuery }}"</span>
+        <button class="reset-search-btn" @click="clearSearch">{{ $t('buttons.clearSearch') }}</button>
       </div>
 
       <div v-else class="product-grid" :class="{ 'list-view': viewMode === 'list' }" key="results">
@@ -74,7 +74,7 @@
               <div class="product-title">{{ activity.title }}</div>
             </div>
             <div class="hover-overlay" :class="{ active: selectedActivity === activity.id }">
-              <button class="detail-btn" @click.stop="goToDetail(activity.id)">DETALLE</button>
+              <button class="detail-btn" @click.stop="goToDetail(activity.id)">{{ $t('buttons.viewDetails') }}</button>
             </div>
           </div>
         </transition-group>
@@ -85,9 +85,14 @@
 
 <script>
 import { ActivityApiService } from '@/domains/postManagement/shared/services/activity-api.service.js';
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: "ActivityCardList",
+  setup() {
+    const { t } = useI18n();
+    return { t };
+  },
   directives: {
     focus: {
       inserted: function (el) {
